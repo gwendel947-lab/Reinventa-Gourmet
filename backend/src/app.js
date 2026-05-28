@@ -11,7 +11,7 @@ app.use(express.json())
 app.use('/users', userRoutes)
 
 app.get('/', (req, res) => {
-  res.json({
+  return res.json({
     message: 'API Reinventa Gourmet funcionando!'
   })
 })
