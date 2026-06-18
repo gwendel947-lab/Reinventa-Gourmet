@@ -13,8 +13,8 @@ model Usuario {
   email           String          @unique @db.VarChar(150)
   senha           String          @db.VarChar(255)
   nivelHabilidade NivelHabilidade @default(INICIANTE)
-  criadoEm       DateTime        @default(now())
-  atualizadoEm   DateTime        @updatedAt
+  criadoEm        DateTime        @default(now())
+  atualizadoEm    DateTime        @updatedAt
 
   perfil     PerfilAlimentar?
   inventario Inventario[]
@@ -38,7 +38,7 @@ model PerfilAlimentar {
   id           Int       @id @default(autoincrement())
   usuarioId    Int       @unique
   tipoDieta    TipoDieta @default(ONIVORO)
-  criadoEm    DateTime  @default(now())
+  criadoEm     DateTime  @default(now())
   atualizadoEm DateTime  @updatedAt
 
   usuario    Usuario              @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
@@ -109,12 +109,12 @@ model Receita {
   usuarioId     Int
   titulo        String   @db.VarChar(200)
   modoPreparo   String   @db.Text
-  tempoEstimado Int      // em minutos
+  tempoEstimado Int // em minutos
   porcoes       Int      @default(1)
   publica       Boolean  @default(true)
   geradaPorIA   Boolean  @default(false) // flag para quando a IA for integrada
-  criadaEm     DateTime @default(now())
-  atualizadaEm DateTime @updatedAt
+  criadaEm      DateTime @default(now())
+  atualizadaEm  DateTime @updatedAt
 
   usuario      Usuario              @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
   ingredientes ReceitaIngrediente[]
@@ -151,7 +151,7 @@ model Postagem {
   receitaId   Int?
   imagemPrato String?  @db.VarChar(500) // URL da imagem
   comentario  String?  @db.Text
-  criadaEm   DateTime @default(now())
+  criadaEm    DateTime @default(now())
 
   usuario Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
   receita Receita? @relation(fields: [receitaId], references: [id], onDelete: SetNull)

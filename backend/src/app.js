@@ -1,19 +1,24 @@
-import express from 'express'
-import cors from 'cors'
+import express from "express";
 
-import userRoutes from './routes/user.routes.js'
+const app = express();
 
-const app = express()
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(cors())
-app.use(express.json())
-
-app.use('/users', userRoutes)
-
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.json({
-    message: 'API Reinventa Gourmet funcionando!'
-  })
-})
+    mensagem: "API de tarefas funcionando!",
+    versao: "2.0",
+    arquitetura: "MVC"
+  });
+});
 
-export default app
+app.use((req, res) => {
+  res.status(404).json({
+    erro: "Rota não encontrada",
+    metodo: req.method,
+    url: req.url
+  });
+});
+
+export default app;
