@@ -1,4 +1,13 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+
+export type SavedRecipe = {
+  id: number;
+  title: string;
+  time: string;
+  difficulty: string;
+  author?: string;
+  image?: string;
+};
 
 export type User = {
   name: string;
@@ -6,6 +15,7 @@ export type User = {
   avatar?: string | null;
   diet: string;
   allergies: string[];
+  savedRecipes?: SavedRecipe[];
 };
 
 type AuthContextType = {
@@ -18,7 +28,19 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window === "undefined") return null;
+    const stored = localStorage.getItem("reinventa-user");
+    return stored ? JSON.parse(stored) : null;
+  });
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("reinventa-user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("reinventa-user");
+    }
+  }, [user]);
 
   const login = (userData: User) => {
     setUser(userData);

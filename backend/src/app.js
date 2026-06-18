@@ -5,11 +5,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cors());
+app.use(express.json());
+
+app.use("/users", userRoutes);
+
 app.get("/", (req, res) => {
-  res.json({
-    mensagem: "API de tarefas funcionando!",
-    versao: "2.0",
-    arquitetura: "MVC"
+  return res.json({
+    message: "API Reinventa Gourmet funcionando!"
   });
 });
 
