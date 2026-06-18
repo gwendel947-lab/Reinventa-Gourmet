@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { motion } from "motion/react";
 import { MessageCircle, Heart, Share2, MoreHorizontal, User, Wand2, ImagePlus } from "lucide-react";
+import { toast } from "sonner";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { useAuth } from "../contexts/AuthContext";
 
 const posts = [
   {
@@ -70,6 +73,41 @@ const posts = [
 ];
 
 export const CommunityFeed = () => {
+  const { user } = useAuth();
+  const [postsState, setPostsState] = useState(posts);
+  const [newPostContent, setNewPostContent] = useState("");
+
+  const handleCreatePost = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!newPostContent.trim()) {
+      toast.error("Escreva algo antes de compartilhar.");
+      return;
+    }
+
+    const author = user?.name ?? "Você";
+    const handle = user ? `@${user.name.toLowerCase().replace(/\s+/g, "")}` : "@cozinheiro";
+
+    setPostsState([
+      {
+        id: Date.now(),
+        user: author,
+        handle,
+        avatar: "bg-[#8C4B3A]",
+        time: "Agora",
+        content: newPostContent.trim(),
+        recipeRef: "Receita da Comunidade",
+        likes: 0,
+        comments: 0,
+        image: null,
+      },
+      ...postsState,
+    ]);
+
+    setNewPostContent("");
+    toast.success("Post adicionado à comunidade!");
+  };
+
   return (
     <div className="w-full min-h-screen bg-[#FEFAF0] text-[#8C4B3A] py-12 px-6">
       <div className="max-w-6xl mx-auto">
@@ -96,32 +134,34 @@ export const CommunityFeed = () => {
           className="max-w-3xl mx-auto bg-white border-4 border-[#8C4B3A] rounded-3xl p-6 shadow-[8px_8px_0px_#E07A5F] mb-16 relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#F2CC8F] rounded-full blur-[60px] opacity-40"></div>
-          <div className="flex flex-col md:flex-row gap-6 relative z-10">
+          <form onSubmit={handleCreatePost} className="flex flex-col md:flex-row gap-6 relative z-10">
             <div className="w-16 h-16 rounded-full bg-[#E07A5F] flex items-center justify-center text-white shrink-0 border-4 border-[#8C4B3A] shadow-inner">
               <User size={32} />
             </div>
             <div className="flex-1">
               <textarea 
                 placeholder="Qual obra-prima você inventou hoje?"
+                value={newPostContent}
+                onChange={(e) => setNewPostContent(e.target.value)}
                 className="w-full bg-[#FEFAF0]/80 border-2 border-dashed border-[#8C4B3A]/40 rounded-2xl p-5 text-xl resize-none focus:outline-none focus:border-[#8C4B3A] focus:bg-[#FEFAF0] transition-colors h-32"
               />
               <div className="flex flex-col sm:flex-row justify-between items-center mt-4 gap-4">
-                <button className="flex items-center gap-2 text-[#E07A5F] font-bold hover:text-[#8C4B3A] transition-colors px-4 py-2 rounded-xl hover:bg-[#E07A5F]/10">
+                <button type="button" className="flex items-center gap-2 text-[#E07A5F] font-bold hover:text-[#8C4B3A] transition-colors px-4 py-2 rounded-xl hover:bg-[#E07A5F]/10">
                   <ImagePlus size={20} />
                   Adicionar Foto
                 </button>
-                <button className="w-full sm:w-auto px-8 py-3 bg-[#8C4B3A] text-white rounded-xl font-title text-xl hover:bg-[#E07A5F] transition-all shadow-[4px_4px_0px_#F2CC8F] hover:shadow-[2px_2px_0px_#F2CC8F] hover:translate-y-[2px] hover:translate-x-[2px]">
+                <button type="submit" className="w-full sm:w-auto px-8 py-3 bg-[#8C4B3A] text-white rounded-xl font-title text-xl hover:bg-[#E07A5F] transition-all shadow-[4px_4px_0px_#F2CC8F] hover:shadow-[2px_2px_0px_#F2CC8F] hover:translate-y-[2px] hover:translate-x-[2px]">
                   COMPARTILHAR
                 </button>
               </div>
             </div>
-          </div>
+          </form>
         </motion.div>
 
         {/* Feed Posts - Masonry Layout */}
         <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 1024: 3 }}>
           <Masonry gutter="24px">
-            {posts.map((post, i) => (
+            {postsState.map((post, i) => (
               <motion.article 
                 key={post.id}
                 initial={{ opacity: 0, y: 30 }}

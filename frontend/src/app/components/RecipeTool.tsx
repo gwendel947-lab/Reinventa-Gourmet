@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, X, Wand2, ChefHat, Clock, Flame, Leaf, Settings2, Info, User as UserIcon, Camera, Mail, Lock } from "lucide-react";
+import { Plus, X, Wand2, ChefHat, Clock, Flame, Leaf, Settings2, Info, User as UserIcon, Camera, Mail, Lock, Save } from "lucide-react";
 import { toast } from "sonner";
 import clsx from "clsx";
 
@@ -38,7 +38,7 @@ const mockRecipes = [
 ];
 
 export const RecipeTool = () => {
-  const { user: currentUser, login } = useAuth();
+  const { user: currentUser, login, updateUser } = useAuth();
   const [ingredients, setIngredients] = useState<string[]>(["Ovo", "Abobrinha"]);
   const [input, setInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -130,6 +130,36 @@ export const RecipeTool = () => {
       setGeneratedRecipe(hasEgg ? mockRecipes[0] : mockRecipes[1]);
       toast.success("Receita criada com sucesso!");
     }, 2500);
+  };
+
+  const handleSaveRecipe = () => {
+    if (!generatedRecipe) return;
+    if (!currentUser) {
+      toast.error("Faça login para salvar sua receita.");
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    const savedRecipes = currentUser.savedRecipes ?? [];
+    if (savedRecipes.some((recipe) => recipe.title === generatedRecipe.title)) {
+      toast("Essa receita já está salva no seu perfil.");
+      return;
+    }
+
+    updateUser({
+      savedRecipes: [
+        ...savedRecipes,
+        {
+          id: Date.now(),
+          title: generatedRecipe.title,
+          time: generatedRecipe.time,
+          difficulty: generatedRecipe.difficulty,
+          author: currentUser.name,
+        },
+      ],
+    });
+
+    toast.success("Receita salva no perfil!");
   };
 
   return (
@@ -331,11 +361,15 @@ export const RecipeTool = () => {
                   </div>
                   
                   <div className="mt-8 pt-8 border-t-2 border-dashed border-[#8C4B3A]/20 flex justify-end">
-                    <button className="px-6 py-3 border-2 border-[#8C4B3A] text-[#8C4B3A] rounded-xl font-bold hover:bg-[#8C4B3A] hover:text-[#FEFAF0] transition-colors">
-                      Salvar Receita
-                    </button>
-                  </div>
+                    <button
+                    onClick={handleSaveRecipe}
+                    className="px-6 py-3 border-2 border-[#8C4B3A] text-[#8C4B3A] rounded-xl font-bold hover:bg-[#8C4B3A] hover:text-[#FEFAF0] transition-colors flex items-center gap-2"
+                  >
+                    <Save size={18} />
+                    Salvar Receita
+                  </button>
                 </div>
+              </div>
               </motion.div>
             ) : null}
           </AnimatePresence>

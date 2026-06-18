@@ -48,6 +48,7 @@ export const Profile = () => {
   const { user, logout, updateUser } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"minhas" | "favoritas">("minhas");
+  const favoriteRecipes = user?.savedRecipes && user.savedRecipes.length > 0 ? user.savedRecipes : savedRecipesData;
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editData, setEditData] = useState({
@@ -242,7 +243,7 @@ export const Profile = () => {
               exit={{ opacity: 0, y: -20 }}
               className="grid md:grid-cols-2 gap-6"
             >
-              {savedRecipesData.map(recipe => (
+              {favoriteRecipes.map(recipe => (
                 <div key={recipe.id} className="bg-white border-4 border-[#8C4B3A] rounded-2xl p-5 shadow-[6px_6px_0px_#E07A5F] flex items-center justify-between group hover:-translate-y-1 transition-all">
                   <div>
                     <h3 className="font-title text-xl mb-2">{recipe.title}</h3>
