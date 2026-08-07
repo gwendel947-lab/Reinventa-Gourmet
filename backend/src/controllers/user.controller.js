@@ -1,5 +1,6 @@
 import prisma from "../config/prisma.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const UserController = {
   async register(req, res) {
@@ -12,7 +13,7 @@ const UserController = {
         });
       }
 
-      const userExists = await prisma.user.findUnique({
+      const userExists = await prisma.usuario.findUnique({
         where: { email }
       });
 
@@ -24,7 +25,7 @@ const UserController = {
 
       const senhaCriptografada = await bcrypt.hash(senha, 10);
 
-      const user = await prisma.user.create({
+      const user = await prisma.usuario.create({
         data: {
           nome,
           email,
@@ -50,9 +51,57 @@ const UserController = {
   },
 
   async login(req, res) {
-    return res.json({
-      message: "Login será implementado na próxima etapa."
-    });
+    try {
+      const { email, senha } = req.body;
+
+      if (!email || !senha) {
+        return res.status(400).json({
+          message: "E-mail e senha são obrigatórios."
+        });
+      }
+
+      const user = await prisma.usuario.findUnique({
+        where: { email }
+      });
+
+      if (!user) {
+        return res.status(401).json({
+          message: "Credenciais inválidas."
+        });
+      }
+
+      const senhaValida = await bcrypt.compare(senha, user.senha);
+
+      if (!senhaValida) {
+        return res.status(401).json({
+          message: "Credenciais inválidas."
+        });
+      }
+
+      const token = jwt.sign(
+        {
+          id: user.id,
+          email: user.email
+        },
+        process.env.JWT_SECRET || "reinventa-gourmet-secret",
+        { expiresIn: "8h" }
+      );
+
+      return res.status(200).json({
+        message: "Login realizado com sucesso.",
+        token,
+        user: {
+          id: user.id,
+          nome: user.nome,
+          email: user.email
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Erro interno do servidor."
+      });
+    }
   }
 };
 
