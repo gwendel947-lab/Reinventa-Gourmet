@@ -4,6 +4,7 @@ import userRoutes from "./routes/user.routes.js";
 import ingredienteRoutes from "./routes/ingrediente.routes.js";
 import inventarioRoutes from "./routes/inventario.routes.js";
 import receitaRoutes from "./routes/receita.routes.js";
+import comunidadeRoutes from "./routes/comunidade.routes.js";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use("/users", userRoutes);
 app.use("/ingredientes", ingredienteRoutes);
 app.use("/inventario", inventarioRoutes);
 app.use("/receitas", receitaRoutes);
+app.use("/comunidade", comunidadeRoutes);
 
 app.get("/", (req, res) => {
   return res.json({
