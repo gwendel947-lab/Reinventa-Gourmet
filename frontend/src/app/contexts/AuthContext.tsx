@@ -10,6 +10,7 @@ export type SavedRecipe = {
 };
 
 export type User = {
+  id: number;
   name: string;
   email: string;
   avatar?: string | null;
@@ -47,6 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
+    localStorage.removeItem("reinventa-token");
     setUser(null);
   };
 

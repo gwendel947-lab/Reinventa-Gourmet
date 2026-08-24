@@ -1,3 +1,17 @@
+import jwt from "jsonwebtoken";
+
 export function authMiddleware(req, res, next) {
-  next()
+  const authorization = req.headers.authorization;
+  const token = authorization?.startsWith("Bearer ") ? authorization.slice(7) : null;
+
+  if (!token) {
+    return res.status(401).json({ message: "Token de autenticação não informado." });
+  }
+
+  try {
+    req.user = jwt.verify(token, process.env.JWT_SECRET || "reinventa-gourmet-secret");
+    return next();
+  } catch {
+    return res.status(401).json({ message: "Token de autenticação inválido ou expirado." });
+  }
 }

@@ -3,11 +3,12 @@ import { prisma } from "../config/prisma.js";
 const InventarioController = {
   async create(req, res) {
     try {
-      const { usuarioId, ingredienteId, quantidade, unidade } = req.body;
+      const { ingredienteId, quantidade, unidade } = req.body;
+      const usuarioId = req.user.id;
 
-      if (!usuarioId || !ingredienteId || !quantidade || !unidade) {
+      if (!ingredienteId || quantidade === undefined || !unidade) {
         return res.status(400).json({
-          message: "usuarioId, ingredienteId, quantidade e unidade são obrigatórios."
+          message: "ingredienteId, quantidade e unidade são obrigatórios."
         });
       }
 
@@ -60,6 +61,10 @@ const InventarioController = {
     try {
       const { usuarioId } = req.params;
 
+      if (Number(usuarioId) !== req.user.id) {
+        return res.status(403).json({ message: "Acesso ao inventário não autorizado." });
+      }
+
       const inventario = await prisma.inventario.findMany({
         where: { usuarioId: Number(usuarioId) },
         include: { ingrediente: true }
@@ -70,6 +75,35 @@ const InventarioController = {
       console.error(error);
       return res.status(500).json({
         message: "Erro interno ao listar inventário do usuário."
+      });
+    }
+  },
+
+  async remove(req, res) {
+    try {
+      const { usuarioId, ingredienteId } = req.params;
+
+      if (Number(usuarioId) !== req.user.id) {
+        return res.status(403).json({ message: "Acesso ao inventário não autorizado." });
+      }
+
+      await prisma.inventario.delete({
+        where: {
+          usuarioId_ingredienteId: {
+            usuarioId: Number(usuarioId),
+            ingredienteId: Number(ingredienteId)
+          }
+        }
+      });
+
+      return res.status(204).send();
+    } catch (error) {
+      if (error.code === "P2025") {
+        return res.status(404).json({ message: "Item de inventário não encontrado." });
+      }
+      console.error(error);
+      return res.status(500).json({
+        message: "Erro interno ao remover item de inventário."
       });
     }
   }

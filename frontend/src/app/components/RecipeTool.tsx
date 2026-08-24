@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus, X, Wand2, ChefHat, Clock, Flame, Leaf, Settings2, Info, User as UserIcon, Camera, Mail, Lock, Save } from "lucide-react";
 import { toast } from "sonner";
 import clsx from "clsx";
 
 import { useAuth } from "../contexts/AuthContext";
+import api from "../../services/api";
 
 const mockRecipes = [
   {
@@ -39,7 +40,10 @@ const mockRecipes = [
 
 export const RecipeTool = () => {
   const { user: currentUser, login, updateUser } = useAuth();
-  const [ingredients, setIngredients] = useState<string[]>(["Ovo", "Abobrinha"]);
+  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [inventoryIds, setInventoryIds] = useState<Record<string, number>>({});
+  const [isLoadingInventory, setIsLoadingInventory] = useState(false);
+  const [isSavingIngredient, setIsSavingIngredient] = useState(false);
   const [input, setInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedRecipe, setGeneratedRecipe] = useState<typeof mockRecipes[0] | null>(null);
@@ -52,6 +56,32 @@ export const RecipeTool = () => {
   const [diet, setDiet] = useState<string>("Come de tudo");
   const [allergies, setAllergies] = useState<string[]>([]);
 
+  useEffect(() => {
+    if (!currentUser?.id) {
+      setIngredients([]);
+      setInventoryIds({});
+      return;
+    }
+
+    const loadInventory = async () => {
+      setIsLoadingInventory(true);
+      try {
+        const { data } = await api.get(`/inventario/usuario/${currentUser.id}`);
+        const items = data.inventario ?? [];
+        setIngredients(items.map((item: { ingrediente: { nome: string } }) => item.ingrediente.nome));
+        setInventoryIds(Object.fromEntries(
+          items.map((item: { ingrediente: { nome: string }; ingredienteId: number }) => [item.ingrediente.nome, item.ingredienteId])
+        ));
+      } catch {
+        toast.error("Não foi possível carregar seu inventário.");
+      } finally {
+        setIsLoadingInventory(false);
+      }
+    };
+
+    loadInventory();
+  }, [currentUser?.id]);
+
   const toggleAllergy = (allergy: string) => {
     setAllergies((prev) =>
       prev.includes(allergy) ? prev.filter((a) => a !== allergy) : [...prev, allergy]
@@ -63,54 +93,105 @@ export const RecipeTool = () => {
       toast.error("Adicione ao menos um ingrediente ao seu inventário!");
       return;
     }
-    if (!currentUser) {
+    if (!currentUser?.id) {
       setIsAuthModalOpen(true);
     } else {
       generateRecipe();
     }
   };
 
-  const handleAuthSubmit = (e: React.FormEvent) => {
+  const handleAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (authMode === "signup") {
       if (!signupData.name || !signupData.email || !signupData.password) {
         toast.error("Preencha todos os campos!");
         return;
       }
-      login({
-        name: signupData.name,
-        email: signupData.email,
-        diet,
-        allergies
-      });
-      toast.success(`Bem-vindo(a), ${signupData.name}! Suas preferências foram salvas.`);
+      try {
+        await api.post("/users/register", {
+          nome: signupData.name,
+          email: signupData.email,
+          senha: signupData.password
+        });
+        const { data } = await api.post("/users/login", {
+          email: signupData.email,
+          senha: signupData.password
+        });
+        localStorage.setItem("reinventa-token", data.token);
+        login({ id: data.user.id, name: data.user.nome, email: data.user.email, diet, allergies });
+        toast.success(`Bem-vindo(a), ${signupData.name}!`);
+      } catch (error: any) {
+        toast.error(error.response?.data?.message ?? "Não foi possível criar sua conta.");
+        return;
+      }
     } else {
       if (!loginData.email || !loginData.password) {
         toast.error("Preencha todos os campos!");
         return;
       }
-      login({
-        name: "Usuário Teste",
-        email: loginData.email,
-        diet: "Come de tudo",
-        allergies: []
-      });
-      toast.success("Login efetuado com sucesso!");
+      try {
+        const { data } = await api.post("/users/login", {
+          email: loginData.email,
+          senha: loginData.password
+        });
+        localStorage.setItem("reinventa-token", data.token);
+        login({ id: data.user.id, name: data.user.nome, email: data.user.email, diet: "Come de tudo", allergies: [] });
+        toast.success("Login efetuado com sucesso!");
+      } catch (error: any) {
+        toast.error(error.response?.data?.message ?? "Não foi possível entrar.");
+        return;
+      }
     }
     setIsAuthModalOpen(false);
     generateRecipe();
   };
 
-  const addIngredient = (e: React.FormEvent) => {
+  const addIngredient = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (input.trim() && !ingredients.includes(input.trim())) {
-      setIngredients([...ingredients, input.trim()]);
+    const name = input.trim();
+    if (!name || !currentUser?.id || ingredients.some((item) => item.toLowerCase() === name.toLowerCase())) return;
+
+    setIsSavingIngredient(true);
+    try {
+      const { data: ingredientData } = await api.get("/ingredientes");
+      const existing = (ingredientData.ingredientes ?? []).find(
+        (item: { id: number; nome: string }) => item.nome.toLowerCase() === name.toLowerCase()
+      );
+      let ingredient = existing;
+      if (!ingredient) {
+        const { data } = await api.post("/ingredientes", { nome: name, categoria: "outros" });
+        ingredient = data.ingrediente;
+      }
+
+      await api.post("/inventario", {
+        usuarioId: currentUser.id,
+        ingredienteId: ingredient.id,
+        quantidade: 1,
+        unidade: "unidade"
+      });
+      setIngredients((previous) => [...previous, ingredient.nome]);
+      setInventoryIds((previous) => ({ ...previous, [ingredient.nome]: ingredient.id }));
       setInput("");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message ?? "Não foi possível adicionar o ingrediente.");
+    } finally {
+      setIsSavingIngredient(false);
     }
   };
 
-  const removeIngredient = (ing: string) => {
-    setIngredients(ingredients.filter((i) => i !== ing));
+  const removeIngredient = async (ing: string) => {
+    if (!currentUser?.id || !inventoryIds[ing]) return;
+    try {
+      await api.delete(`/inventario/usuario/${currentUser.id}/ingrediente/${inventoryIds[ing]}`);
+      setIngredients((previous) => previous.filter((item) => item !== ing));
+      setInventoryIds((previous) => {
+        const next = { ...previous };
+        delete next[ing];
+        return next;
+      });
+    } catch (error: any) {
+      toast.error(error.response?.data?.message ?? "Não foi possível remover o ingrediente.");
+    }
   };
 
   const generateRecipe = () => {
@@ -134,7 +215,7 @@ export const RecipeTool = () => {
 
   const handleSaveRecipe = () => {
     if (!generatedRecipe) return;
-    if (!currentUser) {
+    if (!currentUser?.id) {
       toast.error("Faça login para salvar sua receita.");
       setIsAuthModalOpen(true);
       return;
@@ -187,11 +268,13 @@ export const RecipeTool = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ex: Tomate, Frango..."
+              placeholder={currentUser?.id ? "Ex: Tomate, Frango..." : "Entre para gerenciar seu inventário"}
+              disabled={!currentUser?.id || isSavingIngredient}
               className="flex-1 bg-[#FEFAF0] border-2 border-[#8C4B3A] rounded-xl px-4 py-3 text-lg focus:outline-none focus:ring-4 focus:ring-[#F2CC8F]/50 transition-shadow"
             />
             <button
               type="submit"
+              disabled={!currentUser?.id || isSavingIngredient}
               className="bg-[#8C4B3A] text-white p-3 rounded-xl hover:bg-[#E07A5F] transition-colors shadow-[3px_3px_0px_#E07A5F] active:shadow-none active:translate-y-1 active:translate-x-1"
             >
               <Plus size={24} />
@@ -199,6 +282,9 @@ export const RecipeTool = () => {
           </form>
 
           <div className="flex-1 overflow-y-auto mb-6">
+            {isLoadingInventory && (
+              <p className="text-center opacity-60 py-4">Carregando seu inventário...</p>
+            )}
             <AnimatePresence>
               <div className="flex flex-wrap gap-3">
                 {ingredients.map((ing) => (
