@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowRight, ChefHat, Sparkles, Leaf, Wand2, Star, Clock } from "lucide-react";
 import { Link } from "react-router";
+import { AuthActionButton } from "./AuthActionButton";
 
 export const LandingPage = () => {
   return (
@@ -30,17 +31,17 @@ export const LandingPage = () => {
           <p className="mt-6 text-2xl md:text-3xl max-w-3xl text-[#8C4B3A] font-medium leading-relaxed bg-[#FEFAF0]/60 backdrop-blur-md p-6 rounded-3xl border-2 border-dashed border-[#8C4B3A]/30">
             Transforme ingredientes esquecidos na sua geladeira em receitas incríveis com o poder da Inteligência Artificial.
           </p>
-          <Link to="/tool" className="mt-12 group relative">
+          <div className="mt-12 group relative">
             <div className="absolute inset-0 bg-[#F2CC8F] rounded-2xl translate-x-2 translate-y-2 border-4 border-[#8C4B3A] transition-transform group-hover:translate-x-1 group-hover:translate-y-1"></div>
-            <motion.button
-              whileTap={{ scale: 0.95 }}
+            <AuthActionButton
+              to="/tool"
               className="relative flex items-center gap-4 px-10 py-5 bg-[#E07A5F] text-[#FEFAF0] rounded-2xl font-title text-3xl border-4 border-[#8C4B3A] transition-all"
             >
               <Wand2 size={32} />
               REINVENTE AGORA!
               <ArrowRight className="group-hover:translate-x-2 transition-transform" size={32} />
-            </motion.button>
-          </Link>
+            </AuthActionButton>
+          </div>
         </motion.div>
 
         {/* Decorative Floating Elements */}
@@ -194,15 +195,14 @@ export const LandingPage = () => {
         </div>
         
         <div className="mt-24 flex justify-center">
-           <Link to="/tool" className="group">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+           <div className="group">
+            <AuthActionButton
+              to="/tool"
               className="relative px-12 py-6 bg-[#E07A5F] text-[#FEFAF0] rounded-2xl font-title text-3xl border-4 border-[#8C4B3A] shadow-[8px_8px_0px_#8C4B3A] hover:bg-[#F2CC8F] hover:text-[#8C4B3A] hover:shadow-[4px_4px_0px_#8C4B3A] hover:translate-y-1 hover:translate-x-1 transition-all flex items-center gap-4"
             >
               VAMOS COZINHAR! <ArrowRight size={32} />
-            </motion.button>
-          </Link>
+            </AuthActionButton>
+          </div>
         </div>
       </section>
       
@@ -214,7 +214,12 @@ export const LandingPage = () => {
             <p className="text-xl font-medium opacity-80">A cozinha acessível, criativa e sem dúvidas.</p>
           </div>
           <div className="flex gap-6 text-lg font-bold">
-            <Link to="/tool" className="hover:text-[#F2CC8F] transition-colors underline decoration-wavy">Reinvente</Link>
+            <AuthActionButton
+              to="/tool"
+              className="hover:text-[#F2CC8F] transition-colors underline decoration-wavy"
+            >
+              Reinvente
+            </AuthActionButton>
             <Link to="/community" className="hover:text-[#F2CC8F] transition-colors underline decoration-wavy">Comunidade</Link>
           </div>
         </div>
