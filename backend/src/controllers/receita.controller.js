@@ -3,11 +3,11 @@ import { prisma } from "../config/prisma.js";
 const ReceitaController = {
   async create(req, res) {
     try {
-      const { usuarioId, titulo, modoPreparo, tempoEstimado, porcoes, publica, ingredientes } = req.body;
+      const { titulo, modoPreparo, tempoEstimado, porcoes, publica, ingredientes } = req.body;
 
-      if (!usuarioId || !titulo || !modoPreparo || !tempoEstimado || !porcoes || !Array.isArray(ingredientes)) {
+      if (!req.user?.id || !titulo || !modoPreparo || !tempoEstimado || !porcoes || !Array.isArray(ingredientes)) {
         return res.status(400).json({
-          message: "Dados obrigatórios: usuarioId, titulo, modoPreparo, tempoEstimado, porcoes e ingredientes."
+          message: "Dados obrigatórios: titulo, modoPreparo, tempoEstimado, porcoes e ingredientes."
         });
       }
 
@@ -17,16 +17,14 @@ const ReceitaController = {
         });
       }
 
-      const usuario = await prisma.usuario.findUnique({
-        where: { id: Number(usuarioId) }
-      });
+      const usuario = await prisma.usuario.findUnique({ where: { id: Number(req.user.id) } });
       if (!usuario) {
         return res.status(404).json({ message: "Usuário não encontrado." });
       }
 
       const receita = await prisma.receita.create({
         data: {
-          usuarioId: Number(usuarioId),
+          usuarioId: Number(req.user.id),
           titulo,
           modoPreparo,
           tempoEstimado: Number(tempoEstimado),
@@ -63,16 +61,18 @@ const ReceitaController = {
   async list(req, res) {
     try {
       const { usuarioId, ingredienteId, titulo } = req.query;
-      const where = {};
+      const where = req.user?.id
+        ? { OR: [{ publica: true }, { usuarioId: Number(req.user.id) }] }
+        : { publica: true };
 
       if (usuarioId) {
         where.usuarioId = Number(usuarioId);
       }
       if (titulo) {
-        where.titulo = {
+        where.AND = [{ titulo: {
           contains: titulo,
           mode: "insensitive"
-        };
+        } }];
       }
       if (ingredienteId) {
         where.ingredientes = {
@@ -120,7 +120,7 @@ const ReceitaController = {
         }
       });
 
-      if (!receita) {
+      if (!receita || (!receita.publica && receita.usuarioId !== Number(req.user?.id))) {
         return res.status(404).json({ message: "Receita não encontrada." });
       }
 

@@ -15,3 +15,18 @@ export function authMiddleware(req, res, next) {
     return res.status(401).json({ message: "Token de autenticação inválido ou expirado." });
   }
 }
+
+export function optionalAuthMiddleware(req, res, next) {
+  const authorization = req.headers.authorization;
+  const token = authorization?.startsWith("Bearer ") ? authorization.slice(7) : null;
+
+  if (!token) return next();
+
+  try {
+    req.user = jwt.verify(token, process.env.JWT_SECRET || "reinventa-gourmet-secret");
+  } catch {
+    return res.status(401).json({ message: "Token de autenticação inválido ou expirado." });
+  }
+
+  return next();
+}

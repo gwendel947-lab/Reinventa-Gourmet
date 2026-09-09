@@ -1,220 +1,141 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { MessageCircle, Heart, Share2, MoreHorizontal, User, Wand2, ImagePlus } from "lucide-react";
+import { Clock, Flame, Heart, Lock, MessageCircle, Search, Share2, User, Users, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useAuth } from "../contexts/AuthContext";
+import api from "../../services/api";
 
-const posts = [
-  {
-    id: 1,
-    user: "Maria Silva",
-    handle: "@mariacozinha",
-    avatar: "bg-[#E07A5F]",
-    time: "2h",
-    content: "Fiz o Omelete Rústico sugerido pela IA usando só o que tinha no fundo da gaveta! A dica de colocar o queijo minas ralado nos últimos 2 minutos salvou meu jantar. 🧀🍳",
-    recipeRef: "Omelete Rústico de Abobrinha",
-    likes: 124,
-    comments: 12,
-    image: "https://images.unsplash.com/photo-1598449426314-8b02525e8733?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2ZWdldGFyaWFuJTIwZm9vZHxlbnwxfHx8fDE3NzY5NTczMDN8MA&ixlib=rb-4.1.0&q=80&w=600&utm_source=figma&utm_medium=referral",
-    imageHeight: "h-64"
-  },
-  {
-    id: 2,
-    user: "João Pedro",
-    handle: "@joaonacozinha",
-    avatar: "bg-[#F2CC8F]",
-    time: "5h",
-    content: "Nunca pensei que aquele resto de feijão poderia virar um bolinho tão bom. A IA sugeriu empanar com farinha de mandioca.",
-    recipeRef: "Bolinho de Feijão Mágico",
-    likes: 89,
-    comments: 34,
-    image: "https://images.unsplash.com/photo-1612504258838-fbf14fe4437d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYWtlZCUyMGJlYW5zfGVufDF8fHx8MTc3Njk1NzMwM3ww&ixlib=rb-4.1.0&q=80&w=600&utm_source=figma&utm_medium=referral",
-    imageHeight: "h-96"
-  },
-  {
-    id: 3,
-    user: "Ana Costa",
-    handle: "@anavegana",
-    avatar: "bg-[#8C4B3A]",
-    time: "1d",
-    content: "O filtro vegano é perfeito! Consegui aproveitar umas cenouras murchas e transformei num patê delicioso usando a dica do liquidificador. Compartilhem suas variações!",
-    recipeRef: "Patê de Cenoura Assada",
-    likes: 256,
-    comments: 45,
-    image: "https://images.unsplash.com/photo-1615502732093-495f92575863?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXRlcmNvbG9yJTIwdmVnZXRhYmxlc3xlbnwxfHx8fDE3NzY5NTYwNzR8MA&ixlib=rb-4.1.0&q=80&w=600&utm_source=figma&utm_medium=referral",
-    imageHeight: "h-72"
-  },
-  {
-    id: 4,
-    user: "Carlos Oliveira",
-    handle: "@carlos.chef",
-    avatar: "bg-[#E07A5F]",
-    time: "2d",
-    content: "Sobrou arroz e não sabia o que fazer. A IA reinventou e fiz essa sobremesa divina! Incrível como pequenos detalhes mudam tudo.",
-    recipeRef: "Arroz Doce com Especiarias",
-    likes: 412,
-    comments: 88,
-    image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNzZXJ0fGVufDF8fHx8MTc3Njk1NzMwM3ww&ixlib=rb-4.1.0&q=80&w=600&utm_source=figma&utm_medium=referral",
-    imageHeight: "h-80"
-  },
-  {
-    id: 5,
-    user: "Luciana Martins",
-    handle: "@lu_martins",
-    avatar: "bg-[#F2CC8F]",
-    time: "3d",
-    content: "Alguém já tentou substituir a manteiga por azeite naquela receita de massa? O sabor ficou super diferente, mas eu adorei! A IA ajudou demais na proporção.",
-    recipeRef: "Massa Cremosa 'De Ontem'",
-    likes: 156,
-    comments: 23,
-    image: null
-  }
-];
+type FeedPost = {
+  id: number;
+  comentario: string | null;
+  criadaEm: string;
+  usuario: { id: number; nome: string };
+  receita: {
+    id: number;
+    titulo: string;
+    tempoEstimado: number;
+    porcoes: number;
+    publica: boolean;
+  } | null;
+};
+
+const emptyForm = {
+  title: "",
+  ingredients: "",
+  preparation: "",
+  time: "30",
+  servings: "2",
+  comment: "",
+  visibility: "public" as "public" | "private",
+};
 
 export const CommunityFeed = () => {
   const { user } = useAuth();
-  const [postsState, setPostsState] = useState(posts);
-  const [newPostContent, setNewPostContent] = useState("");
+  const [posts, setPosts] = useState<FeedPost[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [form, setForm] = useState(emptyForm);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleCreatePost = (event: React.FormEvent) => {
+  const loadFeed = async () => {
+    try {
+      const { data } = await api.get("/comunidade/feed");
+      setPosts(data.postagens ?? []);
+    } catch {
+      toast.error("Não foi possível carregar as receitas da comunidade.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadFeed();
+  }, []);
+
+  const updateForm = (field: keyof typeof emptyForm, value: string) => {
+    setForm((previous) => ({ ...previous, [field]: value }));
+  };
+
+  const createRecipe = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    if (!newPostContent.trim()) {
-      toast.error("Escreva algo antes de compartilhar.");
+    if (!user) {
+      toast.error("Entre na sua conta para criar uma receita.");
       return;
     }
 
-    const author = user?.name ?? "Você";
-    const handle = user ? `@${user.name.toLowerCase().replace(/\s+/g, "")}` : "@cozinheiro";
+    const ingredientNames = form.ingredients.split("\n").map((item) => item.trim()).filter(Boolean);
+    if (!form.title.trim() || !form.preparation.trim() || ingredientNames.length === 0) {
+      toast.error("Preencha o título, os ingredientes e o modo de preparo.");
+      return;
+    }
 
-    setPostsState([
-      {
-        id: Date.now(),
-        user: author,
-        handle,
-        avatar: "bg-[#8C4B3A]",
-        time: "Agora",
-        content: newPostContent.trim(),
-        recipeRef: "Receita da Comunidade",
-        likes: 0,
-        comments: 0,
-        image: null,
-      },
-      ...postsState,
-    ]);
+    setIsSubmitting(true);
+    try {
+      const { data: ingredientData } = await api.get("/ingredientes");
+      const existingIngredients = ingredientData.ingredientes ?? [];
+      const ingredients = await Promise.all(ingredientNames.map(async (name) => {
+        const existing = existingIngredients.find(
+          (ingredient: { id: number; nome: string }) => ingredient.nome.toLowerCase() === name.toLowerCase()
+        );
+        if (existing) return existing.id;
+        const { data } = await api.post("/ingredientes", { nome: name, categoria: "outros" });
+        return data.ingrediente.id;
+      }));
 
-    setNewPostContent("");
-    toast.success("Post adicionado à comunidade!");
+      const { data: recipeData } = await api.post("/receitas", {
+        titulo: form.title.trim(),
+        modoPreparo: form.preparation.trim(),
+        tempoEstimado: Number(form.time),
+        porcoes: Number(form.servings),
+        publica: form.visibility === "public",
+        ingredientes: ingredients.map((ingredienteId) => ({ ingredienteId, quantidade: 1, unidade: "unidade" })),
+      });
+
+      if (form.visibility === "public") {
+        await api.post("/comunidade/feed", { receitaId: recipeData.receita.id, comentario: form.comment.trim() || null });
+        toast.success("Receita publicada na comunidade!");
+        await loadFeed();
+      } else {
+        toast.success("Receita privada salva na sua conta!");
+      }
+      setForm(emptyForm);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message ?? "Não foi possível salvar a receita.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const visiblePosts = posts.filter((post) => {
+    const content = `${post.receita?.titulo ?? ""} ${post.comentario ?? ""} ${post.usuario.nome}`;
+    return content.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div className="w-full min-h-screen bg-[#FEFAF0] text-[#8C4B3A] py-12 px-6">
       <div className="max-w-6xl mx-auto">
-        <header className="mb-16 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-block bg-[#F2CC8F] px-6 py-2 rounded-full border-2 border-[#8C4B3A] shadow-[4px_4px_0px_#8C4B3A] mb-6"
-          >
-            <span className="font-title text-xl tracking-wider text-[#8C4B3A]">MURAL DE RECEITAS</span>
-          </motion.div>
-          <h1 className="font-title text-6xl md:text-7xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#8C4B3A] to-[#E07A5F] drop-shadow-sm">
-            COMUNIDADE GOURMET
-          </h1>
-          <p className="text-2xl opacity-80 max-w-2xl mx-auto font-medium">
-            Inspire-se com pratos reais feitos por pessoas reais. Descubra como um ingrediente esquecido pode virar a estrela da noite.
-          </p>
+        <header className="mb-12 text-center">
+          <div className="inline-block bg-[#F2CC8F] px-6 py-2 rounded-full border-2 border-[#8C4B3A] shadow-[4px_4px_0px_#8C4B3A] mb-6"><span className="font-title text-xl tracking-wider">MURAL DE RECEITAS</span></div>
+          <h1 className="font-title text-6xl md:text-7xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#8C4B3A] to-[#E07A5F]">COMUNIDADE GOURMET</h1>
+          <p className="text-2xl opacity-80 max-w-2xl mx-auto font-medium">Crie receitas para guardar só para você ou compartilhe suas invenções com a comunidade.</p>
         </header>
 
-        {/* Create Post Input */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-3xl mx-auto bg-white border-4 border-[#8C4B3A] rounded-3xl p-6 shadow-[8px_8px_0px_#E07A5F] mb-16 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[#F2CC8F] rounded-full blur-[60px] opacity-40"></div>
-          <form onSubmit={handleCreatePost} className="flex flex-col md:flex-row gap-6 relative z-10">
-            <div className="w-16 h-16 rounded-full bg-[#E07A5F] flex items-center justify-center text-white shrink-0 border-4 border-[#8C4B3A] shadow-inner">
-              <User size={32} />
-            </div>
-            <div className="flex-1">
-              <textarea 
-                placeholder="Qual obra-prima você inventou hoje?"
-                value={newPostContent}
-                onChange={(e) => setNewPostContent(e.target.value)}
-                className="w-full bg-[#FEFAF0]/80 border-2 border-dashed border-[#8C4B3A]/40 rounded-2xl p-5 text-xl resize-none focus:outline-none focus:border-[#8C4B3A] focus:bg-[#FEFAF0] transition-colors h-32"
-              />
-              <div className="flex flex-col sm:flex-row justify-between items-center mt-4 gap-4">
-                <button type="button" className="flex items-center gap-2 text-[#E07A5F] font-bold hover:text-[#8C4B3A] transition-colors px-4 py-2 rounded-xl hover:bg-[#E07A5F]/10">
-                  <ImagePlus size={20} />
-                  Adicionar Foto
-                </button>
-                <button type="submit" className="w-full sm:w-auto px-8 py-3 bg-[#8C4B3A] text-white rounded-xl font-title text-xl hover:bg-[#E07A5F] transition-all shadow-[4px_4px_0px_#F2CC8F] hover:shadow-[2px_2px_0px_#F2CC8F] hover:translate-y-[2px] hover:translate-x-[2px]">
-                  COMPARTILHAR
-                </button>
-              </div>
-            </div>
-          </form>
-        </motion.div>
+        <motion.form onSubmit={createRecipe} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl mx-auto bg-white border-4 border-[#8C4B3A] rounded-3xl p-6 md:p-8 shadow-[8px_8px_0px_#E07A5F] mb-16">
+          <div className="flex items-center gap-3 mb-6"><div className="bg-[#F2CC8F] p-3 rounded-xl border-2 border-[#8C4B3A]"><Wand2 size={26} /></div><div><h2 className="font-title text-3xl">CRIAR RECEITA</h2><p className="opacity-70">Sua receita será salva no banco de dados.</p></div></div>
+          <div className="grid md:grid-cols-2 gap-5">
+            <label className="md:col-span-2 font-bold">Título<input value={form.title} onChange={(event) => updateForm("title", event.target.value)} placeholder="Ex: Massa cremosa de domingo" className="mt-2 w-full bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal focus:border-[#E07A5F] focus:outline-none" /></label>
+            <label className="font-bold">Ingredientes<textarea value={form.ingredients} onChange={(event) => updateForm("ingredients", event.target.value)} placeholder="Um ingrediente por linha" className="mt-2 w-full h-32 bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal resize-none focus:border-[#E07A5F] focus:outline-none" /></label>
+            <label className="font-bold">Modo de preparo<textarea value={form.preparation} onChange={(event) => updateForm("preparation", event.target.value)} placeholder="Descreva o passo a passo" className="mt-2 w-full h-32 bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal resize-none focus:border-[#E07A5F] focus:outline-none" /></label>
+            <label className="font-bold">Tempo (minutos)<input type="number" min="1" value={form.time} onChange={(event) => updateForm("time", event.target.value)} className="mt-2 w-full bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal focus:border-[#E07A5F] focus:outline-none" /></label>
+            <label className="font-bold">Porções<input type="number" min="1" value={form.servings} onChange={(event) => updateForm("servings", event.target.value)} className="mt-2 w-full bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal focus:border-[#E07A5F] focus:outline-none" /></label>
+            <label className="md:col-span-2 font-bold">Comentário para a comunidade (opcional)<textarea value={form.comment} onChange={(event) => updateForm("comment", event.target.value)} placeholder="Conte como essa receita nasceu..." className="mt-2 w-full h-24 bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal resize-none focus:border-[#E07A5F] focus:outline-none" /></label>
+          </div>
+          <div className="mt-6 flex flex-col md:flex-row gap-4 md:items-end"><div className="flex-1"><span className="block font-bold mb-2">Visibilidade</span><div className="flex gap-2"><button type="button" onClick={() => updateForm("visibility", "public")} className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border-2 font-bold ${form.visibility === "public" ? "bg-[#8C4B3A] text-white border-[#8C4B3A]" : "bg-white border-[#8C4B3A]/30"}`}><Users size={18} /> Pública</button><button type="button" onClick={() => updateForm("visibility", "private")} className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border-2 font-bold ${form.visibility === "private" ? "bg-[#8C4B3A] text-white border-[#8C4B3A]" : "bg-white border-[#8C4B3A]/30"}`}><Lock size={18} /> Privada</button></div></div><button type="submit" disabled={isSubmitting} className="md:w-64 py-3 bg-[#E07A5F] text-white rounded-xl font-title text-xl border-2 border-[#8C4B3A] shadow-[4px_4px_0px_#8C4B3A] disabled:opacity-60">{isSubmitting ? "SALVANDO..." : form.visibility === "public" ? "PUBLICAR RECEITA" : "SALVAR PRIVADA"}</button></div>
+        </motion.form>
 
-        {/* Feed Posts - Masonry Layout */}
-        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 1024: 3 }}>
-          <Masonry gutter="24px">
-            {postsState.map((post, i) => (
-              <motion.article 
-                key={post.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white border-4 border-[#8C4B3A] rounded-[2rem] p-5 shadow-[6px_6px_0px_#F2CC8F] hover:shadow-[8px_8px_0px_#E07A5F] hover:-translate-y-1 transition-all flex flex-col"
-              >
-                <div className="flex justify-between items-center mb-5">
-                  <div className="flex gap-3 items-center">
-                    <div className={`w-12 h-12 rounded-full ${post.avatar} flex items-center justify-center text-white font-title text-xl border-2 border-[#8C4B3A]`}>
-                      {post.user[0]}
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg leading-tight">{post.user}</h3>
-                      <span className="text-sm opacity-70 font-medium">{post.time}</span>
-                    </div>
-                  </div>
-                  <button className="text-[#8C4B3A]/40 hover:text-[#8C4B3A] transition-colors p-2 hover:bg-[#F2CC8F]/20 rounded-full">
-                    <MoreHorizontal />
-                  </button>
-                </div>
-
-                {post.image && (
-                  <div className={`mb-5 rounded-2xl overflow-hidden border-2 border-[#8C4B3A] ${post.imageHeight}`}>
-                    <img src={post.image} alt="Post content" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                  </div>
-                )}
-
-                <div className="mb-5 text-lg leading-relaxed font-medium">
-                  {post.content}
-                </div>
-
-                <div className="inline-flex items-center gap-2 bg-[#F2CC8F]/30 text-[#8C4B3A] px-4 py-2 rounded-xl text-sm font-bold border-2 border-[#8C4B3A]/20 mb-6 w-fit">
-                  <Wand2 size={16} className="text-[#E07A5F]" /> 
-                  <span className="truncate max-w-[200px]">{post.recipeRef}</span>
-                </div>
-
-                <div className="mt-auto flex items-center justify-between pt-4 border-t-2 border-dashed border-[#8C4B3A]/20 text-[#8C4B3A]/70 font-bold">
-                  <button className="flex items-center gap-2 hover:text-[#E07A5F] transition-colors group px-3 py-2 rounded-lg hover:bg-[#E07A5F]/10">
-                    <Heart size={20} className="group-hover:fill-[#E07A5F]" /> {post.likes}
-                  </button>
-                  <button className="flex items-center gap-2 hover:text-[#8C4B3A] transition-colors px-3 py-2 rounded-lg hover:bg-[#8C4B3A]/10">
-                    <MessageCircle size={20} /> {post.comments}
-                  </button>
-                  <button className="flex items-center gap-2 hover:text-[#8C4B3A] transition-colors px-3 py-2 rounded-lg hover:bg-[#8C4B3A]/10">
-                    <Share2 size={20} />
-                  </button>
-                </div>
-              </motion.article>
-            ))}
-          </Masonry>
-        </ResponsiveMasonry>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"><div><h2 className="font-title text-4xl">RECEITAS PUBLICADAS</h2><p className="opacity-70">Invenções compartilhadas pela comunidade.</p></div><div className="relative w-full md:w-80"><Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50" /><input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Buscar receitas..." className="w-full bg-white border-2 border-[#8C4B3A]/30 rounded-xl pl-11 pr-4 py-3 focus:border-[#E07A5F] focus:outline-none" /></div></div>
+        {isLoading ? <p className="text-center py-12 opacity-70">Carregando receitas...</p> : visiblePosts.length === 0 ? <div className="text-center py-16 border-4 border-dashed border-[#8C4B3A]/20 rounded-3xl opacity-70">Nenhuma receita pública encontrada.</div> : <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 1024: 3 }}><Masonry gutter="24px">{visiblePosts.map((post) => <motion.article key={post.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white border-4 border-[#8C4B3A] rounded-[2rem] p-5 shadow-[6px_6px_0px_#F2CC8F]"><div className="flex gap-3 items-center mb-5"><div className="w-12 h-12 rounded-full bg-[#E07A5F] flex items-center justify-center text-white font-title text-xl border-2 border-[#8C4B3A]"><User size={22} /></div><div><h3 className="font-bold text-lg">{post.usuario.nome}</h3><span className="text-sm opacity-70">{new Date(post.criadaEm).toLocaleDateString("pt-BR")}</span></div></div>{post.receita && <div className="mb-4"><h2 className="font-title text-2xl">{post.receita.titulo}</h2><div className="flex gap-4 text-sm font-bold opacity-70 mt-2"><span className="flex items-center gap-1"><Clock size={16} /> {post.receita.tempoEstimado} min</span><span className="flex items-center gap-1"><Flame size={16} /> {post.receita.porcoes} porções</span></div></div>}{post.comentario && <p className="text-lg leading-relaxed mb-5">{post.comentario}</p>}<div className="flex items-center justify-between pt-4 border-t-2 border-dashed border-[#8C4B3A]/20 text-[#8C4B3A]/70"><button className="flex items-center gap-2"><Heart size={20} /> 0</button><button className="flex items-center gap-2"><MessageCircle size={20} /> 0</button><button><Share2 size={20} /></button></div></motion.article>)}</Masonry></ResponsiveMasonry>}
       </div>
     </div>
   );

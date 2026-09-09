@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { Utensils, User } from "lucide-react";
+import { Utensils, User, Heart } from "lucide-react";
 import { motion } from "motion/react";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -37,6 +37,17 @@ export const Navbar = () => {
           </NavLink>
 
           {user && (
+            <NavLink
+              to="/favorites"
+              aria-label="Receitas favoritas"
+              className={({isActive}) => `flex items-center gap-2 transition-colors hover:text-[#E07A5F] ${isActive ? "text-[#E07A5F] underline decoration-wavy underline-offset-4" : "text-[#8C4B3A]"}`}
+            >
+              <Heart size={21} />
+              Favoritas
+            </NavLink>
+          )}
+
+          {user && (
             <NavLink 
               to="/profile"
               className={({isActive}) => `flex items-center gap-2 transition-colors hover:text-[#E07A5F] ${isActive ? "text-[#E07A5F]" : "text-[#8C4B3A]"}`}
@@ -66,6 +77,17 @@ export const Navbar = () => {
             </motion.button>
           </NavLink>
         </div>
+
+        {user && (
+          <NavLink
+            to="/favorites"
+            aria-label="Receitas favoritas"
+            title="Receitas favoritas"
+            className="md:hidden w-11 h-11 rounded-xl bg-[#F2CC8F] border-2 border-[#8C4B3A] flex items-center justify-center text-[#8C4B3A] shadow-[2px_2px_0px_#8C4B3A]"
+          >
+            <Heart size={21} />
+          </NavLink>
+        )}
       </div>
     </nav>
   );

@@ -39,6 +39,7 @@ export const router = createBrowserRouter([
       { path: "tool", Component: RecipeTool },
       { path: "community", Component: CommunityFeed },
       { path: "profile", Component: Profile },
+      { path: "favorites", Component: Profile },
     ],
   },
 ]);

@@ -24,10 +24,21 @@ const ComunidadeController = {
         return res.status(400).json({ message: "receitaId deve ser um inteiro positivo." });
       }
 
-      const where = {};
+      const where = {
+        AND: [
+          {
+            OR: [
+              { receita: null },
+              ...(req.user?.id
+                ? [{ receita: { publica: true } }, { receita: { usuarioId: Number(req.user.id) } }]
+                : [{ receita: { publica: true } }])
+            ]
+          }
+        ]
+      };
 
       if (q?.trim()) {
-        where.OR = [
+        where.AND.push({ OR: [
           {
             comentario: {
               contains: q.trim(),
@@ -42,15 +53,15 @@ const ComunidadeController = {
               }
             }
           }
-        ];
+        ] });
       }
 
-      if (usuarioId) {
-        where.usuarioId = parsedUsuarioId;
+      if (usuarioId && req.user?.id && parsedUsuarioId === Number(req.user.id)) {
+        where.AND.push({ usuarioId: parsedUsuarioId });
       }
 
       if (receitaId) {
-        where.receitaId = parsedReceitaId;
+        where.AND.push({ receitaId: parsedReceitaId });
       }
 
       const postagens = await prisma.postagem.findMany({
@@ -98,8 +109,8 @@ const ComunidadeController = {
 
   async createPost(req, res) {
     try {
-      const { usuarioId, receitaId, comentario, imagemPrato } = req.body;
-      const parsedUsuarioId = parsePositiveInteger(usuarioId);
+      const { receitaId, comentario, imagemPrato } = req.body;
+      const parsedUsuarioId = parsePositiveInteger(req.user?.id);
       const parsedReceitaId = parsePositiveInteger(receitaId);
       const comentarioNormalizado = comentario ? String(comentario).trim() : null;
       const imagemNormalizada = imagemPrato ? String(imagemPrato).trim() : null;
@@ -139,6 +150,14 @@ const ComunidadeController = {
           return res.status(404).json({
             message: "Receita não encontrada."
           });
+        }
+
+        if (receita.usuarioId !== parsedUsuarioId) {
+          return res.status(403).json({ message: "Você só pode publicar suas próprias receitas." });
+        }
+
+        if (!receita.publica) {
+          return res.status(400).json({ message: "A receita privada não pode ser publicada no feed." });
         }
       }
 

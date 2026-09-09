@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useAuth } from "../contexts/AuthContext";
-import { User, LogOut, Settings, Camera, Heart, BookOpen, Clock, Flame, ArrowRight, X, Save } from "lucide-react";
+import { User, LogOut, Settings, Camera, Heart, BookOpen, Clock, Flame, ArrowRight, X, Save, Search } from "lucide-react";
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import clsx from "clsx";
 
 const myRecipesData = [
@@ -27,28 +27,29 @@ const myRecipesData = [
   }
 ];
 
-const savedRecipesData = [
-  {
-    id: 10,
-    title: "Massa Cremosa 'De Ontem'",
-    time: "20 min",
-    difficulty: "Médio",
-    author: "Ana Costa"
-  },
-  {
-    id: 11,
-    title: "Patê de Cenoura Assada",
-    time: "30 min",
-    difficulty: "Fácil",
-    author: "João Pedro"
-  }
-];
-
 export const Profile = () => {
   const { user, logout, updateUser } = useAuth();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<"minhas" | "favoritas">("minhas");
-  const favoriteRecipes = user?.savedRecipes && user.savedRecipes.length > 0 ? user.savedRecipes : savedRecipesData;
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState<"minhas" | "favoritas">(
+    location.pathname === "/favorites" ? "favoritas" : "minhas"
+  );
+  const [searchTerm, setSearchTerm] = useState("");
+  const favoriteRecipes = user?.savedRecipes ?? [];
+  const filteredFavoriteRecipes = favoriteRecipes.filter((recipe) =>
+    `${recipe.title} ${recipe.author ?? ""}`.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const selectTab = (tab: "minhas" | "favoritas") => {
+    setActiveTab(tab);
+    if (tab === "favoritas") navigate("/favorites");
+    else navigate("/profile");
+  };
+
+  const removeFavorite = (id: number) => {
+    updateUser({ savedRecipes: favoriteRecipes.filter((recipe) => recipe.id !== id) });
+    toast.success("Receita removida das favoritas.");
+  };
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editData, setEditData] = useState({
@@ -167,7 +168,7 @@ export const Profile = () => {
         {/* TABS */}
         <div className="flex gap-4 mb-8 border-b-2 border-[#8C4B3A]/20 pb-4 overflow-x-auto no-scrollbar">
           <button 
-            onClick={() => setActiveTab("minhas")}
+            onClick={() => selectTab("minhas")}
             className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-title text-xl transition-all whitespace-nowrap ${
               activeTab === "minhas" 
                 ? "bg-[#8C4B3A] text-white shadow-[4px_4px_0px_#F2CC8F] -translate-y-1" 
@@ -178,7 +179,7 @@ export const Profile = () => {
             MINHAS RECEITAS
           </button>
           <button 
-            onClick={() => setActiveTab("favoritas")}
+            onClick={() => selectTab("favoritas")}
             className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-title text-xl transition-all whitespace-nowrap ${
               activeTab === "favoritas" 
                 ? "bg-[#8C4B3A] text-white shadow-[4px_4px_0px_#E07A5F] -translate-y-1" 
@@ -236,27 +237,63 @@ export const Profile = () => {
           )}
 
           {activeTab === "favoritas" && (
-            <motion.div 
+            <motion.div
               key="favoritas"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="grid md:grid-cols-2 gap-6"
+              className="space-y-6"
             >
-              {favoriteRecipes.map(recipe => (
-                <div key={recipe.id} className="bg-white border-4 border-[#8C4B3A] rounded-2xl p-5 shadow-[6px_6px_0px_#E07A5F] flex items-center justify-between group hover:-translate-y-1 transition-all">
-                  <div>
-                    <h3 className="font-title text-xl mb-2">{recipe.title}</h3>
-                    <div className="flex items-center gap-4 text-sm font-bold opacity-70">
-                      <span className="flex items-center gap-1"><User size={16} /> {recipe.author}</span>
-                      <span className="flex items-center gap-1"><Clock size={16} /> {recipe.time}</span>
+              <div className="relative max-w-xl">
+                <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#8C4B3A]/50" />
+                <input
+                  type="search"
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                  placeholder="Buscar por receita ou autor..."
+                  aria-label="Buscar receitas favoritas"
+                  className="w-full bg-white border-2 border-[#8C4B3A]/30 rounded-xl pl-11 pr-4 py-3 text-lg focus:border-[#E07A5F] focus:outline-none"
+                />
+              </div>
+
+              {filteredFavoriteRecipes.length > 0 ? (
+                <div className="grid md:grid-cols-2 gap-6">
+                  {filteredFavoriteRecipes.map(recipe => (
+                    <div key={recipe.id} className="bg-white border-4 border-[#8C4B3A] rounded-2xl p-5 shadow-[6px_6px_0px_#E07A5F] flex items-center justify-between gap-4 group hover:-translate-y-1 transition-all">
+                      <div>
+                        <h3 className="font-title text-xl mb-2">{recipe.title}</h3>
+                        <div className="flex items-center gap-4 text-sm font-bold opacity-70">
+                          <span className="flex items-center gap-1"><User size={16} /> {recipe.author ?? "Você"}</span>
+                          <span className="flex items-center gap-1"><Clock size={16} /> {recipe.time}</span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => removeFavorite(recipe.id)}
+                        aria-label={`Remover ${recipe.title} das favoritas`}
+                        title="Remover das favoritas"
+                        className="w-12 h-12 shrink-0 rounded-xl bg-[#F2CC8F] flex items-center justify-center border-2 border-[#8C4B3A] text-[#8C4B3A] group-hover:bg-[#E07A5F] group-hover:text-white transition-colors shadow-[2px_2px_0px_#8C4B3A]"
+                      >
+                        <Heart size={24} fill="currentColor" />
+                      </button>
                     </div>
-                  </div>
-                  <button className="w-12 h-12 rounded-xl bg-[#F2CC8F] flex items-center justify-center border-2 border-[#8C4B3A] text-[#8C4B3A] group-hover:bg-[#E07A5F] group-hover:text-white transition-colors shadow-[2px_2px_0px_#8C4B3A]">
-                    <ArrowRight size={24} />
-                  </button>
+                  ))}
                 </div>
-              ))}
+              ) : (
+                <div className="bg-[#F2CC8F]/20 border-4 border-dashed border-[#8C4B3A]/40 rounded-2xl p-10 text-center">
+                  <Heart size={44} className="mx-auto mb-4 text-[#E07A5F]" />
+                  <h3 className="font-title text-2xl mb-2">
+                    {favoriteRecipes.length === 0 ? "Você ainda não salvou receitas" : "Nenhuma receita encontrada"}
+                  </h3>
+                  <p className="opacity-70 mb-6">
+                    {favoriteRecipes.length === 0 ? "Gere uma receita e salve suas preferidas para encontrá-las aqui." : "Tente buscar por outro nome ou autor."}
+                  </p>
+                  {favoriteRecipes.length === 0 && (
+                    <button onClick={() => navigate("/tool")} className="px-6 py-3 bg-[#E07A5F] text-white rounded-xl font-bold border-2 border-[#8C4B3A] shadow-[3px_3px_0px_#8C4B3A]">
+                      GERAR RECEITA
+                    </button>
+                  )}
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
