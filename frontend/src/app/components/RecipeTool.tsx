@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useSearchParams } from "react-router";
 import { Plus, X, Wand2, ChefHat, Clock, Flame, Leaf, Settings2, Info, User as UserIcon, Camera, Mail, Lock, Save } from "lucide-react";
 import { toast } from "sonner";
 import clsx from "clsx";
@@ -40,6 +41,7 @@ const mockRecipes = [
 
 export const RecipeTool = () => {
   const { user: currentUser, login, updateUser } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [inventoryIds, setInventoryIds] = useState<Record<string, number>>({});
   const [isLoadingInventory, setIsLoadingInventory] = useState(false);
@@ -55,6 +57,14 @@ export const RecipeTool = () => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [diet, setDiet] = useState<string>("Come de tudo");
   const [allergies, setAllergies] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!currentUser?.id && searchParams.get("auth") === "login") {
+      setAuthMode("login");
+      setIsAuthModalOpen(true);
+      setSearchParams({}, { replace: true });
+    }
+  }, [currentUser?.id, searchParams, setSearchParams]);
 
   useEffect(() => {
     if (!currentUser?.id) {
@@ -111,7 +121,9 @@ export const RecipeTool = () => {
         await api.post("/users/register", {
           nome: signupData.name,
           email: signupData.email,
-          senha: signupData.password
+          senha: signupData.password,
+          tipoDieta: diet,
+          restricoes: allergies
         });
         const { data } = await api.post("/users/login", {
           email: signupData.email,

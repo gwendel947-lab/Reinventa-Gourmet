@@ -67,7 +67,7 @@ export const Navbar = () => {
             </NavLink>
           )}
 
-          <NavLink to="/tool">
+          <NavLink to="/tool?auth=login">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

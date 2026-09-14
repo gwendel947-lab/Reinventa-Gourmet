@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 const UserController = {
   async register(req, res) {
     try {
-      const { nome, email, senha } = req.body;
+      const { nome, email, senha, tipoDieta = "Come de tudo", restricoes = [] } = req.body;
 
       if (!nome || !email || !senha) {
         return res.status(400).json({
@@ -25,12 +25,34 @@ const UserController = {
 
       const senhaCriptografada = await bcrypt.hash(senha, 10);
 
-      const user = await prisma.usuario.create({
-        data: {
-          nome,
-          email,
-          senha: senhaCriptografada
-        }
+      const dietMap = {
+        "Come de tudo": "ONIVORO",
+        Vegetariano: "VEGETARIANO",
+        Vegano: "VEGANO"
+      };
+      const tipoDietaBanco = dietMap[tipoDieta] || "ONIVORO";
+      const restricoesValidas = Array.isArray(restricoes)
+        ? restricoes.filter((restricao) => typeof restricao === "string" && restricao.trim())
+        : [];
+
+      const user = await prisma.$transaction(async (transaction) => {
+        const createdUser = await transaction.usuario.create({
+          data: {
+            nome,
+            email,
+            senha: senhaCriptografada,
+            perfil: {
+              create: {
+                tipoDieta: tipoDietaBanco,
+                restricoes: {
+                  create: restricoesValidas.map((tipo) => ({ tipo }))
+                }
+              }
+            }
+          }
+        });
+
+        return createdUser;
       });
 
       return res.status(201).json({
