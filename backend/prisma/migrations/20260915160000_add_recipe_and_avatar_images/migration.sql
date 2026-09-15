@@ -1,0 +1,2 @@
+ALTER TABLE `usuarios` ADD COLUMN `avatar` LONGTEXT NULL;
+ALTER TABLE `receitas` ADD COLUMN `imagem` LONGTEXT NULL;

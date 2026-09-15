@@ -7,6 +7,7 @@ import clsx from "clsx";
 
 import { useAuth } from "../contexts/AuthContext";
 import api from "../../services/api";
+import { readImageAsDataUrl } from "../../services/image";
 
 const mockRecipes = [
   {
@@ -54,6 +55,7 @@ export const RecipeTool = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const [signupData, setSignupData] = useState({ name: "", email: "", password: "" });
+  const [signupAvatar, setSignupAvatar] = useState<string | null>(null);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [diet, setDiet] = useState<string>("Come de tudo");
   const [allergies, setAllergies] = useState<string[]>([]);
@@ -130,7 +132,8 @@ export const RecipeTool = () => {
           senha: signupData.password
         });
         localStorage.setItem("reinventa-token", data.token);
-        login({ id: data.user.id, name: data.user.nome, email: data.user.email, diet, allergies });
+        login({ id: data.user.id, name: data.user.nome, email: data.user.email, diet, allergies, avatar: signupAvatar });
+        if (signupAvatar) await api.put("/users/me", { avatar: signupAvatar });
         toast.success(`Bem-vindo(a), ${signupData.name}!`);
       } catch (error: any) {
         toast.error(error.response?.data?.message ?? "Não foi possível criar sua conta.");
@@ -147,7 +150,7 @@ export const RecipeTool = () => {
           senha: loginData.password
         });
         localStorage.setItem("reinventa-token", data.token);
-        login({ id: data.user.id, name: data.user.nome, email: data.user.email, diet: "Come de tudo", allergies: [] });
+        login({ id: data.user.id, name: data.user.nome, email: data.user.email, diet: "Come de tudo", allergies: [], avatar: data.user.avatar });
         toast.success("Login efetuado com sucesso!");
       } catch (error: any) {
         toast.error(error.response?.data?.message ?? "Não foi possível entrar.");
@@ -247,7 +250,12 @@ export const RecipeTool = () => {
           title: generatedRecipe.title,
           time: generatedRecipe.time,
           difficulty: generatedRecipe.difficulty,
+          servings: "2",
+          preparation: generatedRecipe.steps.join("\n"),
+          ingredients: generatedRecipe.ingredients.map((ingredient) => ({ nome: ingredient })),
           author: currentUser.name,
+          tags: generatedRecipe.tags,
+          aiTip: generatedRecipe.aiTip,
         },
       ],
     });
@@ -536,12 +544,13 @@ export const RecipeTool = () => {
                 {authMode === "signup" && (
                   <div className="space-y-6">
                     {/* Foto de Perfil (Opcional) */}
-                    <div className="flex flex-col items-center gap-2">
+                    <label className="flex cursor-pointer flex-col items-center gap-2">
                       <div className="w-24 h-24 bg-[#E07A5F]/20 rounded-full border-2 border-dashed border-[#E07A5F] flex items-center justify-center text-[#E07A5F] cursor-pointer hover:bg-[#E07A5F]/30 transition-colors">
-                        <Camera size={32} />
+                        {signupAvatar ? <img src={signupAvatar} alt="Prévia do avatar" className="h-full w-full rounded-full object-cover" /> : <Camera size={32} />}
                       </div>
                       <span className="text-sm font-medium opacity-70">Adicionar foto (opcional)</span>
-                    </div>
+                      <input type="file" accept="image/*" className="sr-only" onChange={async (event) => { const file = event.target.files?.[0]; if (!file) return; try { setSignupAvatar(await readImageAsDataUrl(file, 500)); } catch (error: any) { toast.error(error.message); } }} />
+                    </label>
 
                     <div className="space-y-4">
                       <div>

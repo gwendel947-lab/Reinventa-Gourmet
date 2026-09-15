@@ -10,6 +10,63 @@ function parsePositiveInteger(value) {
 }
 
 const ComunidadeController = {
+  async listComments(req, res) {
+    try {
+      const receitaId = parsePositiveInteger(req.params.receitaId);
+      if (!receitaId) return res.status(400).json({ message: "receitaId inválido." });
+
+      const comentarios = await prisma.comentario.findMany({
+        where: { receitaId, respostaDeId: null },
+        include: {
+          usuario: { select: { id: true, nome: true, avatar: true } },
+          respostas: {
+            include: { usuario: { select: { id: true, nome: true, avatar: true } } },
+            orderBy: { criadoEm: "asc" }
+          }
+        },
+        orderBy: { criadoEm: "asc" }
+      });
+      return res.json({ comentarios });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Erro interno ao buscar comentários." });
+    }
+  },
+
+  async createComment(req, res) {
+    try {
+      const receitaId = parsePositiveInteger(req.params.receitaId);
+      const { texto, respostaDeId } = req.body;
+      const usuarioId = parsePositiveInteger(req.user?.id);
+      if (!receitaId || !usuarioId || !String(texto ?? "").trim()) {
+        return res.status(400).json({ message: "Receita e texto do comentário são obrigatórios." });
+      }
+
+      const receita = await prisma.receita.findUnique({ where: { id: receitaId } });
+      if (!receita || (!receita.publica && receita.usuarioId !== usuarioId)) {
+        return res.status(404).json({ message: "Receita não encontrada." });
+      }
+
+      let parentId = null;
+      if (respostaDeId !== undefined && respostaDeId !== null) {
+        parentId = parsePositiveInteger(respostaDeId);
+        const parent = parentId ? await prisma.comentario.findUnique({ where: { id: parentId } }) : null;
+        if (!parent || parent.receitaId !== receitaId || receita.usuarioId !== usuarioId) {
+          return res.status(403).json({ message: "Apenas o criador pode responder comentários desta receita." });
+        }
+      }
+
+      const comentario = await prisma.comentario.create({
+        data: { receitaId, usuarioId, respostaDeId: parentId, texto: String(texto).trim() },
+        include: { usuario: { select: { id: true, nome: true, avatar: true } } }
+      });
+      return res.status(201).json({ comentario });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Erro interno ao salvar comentário." });
+    }
+  },
+
   async listFeed(req, res) {
     try {
       const { q, usuarioId, receitaId } = req.query;
@@ -71,7 +128,8 @@ const ComunidadeController = {
             select: {
               id: true,
               nome: true,
-              email: true
+              email: true,
+              avatar: true
             }
           },
           receita: {
@@ -84,7 +142,8 @@ const ComunidadeController = {
               usuario: {
                 select: {
                   id: true,
-                  nome: true
+                  nome: true,
+                  avatar: true
                 }
               }
             }
