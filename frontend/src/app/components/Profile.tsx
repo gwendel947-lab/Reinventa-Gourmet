@@ -1,31 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { useAuth } from "../contexts/AuthContext";
+import { SavedRecipe, useAuth } from "../contexts/AuthContext";
 import { User, LogOut, Settings, Camera, Heart, BookOpen, Clock, Flame, ArrowRight, X, Save, Search } from "lucide-react";
 import { toast } from "sonner";
 import { useLocation, useNavigate } from "react-router";
 import clsx from "clsx";
-
-const myRecipesData = [
-  {
-    id: 1,
-    title: "Omelete de Abobrinha Rústico",
-    time: "15 min",
-    difficulty: "Fácil",
-    image: "https://images.unsplash.com/photo-1598449426314-8b02525e8733?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2ZWdldGFyaWFuJTIwZm9vZHxlbnwxfHx8fDE3NzY5NTczMDN8MA&ixlib=rb-4.1.0&q=80&w=600&utm_source=figma&utm_medium=referral",
-    likes: 12,
-    comments: 3
-  },
-  {
-    id: 2,
-    title: "Bolo de Caneca Mágico",
-    time: "5 min",
-    difficulty: "Muito Fácil",
-    image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNzZXJ0fGVufDF8fHx8MTc3Njk1NzMwM3ww&ixlib=rb-4.1.0&q=80&w=600&utm_source=figma&utm_medium=referral",
-    likes: 45,
-    comments: 8
-  }
-];
+import api from "../../services/api";
+import { RecipeDetails, RecipeDetailsModal } from "./RecipeDetailsModal";
+import { RecipeEditModal } from "./RecipeEditModal";
+import { readImageAsDataUrl } from "../../services/image";
+import { AvatarCropModal } from "./AvatarCropModal";
 
 export const Profile = () => {
   const { user, logout, updateUser } = useAuth();
@@ -35,10 +19,49 @@ export const Profile = () => {
     location.pathname === "/favorites" ? "favoritas" : "minhas"
   );
   const [searchTerm, setSearchTerm] = useState("");
+  const [myRecipes, setMyRecipes] = useState<SavedRecipe[]>([]);
+  const [selectedRecipe, setSelectedRecipe] = useState<RecipeDetails | null>(null);
+  const [editingRecipe, setEditingRecipe] = useState<RecipeDetails | null>(null);
+  const [isRecipeSaving, setIsRecipeSaving] = useState(false);
+  const [isAvatarSaving, setIsAvatarSaving] = useState(false);
+  const [avatarToCrop, setAvatarToCrop] = useState<string | null>(null);
   const favoriteRecipes = user?.savedRecipes ?? [];
   const filteredFavoriteRecipes = favoriteRecipes.filter((recipe) =>
     `${recipe.title} ${recipe.author ?? ""}`.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const mapRecipe = (recipe: any, author = user?.name): SavedRecipe => ({
+    id: recipe.id,
+    title: recipe.titulo,
+    time: String(recipe.tempoEstimado),
+    difficulty: "",
+    servings: String(recipe.porcoes),
+    preparation: recipe.modoPreparo,
+    ingredients: recipe.ingredientes,
+    author: recipe.usuario?.nome ?? author,
+    authorId: recipe.usuario?.id,
+    image: recipe.imagem ?? undefined,
+  });
+
+  useEffect(() => {
+    if (!user) return;
+    api.get("/users/me").then(({ data }) => {
+      updateUser({ avatar: data.user.avatar, name: data.user.nome, email: data.user.email });
+    }).catch(() => undefined);
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!user) return;
+    const loadMyRecipes = async () => {
+      try {
+        const { data } = await api.get(`/receitas?usuarioId=${user.id}`);
+        setMyRecipes((data.receitas ?? []).map((recipe: any) => mapRecipe(recipe, user.name)));
+      } catch {
+        toast.error("Não foi possível carregar suas receitas.");
+      }
+    };
+    loadMyRecipes();
+  }, [user?.id]);
 
   const selectTab = (tab: "minhas" | "favoritas") => {
     setActiveTab(tab);
@@ -49,6 +72,87 @@ export const Profile = () => {
   const removeFavorite = (id: number) => {
     updateUser({ savedRecipes: favoriteRecipes.filter((recipe) => recipe.id !== id) });
     toast.success("Receita removida das favoritas.");
+  };
+
+  const handleAvatarChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !user) return;
+    try {
+      setAvatarToCrop(await readImageAsDataUrl(file, 1200));
+    } catch (error: any) {
+      toast.error(error.response?.data?.message ?? error.message ?? "Não foi possível salvar a foto.");
+    } finally {
+      event.target.value = "";
+    }
+  };
+
+  const saveAvatar = async (avatar: string) => {
+    setIsAvatarSaving(true);
+    try {
+      const { data } = await api.put("/users/me", { avatar });
+      updateUser({ avatar: data.user.avatar });
+      setAvatarToCrop(null);
+      toast.success("Foto de perfil salva com sucesso!");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message ?? "Não foi possível salvar a foto.");
+    } finally {
+      setIsAvatarSaving(false);
+    }
+  };
+
+  const toRecipeDetails = (recipe: SavedRecipe): RecipeDetails => ({
+    id: recipe.id,
+    title: recipe.title,
+    preparation: recipe.preparation ?? "Modo de preparo não informado.",
+    time: recipe.time,
+    servings: recipe.servings ?? "-",
+    author: recipe.author,
+    authorId: recipe.authorId,
+    ingredients: recipe.ingredients ?? [],
+    tags: recipe.tags,
+    aiTip: recipe.aiTip,
+    image: recipe.image,
+  });
+
+  const saveRecipeChanges = async (recipe: RecipeDetails, ingredientNames: string[]) => {
+    setIsRecipeSaving(true);
+    try {
+      const { data: ingredientData } = await api.get("/ingredientes");
+      const existingIngredients = ingredientData.ingredientes ?? [];
+      const ingredients = await Promise.all(ingredientNames.map(async (name) => {
+        const existing = existingIngredients.find((item: { id: number; nome: string }) => item.nome.toLowerCase() === name.toLowerCase());
+        if (existing) return existing.id;
+        const { data } = await api.post("/ingredientes", { nome: name, categoria: "outros" });
+        return data.ingrediente.id;
+      }));
+      const { data } = await api.put(`/receitas/${recipe.id}`, {
+        titulo: recipe.title,
+        modoPreparo: recipe.preparation,
+        tempoEstimado: Number(recipe.time),
+        porcoes: Number(recipe.servings),
+        ingredientes: ingredients.map((ingredienteId) => ({ ingredienteId, quantidade: 1, unidade: "" })),
+      });
+      const updatedRecipe = mapRecipe(data.receita);
+      setMyRecipes((previous) => previous.map((item) => item.id === updatedRecipe.id ? updatedRecipe : item));
+      setEditingRecipe(null);
+      toast.success("Receita atualizada com sucesso!");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message ?? "Não foi possível atualizar a receita.");
+    } finally {
+      setIsRecipeSaving(false);
+    }
+  };
+
+  const deleteRecipe = async (recipe: RecipeDetails) => {
+    if (!window.confirm(`Excluir a receita "${recipe.title}"?`)) return;
+    try {
+      await api.delete(`/receitas/${recipe.id}`);
+      setMyRecipes((previous) => previous.filter((item) => item.id !== recipe.id));
+      setSelectedRecipe(null);
+      toast.success("Receita excluída com sucesso.");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message ?? "Não foi possível excluir a receita.");
+    }
   };
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -132,9 +236,10 @@ export const Profile = () => {
                   <span className="font-title text-5xl text-[#8C4B3A]">{user.name.charAt(0).toUpperCase()}</span>
                 )}
               </div>
-              <button className="absolute bottom-0 right-0 w-10 h-10 bg-[#E07A5F] rounded-full border-2 border-[#8C4B3A] flex items-center justify-center text-white hover:bg-[#8C4B3A] transition-colors shadow-sm">
+              <label className="absolute bottom-0 right-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-[#8C4B3A] bg-[#E07A5F] text-white shadow-sm transition-colors hover:bg-[#8C4B3A]" title="Alterar foto de perfil">
                 <Camera size={18} />
-              </button>
+                <input type="file" accept="image/*" onChange={handleAvatarChange} disabled={isAvatarSaving} className="sr-only" />
+              </label>
             </div>
 
             <div className="flex-1 text-center md:text-left flex flex-col items-center md:items-start">
@@ -201,25 +306,16 @@ export const Profile = () => {
               exit={{ opacity: 0, y: -20 }}
               className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-              {myRecipesData.map(recipe => (
-                <div key={recipe.id} className="bg-white border-4 border-[#8C4B3A] rounded-3xl overflow-hidden shadow-[6px_6px_0px_#F2CC8F] hover:shadow-[8px_8px_0px_#E07A5F] hover:-translate-y-1 transition-all group flex flex-col">
-                  <div className="h-48 overflow-hidden border-b-4 border-[#8C4B3A]">
-                    <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              {myRecipes.map(recipe => (
+                <button key={recipe.id} onClick={() => setSelectedRecipe(toRecipeDetails(recipe))} className="bg-white border-4 border-[#8C4B3A] rounded-3xl p-5 text-left shadow-[6px_6px_0px_#F2CC8F] hover:shadow-[8px_8px_0px_#E07A5F] hover:-translate-y-1 transition-all group">
+                  {recipe.image && <img src={recipe.image} alt={recipe.title} className="mb-4 h-40 w-full rounded-2xl object-cover" />}
+                  <h3 className="font-title text-2xl mb-3 leading-tight">{recipe.title}</h3>
+                  <div className="flex items-center gap-4 text-sm font-bold opacity-70 mb-6">
+                    <span className="flex items-center gap-1"><Clock size={16} /> {recipe.time}{/\bmin\b/i.test(recipe.time) ? "" : " min"}</span>
+                    <span className="flex items-center gap-1"><Flame size={16} /> {recipe.servings ?? "-"} porções</span>
                   </div>
-                  <div className="p-5 flex flex-col flex-1">
-                    <h3 className="font-title text-2xl mb-3 leading-tight">{recipe.title}</h3>
-                    <div className="flex items-center gap-4 text-sm font-bold opacity-70 mb-6">
-                      <span className="flex items-center gap-1"><Clock size={16} /> {recipe.time}</span>
-                      <span className="flex items-center gap-1"><Flame size={16} /> {recipe.difficulty}</span>
-                    </div>
-                    <div className="mt-auto pt-4 border-t-2 border-dashed border-[#8C4B3A]/20 flex justify-between items-center text-[#8C4B3A]/70 font-bold text-sm">
-                      <span className="flex items-center gap-1"><Heart size={18} className="text-[#E07A5F]" /> {recipe.likes}</span>
-                      <button className="flex items-center gap-1 hover:text-[#E07A5F] transition-colors">
-                        Ver Receita <ArrowRight size={16} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                  <span className="flex items-center gap-1 font-bold text-[#E07A5F]">Ver receita <ArrowRight size={16} /></span>
+                </button>
               ))}
               
               {/* Add New Recipe Card */}
@@ -260,13 +356,15 @@ export const Profile = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   {filteredFavoriteRecipes.map(recipe => (
                     <div key={recipe.id} className="bg-white border-4 border-[#8C4B3A] rounded-2xl p-5 shadow-[6px_6px_0px_#E07A5F] flex items-center justify-between gap-4 group hover:-translate-y-1 transition-all">
-                      <div>
+                      <button onClick={() => setSelectedRecipe(toRecipeDetails(recipe))} className="text-left">
+                        {recipe.image && <img src={recipe.image} alt={recipe.title} className="mb-3 h-24 w-32 rounded-xl object-cover" />}
                         <h3 className="font-title text-xl mb-2">{recipe.title}</h3>
                         <div className="flex items-center gap-4 text-sm font-bold opacity-70">
                           <span className="flex items-center gap-1"><User size={16} /> {recipe.author ?? "Você"}</span>
                           <span className="flex items-center gap-1"><Clock size={16} /> {recipe.time}</span>
                         </div>
-                      </div>
+                        <span className="mt-2 inline-block font-bold text-[#E07A5F]">Abrir receita</span>
+                      </button>
                       <button
                         onClick={() => removeFavorite(recipe.id)}
                         aria-label={`Remover ${recipe.title} das favoritas`}
@@ -297,6 +395,23 @@ export const Profile = () => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        <RecipeDetailsModal
+          recipe={selectedRecipe}
+          isFavorite={selectedRecipe ? favoriteRecipes.some((recipe) => recipe.id === selectedRecipe.id) : false}
+          onToggleFavorite={() => {
+            if (!selectedRecipe) return;
+            const isSaved = favoriteRecipes.some((recipe) => recipe.id === selectedRecipe.id);
+            updateUser({ savedRecipes: isSaved ? favoriteRecipes.filter((recipe) => recipe.id !== selectedRecipe.id) : [...favoriteRecipes, selectedRecipe] });
+            toast.success(isSaved ? "Receita removida das favoritas." : "Receita adicionada às favoritas!");
+          }}
+          onEdit={selectedRecipe && myRecipes.some((recipe) => recipe.id === selectedRecipe.id) ? () => { setEditingRecipe(selectedRecipe); setSelectedRecipe(null); } : undefined}
+          onDelete={selectedRecipe && myRecipes.some((recipe) => recipe.id === selectedRecipe.id) ? () => deleteRecipe(selectedRecipe) : undefined}
+          onClose={() => setSelectedRecipe(null)}
+        />
+
+        <RecipeEditModal recipe={editingRecipe} isSaving={isRecipeSaving} onSave={saveRecipeChanges} onClose={() => setEditingRecipe(null)} />
+        <AvatarCropModal image={avatarToCrop} onSave={saveAvatar} onClose={() => setAvatarToCrop(null)} />
 
       </div>
 

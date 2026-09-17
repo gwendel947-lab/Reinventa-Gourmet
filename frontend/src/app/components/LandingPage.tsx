@@ -30,7 +30,7 @@ export const LandingPage = () => {
           <p className="mt-6 text-2xl md:text-3xl max-w-3xl text-[#8C4B3A] font-medium leading-relaxed bg-[#FEFAF0]/60 backdrop-blur-md p-6 rounded-3xl border-2 border-dashed border-[#8C4B3A]/30">
             Transforme ingredientes esquecidos na sua geladeira em receitas incríveis com o poder da Inteligência Artificial.
           </p>
-          <Link to="/tool" className="mt-12 group relative">
+          <Link to="/tool?auth=login" className="mt-12 group relative">
             <div className="absolute inset-0 bg-[#F2CC8F] rounded-2xl translate-x-2 translate-y-2 border-4 border-[#8C4B3A] transition-transform group-hover:translate-x-1 group-hover:translate-y-1"></div>
             <motion.button
               whileTap={{ scale: 0.95 }}
@@ -194,7 +194,7 @@ export const LandingPage = () => {
         </div>
         
         <div className="mt-24 flex justify-center">
-           <Link to="/tool" className="group">
+           <Link to="/tool?auth=login" className="group">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

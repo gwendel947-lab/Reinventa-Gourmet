@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.post("/", authMiddleware, ReceitaController.create);
 router.get("/", optionalAuthMiddleware, ReceitaController.list);
+router.put("/:id", authMiddleware, ReceitaController.update);
+router.delete("/:id", authMiddleware, ReceitaController.remove);
 router.get("/:id", optionalAuthMiddleware, ReceitaController.getById);
 
 export default router;

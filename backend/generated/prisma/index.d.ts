@@ -49,6 +49,11 @@ export type Receita = $Result.DefaultSelection<Prisma.$ReceitaPayload>
  */
 export type ReceitaIngrediente = $Result.DefaultSelection<Prisma.$ReceitaIngredientePayload>
 /**
+ * Model Comentario
+ * 
+ */
+export type Comentario = $Result.DefaultSelection<Prisma.$ComentarioPayload>
+/**
  * Model Postagem
  * 
  */
@@ -128,7 +133,7 @@ export class PrismaClient<
    * Read more in our [docs](https://pris.ly/d/client).
    */
 
-  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
+  constructor(optionsArg ?: Prisma.PrismaClientConstructorArgs<ClientOptions>);
   $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
 
   /**
@@ -280,6 +285,16 @@ export class PrismaClient<
   get receitaIngrediente(): Prisma.ReceitaIngredienteDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.comentario`: Exposes CRUD operations for the **Comentario** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Comentarios
+    * const comentarios = await prisma.comentario.findMany()
+    * ```
+    */
+  get comentario(): Prisma.ComentarioDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.postagem`: Exposes CRUD operations for the **Postagem** model.
     * Example usage:
     * ```ts
@@ -338,8 +353,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.8.0
-   * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
+   * Prisma Client JS version: 7.10.0
+   * Query Engine version: 0edf323efd1d98336f3f0a68684b56f689b900d3
    */
   export type PrismaVersion = {
     client: string
@@ -474,6 +489,19 @@ export namespace Prisma {
   };
 
   /**
+   * Resolved type of the argument passed to the `PrismaClient` constructor.
+   *
+   * When called without a narrower options type (the common case), this resolves
+   * to `PrismaClientOptions` directly, which produces a clear TypeScript error
+   * message (`not assignable to parameter of type 'PrismaClientOptions'`) when
+   * the argument is missing or incomplete. When the user supplies a narrower
+   * options type (e.g. via a literal), it falls back to `Subset` to keep
+   * filtering out unknown properties.
+   */
+  export type PrismaClientConstructorArgs<Options extends PrismaClientOptions> =
+    [PrismaClientOptions] extends [Options] ? PrismaClientOptions : Subset<Options, PrismaClientOptions>;
+
+  /**
    * SelectSubset
    * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
    * Additionally, it validates, if both select and include are present. If the case, it errors.
@@ -505,7 +533,7 @@ export namespace Prisma {
   type XOR<T, U> =
     T extends object ?
     U extends object ?
-      (Without<T, U> & U) | (Without<U, T> & T)
+      ((Without<T, U> & U) | (Without<U, T> & T)) & object
     : U : T
 
 
@@ -729,6 +757,7 @@ export namespace Prisma {
     Inventario: 'Inventario',
     Receita: 'Receita',
     ReceitaIngrediente: 'ReceitaIngrediente',
+    Comentario: 'Comentario',
     Postagem: 'Postagem'
   };
 
@@ -745,7 +774,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "perfilAlimentar" | "restricaoAlimentar" | "ingrediente" | "inventario" | "receita" | "receitaIngrediente" | "postagem"
+      modelProps: "usuario" | "perfilAlimentar" | "restricaoAlimentar" | "ingrediente" | "inventario" | "receita" | "receitaIngrediente" | "comentario" | "postagem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1211,6 +1240,72 @@ export namespace Prisma {
           }
         }
       }
+      Comentario: {
+        payload: Prisma.$ComentarioPayload<ExtArgs>
+        fields: Prisma.ComentarioFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ComentarioFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComentarioPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ComentarioFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComentarioPayload>
+          }
+          findFirst: {
+            args: Prisma.ComentarioFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComentarioPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ComentarioFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComentarioPayload>
+          }
+          findMany: {
+            args: Prisma.ComentarioFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComentarioPayload>[]
+          }
+          create: {
+            args: Prisma.ComentarioCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComentarioPayload>
+          }
+          createMany: {
+            args: Prisma.ComentarioCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ComentarioDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComentarioPayload>
+          }
+          update: {
+            args: Prisma.ComentarioUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComentarioPayload>
+          }
+          deleteMany: {
+            args: Prisma.ComentarioDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ComentarioUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ComentarioUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComentarioPayload>
+          }
+          aggregate: {
+            args: Prisma.ComentarioAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateComentario>
+          }
+          groupBy: {
+            args: Prisma.ComentarioGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ComentarioGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ComentarioCountArgs<ExtArgs>
+            result: $Utils.Optional<ComentarioCountAggregateOutputType> | number
+          }
+        }
+      }
       Postagem: {
         payload: Prisma.$PostagemPayload<ExtArgs>
         fields: Prisma.PostagemFieldRefs
@@ -1345,11 +1440,26 @@ export namespace Prisma {
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
     /**
-     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     * A driver adapter that PrismaClient uses to connect to your database, such as the ones provided by `@prisma/adapter-pg`, `@prisma/adapter-libsql`, `@prisma/adapter-planetscale`, etc.
+     * 
+     * A driver adapter is **required** unless you connect to your database through Prisma Accelerate (in which case use `accelerateUrl` instead).
+     * 
+     * Learn more: https://pris.ly/d/driver-adapters
+     * 
+     * @example
+     * ```ts
+     * import { PrismaPg } from '@prisma/adapter-pg'
+     * import { PrismaClient } from './generated/prisma/client'
+     * 
+     * const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+     * const prisma = new PrismaClient({ adapter })
+     * ```
      */
     adapter?: runtime.SqlDriverAdapterFactory
     /**
-     * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
+     * The Prisma Accelerate connection URL. Use this option to connect to your database through Prisma Accelerate instead of using a driver adapter to connect directly.
+     * 
+     * Learn more: https://pris.ly/d/accelerate
      */
     accelerateUrl?: string
     /**
@@ -1392,6 +1502,7 @@ export namespace Prisma {
     inventario?: InventarioOmit
     receita?: ReceitaOmit
     receitaIngrediente?: ReceitaIngredienteOmit
+    comentario?: ComentarioOmit
     postagem?: PostagemOmit
   }
 
@@ -1476,12 +1587,14 @@ export namespace Prisma {
     inventario: number
     receitas: number
     postagens: number
+    comentarios: number
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     inventario?: boolean | UsuarioCountOutputTypeCountInventarioArgs
     receitas?: boolean | UsuarioCountOutputTypeCountReceitasArgs
     postagens?: boolean | UsuarioCountOutputTypeCountPostagensArgs
+    comentarios?: boolean | UsuarioCountOutputTypeCountComentariosArgs
   }
 
   // Custom InputTypes
@@ -1514,6 +1627,13 @@ export namespace Prisma {
    */
   export type UsuarioCountOutputTypeCountPostagensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PostagemWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountComentariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ComentarioWhereInput
   }
 
 
@@ -1595,11 +1715,13 @@ export namespace Prisma {
   export type ReceitaCountOutputType = {
     ingredientes: number
     postagens: number
+    comentarios: number
   }
 
   export type ReceitaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ingredientes?: boolean | ReceitaCountOutputTypeCountIngredientesArgs
     postagens?: boolean | ReceitaCountOutputTypeCountPostagensArgs
+    comentarios?: boolean | ReceitaCountOutputTypeCountComentariosArgs
   }
 
   // Custom InputTypes
@@ -1625,6 +1747,44 @@ export namespace Prisma {
    */
   export type ReceitaCountOutputTypeCountPostagensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PostagemWhereInput
+  }
+
+  /**
+   * ReceitaCountOutputType without action
+   */
+  export type ReceitaCountOutputTypeCountComentariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ComentarioWhereInput
+  }
+
+
+  /**
+   * Count Type ComentarioCountOutputType
+   */
+
+  export type ComentarioCountOutputType = {
+    respostas: number
+  }
+
+  export type ComentarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    respostas?: boolean | ComentarioCountOutputTypeCountRespostasArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ComentarioCountOutputType without action
+   */
+  export type ComentarioCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComentarioCountOutputType
+     */
+    select?: ComentarioCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ComentarioCountOutputType without action
+   */
+  export type ComentarioCountOutputTypeCountRespostasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ComentarioWhereInput
   }
 
 
@@ -1657,6 +1817,7 @@ export namespace Prisma {
     nome: string | null
     email: string | null
     senha: string | null
+    avatar: string | null
     nivelHabilidade: $Enums.NivelHabilidade | null
     criadoEm: Date | null
     atualizadoEm: Date | null
@@ -1667,6 +1828,7 @@ export namespace Prisma {
     nome: string | null
     email: string | null
     senha: string | null
+    avatar: string | null
     nivelHabilidade: $Enums.NivelHabilidade | null
     criadoEm: Date | null
     atualizadoEm: Date | null
@@ -1677,6 +1839,7 @@ export namespace Prisma {
     nome: number
     email: number
     senha: number
+    avatar: number
     nivelHabilidade: number
     criadoEm: number
     atualizadoEm: number
@@ -1697,6 +1860,7 @@ export namespace Prisma {
     nome?: true
     email?: true
     senha?: true
+    avatar?: true
     nivelHabilidade?: true
     criadoEm?: true
     atualizadoEm?: true
@@ -1707,6 +1871,7 @@ export namespace Prisma {
     nome?: true
     email?: true
     senha?: true
+    avatar?: true
     nivelHabilidade?: true
     criadoEm?: true
     atualizadoEm?: true
@@ -1717,6 +1882,7 @@ export namespace Prisma {
     nome?: true
     email?: true
     senha?: true
+    avatar?: true
     nivelHabilidade?: true
     criadoEm?: true
     atualizadoEm?: true
@@ -1814,6 +1980,7 @@ export namespace Prisma {
     nome: string
     email: string
     senha: string
+    avatar: string | null
     nivelHabilidade: $Enums.NivelHabilidade
     criadoEm: Date
     atualizadoEm: Date
@@ -1843,6 +2010,7 @@ export namespace Prisma {
     nome?: boolean
     email?: boolean
     senha?: boolean
+    avatar?: boolean
     nivelHabilidade?: boolean
     criadoEm?: boolean
     atualizadoEm?: boolean
@@ -1850,6 +2018,7 @@ export namespace Prisma {
     inventario?: boolean | Usuario$inventarioArgs<ExtArgs>
     receitas?: boolean | Usuario$receitasArgs<ExtArgs>
     postagens?: boolean | Usuario$postagensArgs<ExtArgs>
+    comentarios?: boolean | Usuario$comentariosArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
@@ -1860,17 +2029,19 @@ export namespace Prisma {
     nome?: boolean
     email?: boolean
     senha?: boolean
+    avatar?: boolean
     nivelHabilidade?: boolean
     criadoEm?: boolean
     atualizadoEm?: boolean
   }
 
-  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "email" | "senha" | "nivelHabilidade" | "criadoEm" | "atualizadoEm", ExtArgs["result"]["usuario"]>
+  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "email" | "senha" | "avatar" | "nivelHabilidade" | "criadoEm" | "atualizadoEm", ExtArgs["result"]["usuario"]>
   export type UsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     perfil?: boolean | Usuario$perfilArgs<ExtArgs>
     inventario?: boolean | Usuario$inventarioArgs<ExtArgs>
     receitas?: boolean | Usuario$receitasArgs<ExtArgs>
     postagens?: boolean | Usuario$postagensArgs<ExtArgs>
+    comentarios?: boolean | Usuario$comentariosArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1881,12 +2052,14 @@ export namespace Prisma {
       inventario: Prisma.$InventarioPayload<ExtArgs>[]
       receitas: Prisma.$ReceitaPayload<ExtArgs>[]
       postagens: Prisma.$PostagemPayload<ExtArgs>[]
+      comentarios: Prisma.$ComentarioPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       nome: string
       email: string
       senha: string
+      avatar: string | null
       nivelHabilidade: $Enums.NivelHabilidade
       criadoEm: Date
       atualizadoEm: Date
@@ -2234,6 +2407,7 @@ export namespace Prisma {
     inventario<T extends Usuario$inventarioArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$inventarioArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     receitas<T extends Usuario$receitasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$receitasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReceitaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     postagens<T extends Usuario$postagensArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$postagensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostagemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    comentarios<T extends Usuario$comentariosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$comentariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2267,6 +2441,7 @@ export namespace Prisma {
     readonly nome: FieldRef<"Usuario", 'String'>
     readonly email: FieldRef<"Usuario", 'String'>
     readonly senha: FieldRef<"Usuario", 'String'>
+    readonly avatar: FieldRef<"Usuario", 'String'>
     readonly nivelHabilidade: FieldRef<"Usuario", 'NivelHabilidade'>
     readonly criadoEm: FieldRef<"Usuario", 'DateTime'>
     readonly atualizadoEm: FieldRef<"Usuario", 'DateTime'>
@@ -2706,6 +2881,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PostagemScalarFieldEnum | PostagemScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.comentarios
+   */
+  export type Usuario$comentariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    where?: ComentarioWhereInput
+    orderBy?: ComentarioOrderByWithRelationInput | ComentarioOrderByWithRelationInput[]
+    cursor?: ComentarioWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ComentarioScalarFieldEnum | ComentarioScalarFieldEnum[]
   }
 
   /**
@@ -6696,6 +6895,7 @@ export namespace Prisma {
     modoPreparo: string | null
     tempoEstimado: number | null
     porcoes: number | null
+    imagem: string | null
     publica: boolean | null
     geradaPorIA: boolean | null
     criadaEm: Date | null
@@ -6709,6 +6909,7 @@ export namespace Prisma {
     modoPreparo: string | null
     tempoEstimado: number | null
     porcoes: number | null
+    imagem: string | null
     publica: boolean | null
     geradaPorIA: boolean | null
     criadaEm: Date | null
@@ -6722,6 +6923,7 @@ export namespace Prisma {
     modoPreparo: number
     tempoEstimado: number
     porcoes: number
+    imagem: number
     publica: number
     geradaPorIA: number
     criadaEm: number
@@ -6751,6 +6953,7 @@ export namespace Prisma {
     modoPreparo?: true
     tempoEstimado?: true
     porcoes?: true
+    imagem?: true
     publica?: true
     geradaPorIA?: true
     criadaEm?: true
@@ -6764,6 +6967,7 @@ export namespace Prisma {
     modoPreparo?: true
     tempoEstimado?: true
     porcoes?: true
+    imagem?: true
     publica?: true
     geradaPorIA?: true
     criadaEm?: true
@@ -6777,6 +6981,7 @@ export namespace Prisma {
     modoPreparo?: true
     tempoEstimado?: true
     porcoes?: true
+    imagem?: true
     publica?: true
     geradaPorIA?: true
     criadaEm?: true
@@ -6877,6 +7082,7 @@ export namespace Prisma {
     modoPreparo: string
     tempoEstimado: number
     porcoes: number
+    imagem: string | null
     publica: boolean
     geradaPorIA: boolean
     criadaEm: Date
@@ -6909,6 +7115,7 @@ export namespace Prisma {
     modoPreparo?: boolean
     tempoEstimado?: boolean
     porcoes?: boolean
+    imagem?: boolean
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: boolean
@@ -6916,6 +7123,7 @@ export namespace Prisma {
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     ingredientes?: boolean | Receita$ingredientesArgs<ExtArgs>
     postagens?: boolean | Receita$postagensArgs<ExtArgs>
+    comentarios?: boolean | Receita$comentariosArgs<ExtArgs>
     _count?: boolean | ReceitaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["receita"]>
 
@@ -6928,17 +7136,19 @@ export namespace Prisma {
     modoPreparo?: boolean
     tempoEstimado?: boolean
     porcoes?: boolean
+    imagem?: boolean
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: boolean
     atualizadaEm?: boolean
   }
 
-  export type ReceitaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "titulo" | "modoPreparo" | "tempoEstimado" | "porcoes" | "publica" | "geradaPorIA" | "criadaEm" | "atualizadaEm", ExtArgs["result"]["receita"]>
+  export type ReceitaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "titulo" | "modoPreparo" | "tempoEstimado" | "porcoes" | "imagem" | "publica" | "geradaPorIA" | "criadaEm" | "atualizadaEm", ExtArgs["result"]["receita"]>
   export type ReceitaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     ingredientes?: boolean | Receita$ingredientesArgs<ExtArgs>
     postagens?: boolean | Receita$postagensArgs<ExtArgs>
+    comentarios?: boolean | Receita$comentariosArgs<ExtArgs>
     _count?: boolean | ReceitaCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -6948,6 +7158,7 @@ export namespace Prisma {
       usuario: Prisma.$UsuarioPayload<ExtArgs>
       ingredientes: Prisma.$ReceitaIngredientePayload<ExtArgs>[]
       postagens: Prisma.$PostagemPayload<ExtArgs>[]
+      comentarios: Prisma.$ComentarioPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6956,6 +7167,7 @@ export namespace Prisma {
       modoPreparo: string
       tempoEstimado: number
       porcoes: number
+      imagem: string | null
       publica: boolean
       geradaPorIA: boolean
       criadaEm: Date
@@ -7303,6 +7515,7 @@ export namespace Prisma {
     usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ingredientes<T extends Receita$ingredientesArgs<ExtArgs> = {}>(args?: Subset<T, Receita$ingredientesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReceitaIngredientePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     postagens<T extends Receita$postagensArgs<ExtArgs> = {}>(args?: Subset<T, Receita$postagensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostagemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    comentarios<T extends Receita$comentariosArgs<ExtArgs> = {}>(args?: Subset<T, Receita$comentariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7338,6 +7551,7 @@ export namespace Prisma {
     readonly modoPreparo: FieldRef<"Receita", 'String'>
     readonly tempoEstimado: FieldRef<"Receita", 'Int'>
     readonly porcoes: FieldRef<"Receita", 'Int'>
+    readonly imagem: FieldRef<"Receita", 'String'>
     readonly publica: FieldRef<"Receita", 'Boolean'>
     readonly geradaPorIA: FieldRef<"Receita", 'Boolean'>
     readonly criadaEm: FieldRef<"Receita", 'DateTime'>
@@ -7735,6 +7949,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PostagemScalarFieldEnum | PostagemScalarFieldEnum[]
+  }
+
+  /**
+   * Receita.comentarios
+   */
+  export type Receita$comentariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    where?: ComentarioWhereInput
+    orderBy?: ComentarioOrderByWithRelationInput | ComentarioOrderByWithRelationInput[]
+    cursor?: ComentarioWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ComentarioScalarFieldEnum | ComentarioScalarFieldEnum[]
   }
 
   /**
@@ -8733,6 +8971,1054 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ReceitaIngredienteInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Comentario
+   */
+
+  export type AggregateComentario = {
+    _count: ComentarioCountAggregateOutputType | null
+    _avg: ComentarioAvgAggregateOutputType | null
+    _sum: ComentarioSumAggregateOutputType | null
+    _min: ComentarioMinAggregateOutputType | null
+    _max: ComentarioMaxAggregateOutputType | null
+  }
+
+  export type ComentarioAvgAggregateOutputType = {
+    id: number | null
+    receitaId: number | null
+    usuarioId: number | null
+    respostaDeId: number | null
+  }
+
+  export type ComentarioSumAggregateOutputType = {
+    id: number | null
+    receitaId: number | null
+    usuarioId: number | null
+    respostaDeId: number | null
+  }
+
+  export type ComentarioMinAggregateOutputType = {
+    id: number | null
+    receitaId: number | null
+    usuarioId: number | null
+    respostaDeId: number | null
+    texto: string | null
+    criadoEm: Date | null
+  }
+
+  export type ComentarioMaxAggregateOutputType = {
+    id: number | null
+    receitaId: number | null
+    usuarioId: number | null
+    respostaDeId: number | null
+    texto: string | null
+    criadoEm: Date | null
+  }
+
+  export type ComentarioCountAggregateOutputType = {
+    id: number
+    receitaId: number
+    usuarioId: number
+    respostaDeId: number
+    texto: number
+    criadoEm: number
+    _all: number
+  }
+
+
+  export type ComentarioAvgAggregateInputType = {
+    id?: true
+    receitaId?: true
+    usuarioId?: true
+    respostaDeId?: true
+  }
+
+  export type ComentarioSumAggregateInputType = {
+    id?: true
+    receitaId?: true
+    usuarioId?: true
+    respostaDeId?: true
+  }
+
+  export type ComentarioMinAggregateInputType = {
+    id?: true
+    receitaId?: true
+    usuarioId?: true
+    respostaDeId?: true
+    texto?: true
+    criadoEm?: true
+  }
+
+  export type ComentarioMaxAggregateInputType = {
+    id?: true
+    receitaId?: true
+    usuarioId?: true
+    respostaDeId?: true
+    texto?: true
+    criadoEm?: true
+  }
+
+  export type ComentarioCountAggregateInputType = {
+    id?: true
+    receitaId?: true
+    usuarioId?: true
+    respostaDeId?: true
+    texto?: true
+    criadoEm?: true
+    _all?: true
+  }
+
+  export type ComentarioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Comentario to aggregate.
+     */
+    where?: ComentarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comentarios to fetch.
+     */
+    orderBy?: ComentarioOrderByWithRelationInput | ComentarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ComentarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comentarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comentarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Comentarios
+    **/
+    _count?: true | ComentarioCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ComentarioAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ComentarioSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ComentarioMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ComentarioMaxAggregateInputType
+  }
+
+  export type GetComentarioAggregateType<T extends ComentarioAggregateArgs> = {
+        [P in keyof T & keyof AggregateComentario]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateComentario[P]>
+      : GetScalarType<T[P], AggregateComentario[P]>
+  }
+
+
+
+
+  export type ComentarioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ComentarioWhereInput
+    orderBy?: ComentarioOrderByWithAggregationInput | ComentarioOrderByWithAggregationInput[]
+    by: ComentarioScalarFieldEnum[] | ComentarioScalarFieldEnum
+    having?: ComentarioScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ComentarioCountAggregateInputType | true
+    _avg?: ComentarioAvgAggregateInputType
+    _sum?: ComentarioSumAggregateInputType
+    _min?: ComentarioMinAggregateInputType
+    _max?: ComentarioMaxAggregateInputType
+  }
+
+  export type ComentarioGroupByOutputType = {
+    id: number
+    receitaId: number
+    usuarioId: number
+    respostaDeId: number | null
+    texto: string
+    criadoEm: Date
+    _count: ComentarioCountAggregateOutputType | null
+    _avg: ComentarioAvgAggregateOutputType | null
+    _sum: ComentarioSumAggregateOutputType | null
+    _min: ComentarioMinAggregateOutputType | null
+    _max: ComentarioMaxAggregateOutputType | null
+  }
+
+  type GetComentarioGroupByPayload<T extends ComentarioGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ComentarioGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ComentarioGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ComentarioGroupByOutputType[P]>
+            : GetScalarType<T[P], ComentarioGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ComentarioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    receitaId?: boolean
+    usuarioId?: boolean
+    respostaDeId?: boolean
+    texto?: boolean
+    criadoEm?: boolean
+    receita?: boolean | ReceitaDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    respostaDe?: boolean | Comentario$respostaDeArgs<ExtArgs>
+    respostas?: boolean | Comentario$respostasArgs<ExtArgs>
+    _count?: boolean | ComentarioCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["comentario"]>
+
+
+
+  export type ComentarioSelectScalar = {
+    id?: boolean
+    receitaId?: boolean
+    usuarioId?: boolean
+    respostaDeId?: boolean
+    texto?: boolean
+    criadoEm?: boolean
+  }
+
+  export type ComentarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "receitaId" | "usuarioId" | "respostaDeId" | "texto" | "criadoEm", ExtArgs["result"]["comentario"]>
+  export type ComentarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    receita?: boolean | ReceitaDefaultArgs<ExtArgs>
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    respostaDe?: boolean | Comentario$respostaDeArgs<ExtArgs>
+    respostas?: boolean | Comentario$respostasArgs<ExtArgs>
+    _count?: boolean | ComentarioCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ComentarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Comentario"
+    objects: {
+      receita: Prisma.$ReceitaPayload<ExtArgs>
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
+      respostaDe: Prisma.$ComentarioPayload<ExtArgs> | null
+      respostas: Prisma.$ComentarioPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      receitaId: number
+      usuarioId: number
+      respostaDeId: number | null
+      texto: string
+      criadoEm: Date
+    }, ExtArgs["result"]["comentario"]>
+    composites: {}
+  }
+
+  type ComentarioGetPayload<S extends boolean | null | undefined | ComentarioDefaultArgs> = $Result.GetResult<Prisma.$ComentarioPayload, S>
+
+  type ComentarioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ComentarioFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ComentarioCountAggregateInputType | true
+    }
+
+  export interface ComentarioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Comentario'], meta: { name: 'Comentario' } }
+    /**
+     * Find zero or one Comentario that matches the filter.
+     * @param {ComentarioFindUniqueArgs} args - Arguments to find a Comentario
+     * @example
+     * // Get one Comentario
+     * const comentario = await prisma.comentario.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ComentarioFindUniqueArgs>(args: SelectSubset<T, ComentarioFindUniqueArgs<ExtArgs>>): Prisma__ComentarioClient<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Comentario that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ComentarioFindUniqueOrThrowArgs} args - Arguments to find a Comentario
+     * @example
+     * // Get one Comentario
+     * const comentario = await prisma.comentario.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ComentarioFindUniqueOrThrowArgs>(args: SelectSubset<T, ComentarioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ComentarioClient<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Comentario that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComentarioFindFirstArgs} args - Arguments to find a Comentario
+     * @example
+     * // Get one Comentario
+     * const comentario = await prisma.comentario.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ComentarioFindFirstArgs>(args?: SelectSubset<T, ComentarioFindFirstArgs<ExtArgs>>): Prisma__ComentarioClient<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Comentario that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComentarioFindFirstOrThrowArgs} args - Arguments to find a Comentario
+     * @example
+     * // Get one Comentario
+     * const comentario = await prisma.comentario.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ComentarioFindFirstOrThrowArgs>(args?: SelectSubset<T, ComentarioFindFirstOrThrowArgs<ExtArgs>>): Prisma__ComentarioClient<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Comentarios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComentarioFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Comentarios
+     * const comentarios = await prisma.comentario.findMany()
+     * 
+     * // Get first 10 Comentarios
+     * const comentarios = await prisma.comentario.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const comentarioWithIdOnly = await prisma.comentario.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ComentarioFindManyArgs>(args?: SelectSubset<T, ComentarioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Comentario.
+     * @param {ComentarioCreateArgs} args - Arguments to create a Comentario.
+     * @example
+     * // Create one Comentario
+     * const Comentario = await prisma.comentario.create({
+     *   data: {
+     *     // ... data to create a Comentario
+     *   }
+     * })
+     * 
+     */
+    create<T extends ComentarioCreateArgs>(args: SelectSubset<T, ComentarioCreateArgs<ExtArgs>>): Prisma__ComentarioClient<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Comentarios.
+     * @param {ComentarioCreateManyArgs} args - Arguments to create many Comentarios.
+     * @example
+     * // Create many Comentarios
+     * const comentario = await prisma.comentario.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ComentarioCreateManyArgs>(args?: SelectSubset<T, ComentarioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Comentario.
+     * @param {ComentarioDeleteArgs} args - Arguments to delete one Comentario.
+     * @example
+     * // Delete one Comentario
+     * const Comentario = await prisma.comentario.delete({
+     *   where: {
+     *     // ... filter to delete one Comentario
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ComentarioDeleteArgs>(args: SelectSubset<T, ComentarioDeleteArgs<ExtArgs>>): Prisma__ComentarioClient<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Comentario.
+     * @param {ComentarioUpdateArgs} args - Arguments to update one Comentario.
+     * @example
+     * // Update one Comentario
+     * const comentario = await prisma.comentario.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ComentarioUpdateArgs>(args: SelectSubset<T, ComentarioUpdateArgs<ExtArgs>>): Prisma__ComentarioClient<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Comentarios.
+     * @param {ComentarioDeleteManyArgs} args - Arguments to filter Comentarios to delete.
+     * @example
+     * // Delete a few Comentarios
+     * const { count } = await prisma.comentario.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ComentarioDeleteManyArgs>(args?: SelectSubset<T, ComentarioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Comentarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComentarioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Comentarios
+     * const comentario = await prisma.comentario.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ComentarioUpdateManyArgs>(args: SelectSubset<T, ComentarioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Comentario.
+     * @param {ComentarioUpsertArgs} args - Arguments to update or create a Comentario.
+     * @example
+     * // Update or create a Comentario
+     * const comentario = await prisma.comentario.upsert({
+     *   create: {
+     *     // ... data to create a Comentario
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Comentario we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ComentarioUpsertArgs>(args: SelectSubset<T, ComentarioUpsertArgs<ExtArgs>>): Prisma__ComentarioClient<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Comentarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComentarioCountArgs} args - Arguments to filter Comentarios to count.
+     * @example
+     * // Count the number of Comentarios
+     * const count = await prisma.comentario.count({
+     *   where: {
+     *     // ... the filter for the Comentarios we want to count
+     *   }
+     * })
+    **/
+    count<T extends ComentarioCountArgs>(
+      args?: Subset<T, ComentarioCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ComentarioCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Comentario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComentarioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ComentarioAggregateArgs>(args: Subset<T, ComentarioAggregateArgs>): Prisma.PrismaPromise<GetComentarioAggregateType<T>>
+
+    /**
+     * Group by Comentario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComentarioGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ComentarioGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ComentarioGroupByArgs['orderBy'] }
+        : { orderBy?: ComentarioGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ComentarioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetComentarioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Comentario model
+   */
+  readonly fields: ComentarioFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Comentario.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ComentarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    receita<T extends ReceitaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ReceitaDefaultArgs<ExtArgs>>): Prisma__ReceitaClient<$Result.GetResult<Prisma.$ReceitaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    respostaDe<T extends Comentario$respostaDeArgs<ExtArgs> = {}>(args?: Subset<T, Comentario$respostaDeArgs<ExtArgs>>): Prisma__ComentarioClient<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    respostas<T extends Comentario$respostasArgs<ExtArgs> = {}>(args?: Subset<T, Comentario$respostasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Comentario model
+   */
+  interface ComentarioFieldRefs {
+    readonly id: FieldRef<"Comentario", 'Int'>
+    readonly receitaId: FieldRef<"Comentario", 'Int'>
+    readonly usuarioId: FieldRef<"Comentario", 'Int'>
+    readonly respostaDeId: FieldRef<"Comentario", 'Int'>
+    readonly texto: FieldRef<"Comentario", 'String'>
+    readonly criadoEm: FieldRef<"Comentario", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Comentario findUnique
+   */
+  export type ComentarioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    /**
+     * Filter, which Comentario to fetch.
+     */
+    where: ComentarioWhereUniqueInput
+  }
+
+  /**
+   * Comentario findUniqueOrThrow
+   */
+  export type ComentarioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    /**
+     * Filter, which Comentario to fetch.
+     */
+    where: ComentarioWhereUniqueInput
+  }
+
+  /**
+   * Comentario findFirst
+   */
+  export type ComentarioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    /**
+     * Filter, which Comentario to fetch.
+     */
+    where?: ComentarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comentarios to fetch.
+     */
+    orderBy?: ComentarioOrderByWithRelationInput | ComentarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Comentarios.
+     */
+    cursor?: ComentarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comentarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comentarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Comentarios.
+     */
+    distinct?: ComentarioScalarFieldEnum | ComentarioScalarFieldEnum[]
+  }
+
+  /**
+   * Comentario findFirstOrThrow
+   */
+  export type ComentarioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    /**
+     * Filter, which Comentario to fetch.
+     */
+    where?: ComentarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comentarios to fetch.
+     */
+    orderBy?: ComentarioOrderByWithRelationInput | ComentarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Comentarios.
+     */
+    cursor?: ComentarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comentarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comentarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Comentarios.
+     */
+    distinct?: ComentarioScalarFieldEnum | ComentarioScalarFieldEnum[]
+  }
+
+  /**
+   * Comentario findMany
+   */
+  export type ComentarioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    /**
+     * Filter, which Comentarios to fetch.
+     */
+    where?: ComentarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comentarios to fetch.
+     */
+    orderBy?: ComentarioOrderByWithRelationInput | ComentarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Comentarios.
+     */
+    cursor?: ComentarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comentarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comentarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Comentarios.
+     */
+    distinct?: ComentarioScalarFieldEnum | ComentarioScalarFieldEnum[]
+  }
+
+  /**
+   * Comentario create
+   */
+  export type ComentarioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Comentario.
+     */
+    data: XOR<ComentarioCreateInput, ComentarioUncheckedCreateInput>
+  }
+
+  /**
+   * Comentario createMany
+   */
+  export type ComentarioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Comentarios.
+     */
+    data: ComentarioCreateManyInput | ComentarioCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Comentario update
+   */
+  export type ComentarioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Comentario.
+     */
+    data: XOR<ComentarioUpdateInput, ComentarioUncheckedUpdateInput>
+    /**
+     * Choose, which Comentario to update.
+     */
+    where: ComentarioWhereUniqueInput
+  }
+
+  /**
+   * Comentario updateMany
+   */
+  export type ComentarioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Comentarios.
+     */
+    data: XOR<ComentarioUpdateManyMutationInput, ComentarioUncheckedUpdateManyInput>
+    /**
+     * Filter which Comentarios to update
+     */
+    where?: ComentarioWhereInput
+    /**
+     * Limit how many Comentarios to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Comentario upsert
+   */
+  export type ComentarioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Comentario to update in case it exists.
+     */
+    where: ComentarioWhereUniqueInput
+    /**
+     * In case the Comentario found by the `where` argument doesn't exist, create a new Comentario with this data.
+     */
+    create: XOR<ComentarioCreateInput, ComentarioUncheckedCreateInput>
+    /**
+     * In case the Comentario was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ComentarioUpdateInput, ComentarioUncheckedUpdateInput>
+  }
+
+  /**
+   * Comentario delete
+   */
+  export type ComentarioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    /**
+     * Filter which Comentario to delete.
+     */
+    where: ComentarioWhereUniqueInput
+  }
+
+  /**
+   * Comentario deleteMany
+   */
+  export type ComentarioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Comentarios to delete
+     */
+    where?: ComentarioWhereInput
+    /**
+     * Limit how many Comentarios to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Comentario.respostaDe
+   */
+  export type Comentario$respostaDeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    where?: ComentarioWhereInput
+  }
+
+  /**
+   * Comentario.respostas
+   */
+  export type Comentario$respostasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
+    where?: ComentarioWhereInput
+    orderBy?: ComentarioOrderByWithRelationInput | ComentarioOrderByWithRelationInput[]
+    cursor?: ComentarioWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ComentarioScalarFieldEnum | ComentarioScalarFieldEnum[]
+  }
+
+  /**
+   * Comentario without action
+   */
+  export type ComentarioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comentario
+     */
+    select?: ComentarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comentario
+     */
+    omit?: ComentarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComentarioInclude<ExtArgs> | null
   }
 
 
@@ -9765,6 +11051,7 @@ export namespace Prisma {
     nome: 'nome',
     email: 'email',
     senha: 'senha',
+    avatar: 'avatar',
     nivelHabilidade: 'nivelHabilidade',
     criadoEm: 'criadoEm',
     atualizadoEm: 'atualizadoEm'
@@ -9820,6 +11107,7 @@ export namespace Prisma {
     modoPreparo: 'modoPreparo',
     tempoEstimado: 'tempoEstimado',
     porcoes: 'porcoes',
+    imagem: 'imagem',
     publica: 'publica',
     geradaPorIA: 'geradaPorIA',
     criadaEm: 'criadaEm',
@@ -9838,6 +11126,18 @@ export namespace Prisma {
   };
 
   export type ReceitaIngredienteScalarFieldEnum = (typeof ReceitaIngredienteScalarFieldEnum)[keyof typeof ReceitaIngredienteScalarFieldEnum]
+
+
+  export const ComentarioScalarFieldEnum: {
+    id: 'id',
+    receitaId: 'receitaId',
+    usuarioId: 'usuarioId',
+    respostaDeId: 'respostaDeId',
+    texto: 'texto',
+    criadoEm: 'criadoEm'
+  };
+
+  export type ComentarioScalarFieldEnum = (typeof ComentarioScalarFieldEnum)[keyof typeof ComentarioScalarFieldEnum]
 
 
   export const PostagemScalarFieldEnum: {
@@ -9860,10 +11160,19 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   export const UsuarioOrderByRelevanceFieldEnum: {
     nome: 'nome',
     email: 'email',
-    senha: 'senha'
+    senha: 'senha',
+    avatar: 'avatar'
   };
 
   export type UsuarioOrderByRelevanceFieldEnum = (typeof UsuarioOrderByRelevanceFieldEnum)[keyof typeof UsuarioOrderByRelevanceFieldEnum]
@@ -9893,7 +11202,8 @@ export namespace Prisma {
 
   export const ReceitaOrderByRelevanceFieldEnum: {
     titulo: 'titulo',
-    modoPreparo: 'modoPreparo'
+    modoPreparo: 'modoPreparo',
+    imagem: 'imagem'
   };
 
   export type ReceitaOrderByRelevanceFieldEnum = (typeof ReceitaOrderByRelevanceFieldEnum)[keyof typeof ReceitaOrderByRelevanceFieldEnum]
@@ -9906,12 +11216,11 @@ export namespace Prisma {
   export type ReceitaIngredienteOrderByRelevanceFieldEnum = (typeof ReceitaIngredienteOrderByRelevanceFieldEnum)[keyof typeof ReceitaIngredienteOrderByRelevanceFieldEnum]
 
 
-  export const NullsOrder: {
-    first: 'first',
-    last: 'last'
+  export const ComentarioOrderByRelevanceFieldEnum: {
+    texto: 'texto'
   };
 
-  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+  export type ComentarioOrderByRelevanceFieldEnum = (typeof ComentarioOrderByRelevanceFieldEnum)[keyof typeof ComentarioOrderByRelevanceFieldEnum]
 
 
   export const PostagemOrderByRelevanceFieldEnum: {
@@ -9987,6 +11296,7 @@ export namespace Prisma {
     nome?: StringFilter<"Usuario"> | string
     email?: StringFilter<"Usuario"> | string
     senha?: StringFilter<"Usuario"> | string
+    avatar?: StringNullableFilter<"Usuario"> | string | null
     nivelHabilidade?: EnumNivelHabilidadeFilter<"Usuario"> | $Enums.NivelHabilidade
     criadoEm?: DateTimeFilter<"Usuario"> | Date | string
     atualizadoEm?: DateTimeFilter<"Usuario"> | Date | string
@@ -9994,6 +11304,7 @@ export namespace Prisma {
     inventario?: InventarioListRelationFilter
     receitas?: ReceitaListRelationFilter
     postagens?: PostagemListRelationFilter
+    comentarios?: ComentarioListRelationFilter
   }
 
   export type UsuarioOrderByWithRelationInput = {
@@ -10001,6 +11312,7 @@ export namespace Prisma {
     nome?: SortOrder
     email?: SortOrder
     senha?: SortOrder
+    avatar?: SortOrderInput | SortOrder
     nivelHabilidade?: SortOrder
     criadoEm?: SortOrder
     atualizadoEm?: SortOrder
@@ -10008,6 +11320,7 @@ export namespace Prisma {
     inventario?: InventarioOrderByRelationAggregateInput
     receitas?: ReceitaOrderByRelationAggregateInput
     postagens?: PostagemOrderByRelationAggregateInput
+    comentarios?: ComentarioOrderByRelationAggregateInput
     _relevance?: UsuarioOrderByRelevanceInput
   }
 
@@ -10019,6 +11332,7 @@ export namespace Prisma {
     NOT?: UsuarioWhereInput | UsuarioWhereInput[]
     nome?: StringFilter<"Usuario"> | string
     senha?: StringFilter<"Usuario"> | string
+    avatar?: StringNullableFilter<"Usuario"> | string | null
     nivelHabilidade?: EnumNivelHabilidadeFilter<"Usuario"> | $Enums.NivelHabilidade
     criadoEm?: DateTimeFilter<"Usuario"> | Date | string
     atualizadoEm?: DateTimeFilter<"Usuario"> | Date | string
@@ -10026,6 +11340,7 @@ export namespace Prisma {
     inventario?: InventarioListRelationFilter
     receitas?: ReceitaListRelationFilter
     postagens?: PostagemListRelationFilter
+    comentarios?: ComentarioListRelationFilter
   }, "id" | "email">
 
   export type UsuarioOrderByWithAggregationInput = {
@@ -10033,6 +11348,7 @@ export namespace Prisma {
     nome?: SortOrder
     email?: SortOrder
     senha?: SortOrder
+    avatar?: SortOrderInput | SortOrder
     nivelHabilidade?: SortOrder
     criadoEm?: SortOrder
     atualizadoEm?: SortOrder
@@ -10051,6 +11367,7 @@ export namespace Prisma {
     nome?: StringWithAggregatesFilter<"Usuario"> | string
     email?: StringWithAggregatesFilter<"Usuario"> | string
     senha?: StringWithAggregatesFilter<"Usuario"> | string
+    avatar?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
     nivelHabilidade?: EnumNivelHabilidadeWithAggregatesFilter<"Usuario"> | $Enums.NivelHabilidade
     criadoEm?: DateTimeWithAggregatesFilter<"Usuario"> | Date | string
     atualizadoEm?: DateTimeWithAggregatesFilter<"Usuario"> | Date | string
@@ -10287,6 +11604,7 @@ export namespace Prisma {
     modoPreparo?: StringFilter<"Receita"> | string
     tempoEstimado?: IntFilter<"Receita"> | number
     porcoes?: IntFilter<"Receita"> | number
+    imagem?: StringNullableFilter<"Receita"> | string | null
     publica?: BoolFilter<"Receita"> | boolean
     geradaPorIA?: BoolFilter<"Receita"> | boolean
     criadaEm?: DateTimeFilter<"Receita"> | Date | string
@@ -10294,6 +11612,7 @@ export namespace Prisma {
     usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     ingredientes?: ReceitaIngredienteListRelationFilter
     postagens?: PostagemListRelationFilter
+    comentarios?: ComentarioListRelationFilter
   }
 
   export type ReceitaOrderByWithRelationInput = {
@@ -10303,6 +11622,7 @@ export namespace Prisma {
     modoPreparo?: SortOrder
     tempoEstimado?: SortOrder
     porcoes?: SortOrder
+    imagem?: SortOrderInput | SortOrder
     publica?: SortOrder
     geradaPorIA?: SortOrder
     criadaEm?: SortOrder
@@ -10310,6 +11630,7 @@ export namespace Prisma {
     usuario?: UsuarioOrderByWithRelationInput
     ingredientes?: ReceitaIngredienteOrderByRelationAggregateInput
     postagens?: PostagemOrderByRelationAggregateInput
+    comentarios?: ComentarioOrderByRelationAggregateInput
     _relevance?: ReceitaOrderByRelevanceInput
   }
 
@@ -10323,6 +11644,7 @@ export namespace Prisma {
     modoPreparo?: StringFilter<"Receita"> | string
     tempoEstimado?: IntFilter<"Receita"> | number
     porcoes?: IntFilter<"Receita"> | number
+    imagem?: StringNullableFilter<"Receita"> | string | null
     publica?: BoolFilter<"Receita"> | boolean
     geradaPorIA?: BoolFilter<"Receita"> | boolean
     criadaEm?: DateTimeFilter<"Receita"> | Date | string
@@ -10330,6 +11652,7 @@ export namespace Prisma {
     usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     ingredientes?: ReceitaIngredienteListRelationFilter
     postagens?: PostagemListRelationFilter
+    comentarios?: ComentarioListRelationFilter
   }, "id">
 
   export type ReceitaOrderByWithAggregationInput = {
@@ -10339,6 +11662,7 @@ export namespace Prisma {
     modoPreparo?: SortOrder
     tempoEstimado?: SortOrder
     porcoes?: SortOrder
+    imagem?: SortOrderInput | SortOrder
     publica?: SortOrder
     geradaPorIA?: SortOrder
     criadaEm?: SortOrder
@@ -10360,6 +11684,7 @@ export namespace Prisma {
     modoPreparo?: StringWithAggregatesFilter<"Receita"> | string
     tempoEstimado?: IntWithAggregatesFilter<"Receita"> | number
     porcoes?: IntWithAggregatesFilter<"Receita"> | number
+    imagem?: StringNullableWithAggregatesFilter<"Receita"> | string | null
     publica?: BoolWithAggregatesFilter<"Receita"> | boolean
     geradaPorIA?: BoolWithAggregatesFilter<"Receita"> | boolean
     criadaEm?: DateTimeWithAggregatesFilter<"Receita"> | Date | string
@@ -10426,6 +11751,78 @@ export namespace Prisma {
     quantidade?: FloatWithAggregatesFilter<"ReceitaIngrediente"> | number
     unidade?: StringWithAggregatesFilter<"ReceitaIngrediente"> | string
     opcional?: BoolWithAggregatesFilter<"ReceitaIngrediente"> | boolean
+  }
+
+  export type ComentarioWhereInput = {
+    AND?: ComentarioWhereInput | ComentarioWhereInput[]
+    OR?: ComentarioWhereInput[]
+    NOT?: ComentarioWhereInput | ComentarioWhereInput[]
+    id?: IntFilter<"Comentario"> | number
+    receitaId?: IntFilter<"Comentario"> | number
+    usuarioId?: IntFilter<"Comentario"> | number
+    respostaDeId?: IntNullableFilter<"Comentario"> | number | null
+    texto?: StringFilter<"Comentario"> | string
+    criadoEm?: DateTimeFilter<"Comentario"> | Date | string
+    receita?: XOR<ReceitaScalarRelationFilter, ReceitaWhereInput>
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    respostaDe?: XOR<ComentarioNullableScalarRelationFilter, ComentarioWhereInput> | null
+    respostas?: ComentarioListRelationFilter
+  }
+
+  export type ComentarioOrderByWithRelationInput = {
+    id?: SortOrder
+    receitaId?: SortOrder
+    usuarioId?: SortOrder
+    respostaDeId?: SortOrderInput | SortOrder
+    texto?: SortOrder
+    criadoEm?: SortOrder
+    receita?: ReceitaOrderByWithRelationInput
+    usuario?: UsuarioOrderByWithRelationInput
+    respostaDe?: ComentarioOrderByWithRelationInput
+    respostas?: ComentarioOrderByRelationAggregateInput
+    _relevance?: ComentarioOrderByRelevanceInput
+  }
+
+  export type ComentarioWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ComentarioWhereInput | ComentarioWhereInput[]
+    OR?: ComentarioWhereInput[]
+    NOT?: ComentarioWhereInput | ComentarioWhereInput[]
+    receitaId?: IntFilter<"Comentario"> | number
+    usuarioId?: IntFilter<"Comentario"> | number
+    respostaDeId?: IntNullableFilter<"Comentario"> | number | null
+    texto?: StringFilter<"Comentario"> | string
+    criadoEm?: DateTimeFilter<"Comentario"> | Date | string
+    receita?: XOR<ReceitaScalarRelationFilter, ReceitaWhereInput>
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    respostaDe?: XOR<ComentarioNullableScalarRelationFilter, ComentarioWhereInput> | null
+    respostas?: ComentarioListRelationFilter
+  }, "id">
+
+  export type ComentarioOrderByWithAggregationInput = {
+    id?: SortOrder
+    receitaId?: SortOrder
+    usuarioId?: SortOrder
+    respostaDeId?: SortOrderInput | SortOrder
+    texto?: SortOrder
+    criadoEm?: SortOrder
+    _count?: ComentarioCountOrderByAggregateInput
+    _avg?: ComentarioAvgOrderByAggregateInput
+    _max?: ComentarioMaxOrderByAggregateInput
+    _min?: ComentarioMinOrderByAggregateInput
+    _sum?: ComentarioSumOrderByAggregateInput
+  }
+
+  export type ComentarioScalarWhereWithAggregatesInput = {
+    AND?: ComentarioScalarWhereWithAggregatesInput | ComentarioScalarWhereWithAggregatesInput[]
+    OR?: ComentarioScalarWhereWithAggregatesInput[]
+    NOT?: ComentarioScalarWhereWithAggregatesInput | ComentarioScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Comentario"> | number
+    receitaId?: IntWithAggregatesFilter<"Comentario"> | number
+    usuarioId?: IntWithAggregatesFilter<"Comentario"> | number
+    respostaDeId?: IntNullableWithAggregatesFilter<"Comentario"> | number | null
+    texto?: StringWithAggregatesFilter<"Comentario"> | string
+    criadoEm?: DateTimeWithAggregatesFilter<"Comentario"> | Date | string
   }
 
   export type PostagemWhereInput = {
@@ -10498,6 +11895,7 @@ export namespace Prisma {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
@@ -10505,6 +11903,7 @@ export namespace Prisma {
     inventario?: InventarioCreateNestedManyWithoutUsuarioInput
     receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateInput = {
@@ -10512,6 +11911,7 @@ export namespace Prisma {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
@@ -10519,12 +11919,14 @@ export namespace Prisma {
     inventario?: InventarioUncheckedCreateNestedManyWithoutUsuarioInput
     receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10532,6 +11934,7 @@ export namespace Prisma {
     inventario?: InventarioUpdateManyWithoutUsuarioNestedInput
     receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateInput = {
@@ -10539,6 +11942,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10546,6 +11950,7 @@ export namespace Prisma {
     inventario?: InventarioUncheckedUpdateManyWithoutUsuarioNestedInput
     receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioCreateManyInput = {
@@ -10553,6 +11958,7 @@ export namespace Prisma {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
@@ -10562,6 +11968,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10572,6 +11979,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10774,6 +12182,7 @@ export namespace Prisma {
     modoPreparo: string
     tempoEstimado: number
     porcoes?: number
+    imagem?: string | null
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: Date | string
@@ -10781,6 +12190,7 @@ export namespace Prisma {
     usuario: UsuarioCreateNestedOneWithoutReceitasInput
     ingredientes?: ReceitaIngredienteCreateNestedManyWithoutReceitaInput
     postagens?: PostagemCreateNestedManyWithoutReceitaInput
+    comentarios?: ComentarioCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUncheckedCreateInput = {
@@ -10790,12 +12200,14 @@ export namespace Prisma {
     modoPreparo: string
     tempoEstimado: number
     porcoes?: number
+    imagem?: string | null
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: Date | string
     atualizadaEm?: Date | string
     ingredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutReceitaInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUpdateInput = {
@@ -10803,6 +12215,7 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10810,6 +12223,7 @@ export namespace Prisma {
     usuario?: UsuarioUpdateOneRequiredWithoutReceitasNestedInput
     ingredientes?: ReceitaIngredienteUpdateManyWithoutReceitaNestedInput
     postagens?: PostagemUpdateManyWithoutReceitaNestedInput
+    comentarios?: ComentarioUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateInput = {
@@ -10819,12 +12233,14 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     ingredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutReceitaNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaCreateManyInput = {
@@ -10834,6 +12250,7 @@ export namespace Prisma {
     modoPreparo: string
     tempoEstimado: number
     porcoes?: number
+    imagem?: string | null
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: Date | string
@@ -10845,6 +12262,7 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10858,6 +12276,7 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10916,6 +12335,67 @@ export namespace Prisma {
     quantidade?: FloatFieldUpdateOperationsInput | number
     unidade?: StringFieldUpdateOperationsInput | string
     opcional?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ComentarioCreateInput = {
+    texto: string
+    criadoEm?: Date | string
+    receita: ReceitaCreateNestedOneWithoutComentariosInput
+    usuario: UsuarioCreateNestedOneWithoutComentariosInput
+    respostaDe?: ComentarioCreateNestedOneWithoutRespostasInput
+    respostas?: ComentarioCreateNestedManyWithoutRespostaDeInput
+  }
+
+  export type ComentarioUncheckedCreateInput = {
+    id?: number
+    receitaId: number
+    usuarioId: number
+    respostaDeId?: number | null
+    texto: string
+    criadoEm?: Date | string
+    respostas?: ComentarioUncheckedCreateNestedManyWithoutRespostaDeInput
+  }
+
+  export type ComentarioUpdateInput = {
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    receita?: ReceitaUpdateOneRequiredWithoutComentariosNestedInput
+    usuario?: UsuarioUpdateOneRequiredWithoutComentariosNestedInput
+    respostaDe?: ComentarioUpdateOneWithoutRespostasNestedInput
+    respostas?: ComentarioUpdateManyWithoutRespostaDeNestedInput
+  }
+
+  export type ComentarioUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    respostaDeId?: NullableIntFieldUpdateOperationsInput | number | null
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    respostas?: ComentarioUncheckedUpdateManyWithoutRespostaDeNestedInput
+  }
+
+  export type ComentarioCreateManyInput = {
+    id?: number
+    receitaId: number
+    usuarioId: number
+    respostaDeId?: number | null
+    texto: string
+    criadoEm?: Date | string
+  }
+
+  export type ComentarioUpdateManyMutationInput = {
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComentarioUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    respostaDeId?: NullableIntFieldUpdateOperationsInput | number | null
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PostagemCreateInput = {
@@ -11002,6 +12482,21 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type EnumNivelHabilidadeFilter<$PrismaModel = never> = {
     equals?: $Enums.NivelHabilidade | EnumNivelHabilidadeFieldRefInput<$PrismaModel>
     in?: $Enums.NivelHabilidade[]
@@ -11043,6 +12538,17 @@ export namespace Prisma {
     none?: PostagemWhereInput
   }
 
+  export type ComentarioListRelationFilter = {
+    every?: ComentarioWhereInput
+    some?: ComentarioWhereInput
+    none?: ComentarioWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type InventarioOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -11052,6 +12558,10 @@ export namespace Prisma {
   }
 
   export type PostagemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ComentarioOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11066,6 +12576,7 @@ export namespace Prisma {
     nome?: SortOrder
     email?: SortOrder
     senha?: SortOrder
+    avatar?: SortOrder
     nivelHabilidade?: SortOrder
     criadoEm?: SortOrder
     atualizadoEm?: SortOrder
@@ -11080,6 +12591,7 @@ export namespace Prisma {
     nome?: SortOrder
     email?: SortOrder
     senha?: SortOrder
+    avatar?: SortOrder
     nivelHabilidade?: SortOrder
     criadoEm?: SortOrder
     atualizadoEm?: SortOrder
@@ -11090,6 +12602,7 @@ export namespace Prisma {
     nome?: SortOrder
     email?: SortOrder
     senha?: SortOrder
+    avatar?: SortOrder
     nivelHabilidade?: SortOrder
     criadoEm?: SortOrder
     atualizadoEm?: SortOrder
@@ -11131,6 +12644,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumNivelHabilidadeWithAggregatesFilter<$PrismaModel = never> = {
@@ -11403,6 +12934,7 @@ export namespace Prisma {
     modoPreparo?: SortOrder
     tempoEstimado?: SortOrder
     porcoes?: SortOrder
+    imagem?: SortOrder
     publica?: SortOrder
     geradaPorIA?: SortOrder
     criadaEm?: SortOrder
@@ -11423,6 +12955,7 @@ export namespace Prisma {
     modoPreparo?: SortOrder
     tempoEstimado?: SortOrder
     porcoes?: SortOrder
+    imagem?: SortOrder
     publica?: SortOrder
     geradaPorIA?: SortOrder
     criadaEm?: SortOrder
@@ -11436,6 +12969,7 @@ export namespace Prisma {
     modoPreparo?: SortOrder
     tempoEstimado?: SortOrder
     porcoes?: SortOrder
+    imagem?: SortOrder
     publica?: SortOrder
     geradaPorIA?: SortOrder
     criadaEm?: SortOrder
@@ -11520,29 +13054,77 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type ComentarioNullableScalarRelationFilter = {
+    is?: ComentarioWhereInput | null
+    isNot?: ComentarioWhereInput | null
+  }
+
+  export type ComentarioOrderByRelevanceInput = {
+    fields: ComentarioOrderByRelevanceFieldEnum | ComentarioOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ComentarioCountOrderByAggregateInput = {
+    id?: SortOrder
+    receitaId?: SortOrder
+    usuarioId?: SortOrder
+    respostaDeId?: SortOrder
+    texto?: SortOrder
+    criadoEm?: SortOrder
+  }
+
+  export type ComentarioAvgOrderByAggregateInput = {
+    id?: SortOrder
+    receitaId?: SortOrder
+    usuarioId?: SortOrder
+    respostaDeId?: SortOrder
+  }
+
+  export type ComentarioMaxOrderByAggregateInput = {
+    id?: SortOrder
+    receitaId?: SortOrder
+    usuarioId?: SortOrder
+    respostaDeId?: SortOrder
+    texto?: SortOrder
+    criadoEm?: SortOrder
+  }
+
+  export type ComentarioMinOrderByAggregateInput = {
+    id?: SortOrder
+    receitaId?: SortOrder
+    usuarioId?: SortOrder
+    respostaDeId?: SortOrder
+    texto?: SortOrder
+    criadoEm?: SortOrder
+  }
+
+  export type ComentarioSumOrderByAggregateInput = {
+    id?: SortOrder
+    receitaId?: SortOrder
+    usuarioId?: SortOrder
+    respostaDeId?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type ReceitaNullableScalarRelationFilter = {
     is?: ReceitaWhereInput | null
     isNot?: ReceitaWhereInput | null
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type PostagemOrderByRelevanceInput = {
@@ -11590,40 +13172,6 @@ export namespace Prisma {
     receitaId?: SortOrder
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
   export type PerfilAlimentarCreateNestedOneWithoutUsuarioInput = {
     create?: XOR<PerfilAlimentarCreateWithoutUsuarioInput, PerfilAlimentarUncheckedCreateWithoutUsuarioInput>
     connectOrCreate?: PerfilAlimentarCreateOrConnectWithoutUsuarioInput
@@ -11649,6 +13197,13 @@ export namespace Prisma {
     connectOrCreate?: PostagemCreateOrConnectWithoutUsuarioInput | PostagemCreateOrConnectWithoutUsuarioInput[]
     createMany?: PostagemCreateManyUsuarioInputEnvelope
     connect?: PostagemWhereUniqueInput | PostagemWhereUniqueInput[]
+  }
+
+  export type ComentarioCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<ComentarioCreateWithoutUsuarioInput, ComentarioUncheckedCreateWithoutUsuarioInput> | ComentarioCreateWithoutUsuarioInput[] | ComentarioUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutUsuarioInput | ComentarioCreateOrConnectWithoutUsuarioInput[]
+    createMany?: ComentarioCreateManyUsuarioInputEnvelope
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
   }
 
   export type PerfilAlimentarUncheckedCreateNestedOneWithoutUsuarioInput = {
@@ -11678,8 +13233,19 @@ export namespace Prisma {
     connect?: PostagemWhereUniqueInput | PostagemWhereUniqueInput[]
   }
 
+  export type ComentarioUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<ComentarioCreateWithoutUsuarioInput, ComentarioUncheckedCreateWithoutUsuarioInput> | ComentarioCreateWithoutUsuarioInput[] | ComentarioUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutUsuarioInput | ComentarioCreateOrConnectWithoutUsuarioInput[]
+    createMany?: ComentarioCreateManyUsuarioInputEnvelope
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type EnumNivelHabilidadeFieldUpdateOperationsInput = {
@@ -11742,6 +13308,20 @@ export namespace Prisma {
     deleteMany?: PostagemScalarWhereInput | PostagemScalarWhereInput[]
   }
 
+  export type ComentarioUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<ComentarioCreateWithoutUsuarioInput, ComentarioUncheckedCreateWithoutUsuarioInput> | ComentarioCreateWithoutUsuarioInput[] | ComentarioUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutUsuarioInput | ComentarioCreateOrConnectWithoutUsuarioInput[]
+    upsert?: ComentarioUpsertWithWhereUniqueWithoutUsuarioInput | ComentarioUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: ComentarioCreateManyUsuarioInputEnvelope
+    set?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    disconnect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    delete?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    update?: ComentarioUpdateWithWhereUniqueWithoutUsuarioInput | ComentarioUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: ComentarioUpdateManyWithWhereWithoutUsuarioInput | ComentarioUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -11800,6 +13380,20 @@ export namespace Prisma {
     update?: PostagemUpdateWithWhereUniqueWithoutUsuarioInput | PostagemUpdateWithWhereUniqueWithoutUsuarioInput[]
     updateMany?: PostagemUpdateManyWithWhereWithoutUsuarioInput | PostagemUpdateManyWithWhereWithoutUsuarioInput[]
     deleteMany?: PostagemScalarWhereInput | PostagemScalarWhereInput[]
+  }
+
+  export type ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<ComentarioCreateWithoutUsuarioInput, ComentarioUncheckedCreateWithoutUsuarioInput> | ComentarioCreateWithoutUsuarioInput[] | ComentarioUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutUsuarioInput | ComentarioCreateOrConnectWithoutUsuarioInput[]
+    upsert?: ComentarioUpsertWithWhereUniqueWithoutUsuarioInput | ComentarioUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: ComentarioCreateManyUsuarioInputEnvelope
+    set?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    disconnect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    delete?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    update?: ComentarioUpdateWithWhereUniqueWithoutUsuarioInput | ComentarioUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: ComentarioUpdateManyWithWhereWithoutUsuarioInput | ComentarioUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
   }
 
   export type UsuarioCreateNestedOneWithoutPerfilInput = {
@@ -12016,6 +13610,13 @@ export namespace Prisma {
     connect?: PostagemWhereUniqueInput | PostagemWhereUniqueInput[]
   }
 
+  export type ComentarioCreateNestedManyWithoutReceitaInput = {
+    create?: XOR<ComentarioCreateWithoutReceitaInput, ComentarioUncheckedCreateWithoutReceitaInput> | ComentarioCreateWithoutReceitaInput[] | ComentarioUncheckedCreateWithoutReceitaInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutReceitaInput | ComentarioCreateOrConnectWithoutReceitaInput[]
+    createMany?: ComentarioCreateManyReceitaInputEnvelope
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+  }
+
   export type ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput = {
     create?: XOR<ReceitaIngredienteCreateWithoutReceitaInput, ReceitaIngredienteUncheckedCreateWithoutReceitaInput> | ReceitaIngredienteCreateWithoutReceitaInput[] | ReceitaIngredienteUncheckedCreateWithoutReceitaInput[]
     connectOrCreate?: ReceitaIngredienteCreateOrConnectWithoutReceitaInput | ReceitaIngredienteCreateOrConnectWithoutReceitaInput[]
@@ -12028,6 +13629,13 @@ export namespace Prisma {
     connectOrCreate?: PostagemCreateOrConnectWithoutReceitaInput | PostagemCreateOrConnectWithoutReceitaInput[]
     createMany?: PostagemCreateManyReceitaInputEnvelope
     connect?: PostagemWhereUniqueInput | PostagemWhereUniqueInput[]
+  }
+
+  export type ComentarioUncheckedCreateNestedManyWithoutReceitaInput = {
+    create?: XOR<ComentarioCreateWithoutReceitaInput, ComentarioUncheckedCreateWithoutReceitaInput> | ComentarioCreateWithoutReceitaInput[] | ComentarioUncheckedCreateWithoutReceitaInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutReceitaInput | ComentarioCreateOrConnectWithoutReceitaInput[]
+    createMany?: ComentarioCreateManyReceitaInputEnvelope
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -12070,6 +13678,20 @@ export namespace Prisma {
     deleteMany?: PostagemScalarWhereInput | PostagemScalarWhereInput[]
   }
 
+  export type ComentarioUpdateManyWithoutReceitaNestedInput = {
+    create?: XOR<ComentarioCreateWithoutReceitaInput, ComentarioUncheckedCreateWithoutReceitaInput> | ComentarioCreateWithoutReceitaInput[] | ComentarioUncheckedCreateWithoutReceitaInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutReceitaInput | ComentarioCreateOrConnectWithoutReceitaInput[]
+    upsert?: ComentarioUpsertWithWhereUniqueWithoutReceitaInput | ComentarioUpsertWithWhereUniqueWithoutReceitaInput[]
+    createMany?: ComentarioCreateManyReceitaInputEnvelope
+    set?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    disconnect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    delete?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    update?: ComentarioUpdateWithWhereUniqueWithoutReceitaInput | ComentarioUpdateWithWhereUniqueWithoutReceitaInput[]
+    updateMany?: ComentarioUpdateManyWithWhereWithoutReceitaInput | ComentarioUpdateManyWithWhereWithoutReceitaInput[]
+    deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
+  }
+
   export type ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput = {
     create?: XOR<ReceitaIngredienteCreateWithoutReceitaInput, ReceitaIngredienteUncheckedCreateWithoutReceitaInput> | ReceitaIngredienteCreateWithoutReceitaInput[] | ReceitaIngredienteUncheckedCreateWithoutReceitaInput[]
     connectOrCreate?: ReceitaIngredienteCreateOrConnectWithoutReceitaInput | ReceitaIngredienteCreateOrConnectWithoutReceitaInput[]
@@ -12096,6 +13718,20 @@ export namespace Prisma {
     update?: PostagemUpdateWithWhereUniqueWithoutReceitaInput | PostagemUpdateWithWhereUniqueWithoutReceitaInput[]
     updateMany?: PostagemUpdateManyWithWhereWithoutReceitaInput | PostagemUpdateManyWithWhereWithoutReceitaInput[]
     deleteMany?: PostagemScalarWhereInput | PostagemScalarWhereInput[]
+  }
+
+  export type ComentarioUncheckedUpdateManyWithoutReceitaNestedInput = {
+    create?: XOR<ComentarioCreateWithoutReceitaInput, ComentarioUncheckedCreateWithoutReceitaInput> | ComentarioCreateWithoutReceitaInput[] | ComentarioUncheckedCreateWithoutReceitaInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutReceitaInput | ComentarioCreateOrConnectWithoutReceitaInput[]
+    upsert?: ComentarioUpsertWithWhereUniqueWithoutReceitaInput | ComentarioUpsertWithWhereUniqueWithoutReceitaInput[]
+    createMany?: ComentarioCreateManyReceitaInputEnvelope
+    set?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    disconnect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    delete?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    update?: ComentarioUpdateWithWhereUniqueWithoutReceitaInput | ComentarioUpdateWithWhereUniqueWithoutReceitaInput[]
+    updateMany?: ComentarioUpdateManyWithWhereWithoutReceitaInput | ComentarioUpdateManyWithWhereWithoutReceitaInput[]
+    deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
   }
 
   export type ReceitaCreateNestedOneWithoutIngredientesInput = {
@@ -12126,6 +13762,100 @@ export namespace Prisma {
     update?: XOR<XOR<IngredienteUpdateToOneWithWhereWithoutReceitaIngredientesInput, IngredienteUpdateWithoutReceitaIngredientesInput>, IngredienteUncheckedUpdateWithoutReceitaIngredientesInput>
   }
 
+  export type ReceitaCreateNestedOneWithoutComentariosInput = {
+    create?: XOR<ReceitaCreateWithoutComentariosInput, ReceitaUncheckedCreateWithoutComentariosInput>
+    connectOrCreate?: ReceitaCreateOrConnectWithoutComentariosInput
+    connect?: ReceitaWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutComentariosInput = {
+    create?: XOR<UsuarioCreateWithoutComentariosInput, UsuarioUncheckedCreateWithoutComentariosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutComentariosInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type ComentarioCreateNestedOneWithoutRespostasInput = {
+    create?: XOR<ComentarioCreateWithoutRespostasInput, ComentarioUncheckedCreateWithoutRespostasInput>
+    connectOrCreate?: ComentarioCreateOrConnectWithoutRespostasInput
+    connect?: ComentarioWhereUniqueInput
+  }
+
+  export type ComentarioCreateNestedManyWithoutRespostaDeInput = {
+    create?: XOR<ComentarioCreateWithoutRespostaDeInput, ComentarioUncheckedCreateWithoutRespostaDeInput> | ComentarioCreateWithoutRespostaDeInput[] | ComentarioUncheckedCreateWithoutRespostaDeInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutRespostaDeInput | ComentarioCreateOrConnectWithoutRespostaDeInput[]
+    createMany?: ComentarioCreateManyRespostaDeInputEnvelope
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+  }
+
+  export type ComentarioUncheckedCreateNestedManyWithoutRespostaDeInput = {
+    create?: XOR<ComentarioCreateWithoutRespostaDeInput, ComentarioUncheckedCreateWithoutRespostaDeInput> | ComentarioCreateWithoutRespostaDeInput[] | ComentarioUncheckedCreateWithoutRespostaDeInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutRespostaDeInput | ComentarioCreateOrConnectWithoutRespostaDeInput[]
+    createMany?: ComentarioCreateManyRespostaDeInputEnvelope
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+  }
+
+  export type ReceitaUpdateOneRequiredWithoutComentariosNestedInput = {
+    create?: XOR<ReceitaCreateWithoutComentariosInput, ReceitaUncheckedCreateWithoutComentariosInput>
+    connectOrCreate?: ReceitaCreateOrConnectWithoutComentariosInput
+    upsert?: ReceitaUpsertWithoutComentariosInput
+    connect?: ReceitaWhereUniqueInput
+    update?: XOR<XOR<ReceitaUpdateToOneWithWhereWithoutComentariosInput, ReceitaUpdateWithoutComentariosInput>, ReceitaUncheckedUpdateWithoutComentariosInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutComentariosNestedInput = {
+    create?: XOR<UsuarioCreateWithoutComentariosInput, UsuarioUncheckedCreateWithoutComentariosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutComentariosInput
+    upsert?: UsuarioUpsertWithoutComentariosInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutComentariosInput, UsuarioUpdateWithoutComentariosInput>, UsuarioUncheckedUpdateWithoutComentariosInput>
+  }
+
+  export type ComentarioUpdateOneWithoutRespostasNestedInput = {
+    create?: XOR<ComentarioCreateWithoutRespostasInput, ComentarioUncheckedCreateWithoutRespostasInput>
+    connectOrCreate?: ComentarioCreateOrConnectWithoutRespostasInput
+    upsert?: ComentarioUpsertWithoutRespostasInput
+    disconnect?: ComentarioWhereInput | boolean
+    delete?: ComentarioWhereInput | boolean
+    connect?: ComentarioWhereUniqueInput
+    update?: XOR<XOR<ComentarioUpdateToOneWithWhereWithoutRespostasInput, ComentarioUpdateWithoutRespostasInput>, ComentarioUncheckedUpdateWithoutRespostasInput>
+  }
+
+  export type ComentarioUpdateManyWithoutRespostaDeNestedInput = {
+    create?: XOR<ComentarioCreateWithoutRespostaDeInput, ComentarioUncheckedCreateWithoutRespostaDeInput> | ComentarioCreateWithoutRespostaDeInput[] | ComentarioUncheckedCreateWithoutRespostaDeInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutRespostaDeInput | ComentarioCreateOrConnectWithoutRespostaDeInput[]
+    upsert?: ComentarioUpsertWithWhereUniqueWithoutRespostaDeInput | ComentarioUpsertWithWhereUniqueWithoutRespostaDeInput[]
+    createMany?: ComentarioCreateManyRespostaDeInputEnvelope
+    set?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    disconnect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    delete?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    update?: ComentarioUpdateWithWhereUniqueWithoutRespostaDeInput | ComentarioUpdateWithWhereUniqueWithoutRespostaDeInput[]
+    updateMany?: ComentarioUpdateManyWithWhereWithoutRespostaDeInput | ComentarioUpdateManyWithWhereWithoutRespostaDeInput[]
+    deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type ComentarioUncheckedUpdateManyWithoutRespostaDeNestedInput = {
+    create?: XOR<ComentarioCreateWithoutRespostaDeInput, ComentarioUncheckedCreateWithoutRespostaDeInput> | ComentarioCreateWithoutRespostaDeInput[] | ComentarioUncheckedCreateWithoutRespostaDeInput[]
+    connectOrCreate?: ComentarioCreateOrConnectWithoutRespostaDeInput | ComentarioCreateOrConnectWithoutRespostaDeInput[]
+    upsert?: ComentarioUpsertWithWhereUniqueWithoutRespostaDeInput | ComentarioUpsertWithWhereUniqueWithoutRespostaDeInput[]
+    createMany?: ComentarioCreateManyRespostaDeInputEnvelope
+    set?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    disconnect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    delete?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+    update?: ComentarioUpdateWithWhereUniqueWithoutRespostaDeInput | ComentarioUpdateWithWhereUniqueWithoutRespostaDeInput[]
+    updateMany?: ComentarioUpdateManyWithWhereWithoutRespostaDeInput | ComentarioUpdateManyWithWhereWithoutRespostaDeInput[]
+    deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
+  }
+
   export type UsuarioCreateNestedOneWithoutPostagensInput = {
     create?: XOR<UsuarioCreateWithoutPostagensInput, UsuarioUncheckedCreateWithoutPostagensInput>
     connectOrCreate?: UsuarioCreateOrConnectWithoutPostagensInput
@@ -12136,10 +13866,6 @@ export namespace Prisma {
     create?: XOR<ReceitaCreateWithoutPostagensInput, ReceitaUncheckedCreateWithoutPostagensInput>
     connectOrCreate?: ReceitaCreateOrConnectWithoutPostagensInput
     connect?: ReceitaWhereUniqueInput
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type UsuarioUpdateOneRequiredWithoutPostagensNestedInput = {
@@ -12158,14 +13884,6 @@ export namespace Prisma {
     delete?: ReceitaWhereInput | boolean
     connect?: ReceitaWhereUniqueInput
     update?: XOR<XOR<ReceitaUpdateToOneWithWhereWithoutPostagensInput, ReceitaUpdateWithoutPostagensInput>, ReceitaUncheckedUpdateWithoutPostagensInput>
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -12192,6 +13910,21 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     search?: string
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedEnumNivelHabilidadeFilter<$PrismaModel = never> = {
@@ -12255,6 +13988,35 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumNivelHabilidadeWithAggregatesFilter<$PrismaModel = never> = {
@@ -12327,32 +14089,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -12378,24 +14114,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type PerfilAlimentarCreateWithoutUsuarioInput = {
@@ -12446,12 +14164,14 @@ export namespace Prisma {
     modoPreparo: string
     tempoEstimado: number
     porcoes?: number
+    imagem?: string | null
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: Date | string
     atualizadaEm?: Date | string
     ingredientes?: ReceitaIngredienteCreateNestedManyWithoutReceitaInput
     postagens?: PostagemCreateNestedManyWithoutReceitaInput
+    comentarios?: ComentarioCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUncheckedCreateWithoutUsuarioInput = {
@@ -12460,12 +14180,14 @@ export namespace Prisma {
     modoPreparo: string
     tempoEstimado: number
     porcoes?: number
+    imagem?: string | null
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: Date | string
     atualizadaEm?: Date | string
     ingredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutReceitaInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaCreateOrConnectWithoutUsuarioInput = {
@@ -12500,6 +14222,33 @@ export namespace Prisma {
 
   export type PostagemCreateManyUsuarioInputEnvelope = {
     data: PostagemCreateManyUsuarioInput | PostagemCreateManyUsuarioInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ComentarioCreateWithoutUsuarioInput = {
+    texto: string
+    criadoEm?: Date | string
+    receita: ReceitaCreateNestedOneWithoutComentariosInput
+    respostaDe?: ComentarioCreateNestedOneWithoutRespostasInput
+    respostas?: ComentarioCreateNestedManyWithoutRespostaDeInput
+  }
+
+  export type ComentarioUncheckedCreateWithoutUsuarioInput = {
+    id?: number
+    receitaId: number
+    respostaDeId?: number | null
+    texto: string
+    criadoEm?: Date | string
+    respostas?: ComentarioUncheckedCreateNestedManyWithoutRespostaDeInput
+  }
+
+  export type ComentarioCreateOrConnectWithoutUsuarioInput = {
+    where: ComentarioWhereUniqueInput
+    create: XOR<ComentarioCreateWithoutUsuarioInput, ComentarioUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type ComentarioCreateManyUsuarioInputEnvelope = {
+    data: ComentarioCreateManyUsuarioInput | ComentarioCreateManyUsuarioInput[]
     skipDuplicates?: boolean
   }
 
@@ -12582,6 +14331,7 @@ export namespace Prisma {
     modoPreparo?: StringFilter<"Receita"> | string
     tempoEstimado?: IntFilter<"Receita"> | number
     porcoes?: IntFilter<"Receita"> | number
+    imagem?: StringNullableFilter<"Receita"> | string | null
     publica?: BoolFilter<"Receita"> | boolean
     geradaPorIA?: BoolFilter<"Receita"> | boolean
     criadaEm?: DateTimeFilter<"Receita"> | Date | string
@@ -12616,16 +14366,46 @@ export namespace Prisma {
     criadaEm?: DateTimeFilter<"Postagem"> | Date | string
   }
 
+  export type ComentarioUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: ComentarioWhereUniqueInput
+    update: XOR<ComentarioUpdateWithoutUsuarioInput, ComentarioUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<ComentarioCreateWithoutUsuarioInput, ComentarioUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type ComentarioUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: ComentarioWhereUniqueInput
+    data: XOR<ComentarioUpdateWithoutUsuarioInput, ComentarioUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type ComentarioUpdateManyWithWhereWithoutUsuarioInput = {
+    where: ComentarioScalarWhereInput
+    data: XOR<ComentarioUpdateManyMutationInput, ComentarioUncheckedUpdateManyWithoutUsuarioInput>
+  }
+
+  export type ComentarioScalarWhereInput = {
+    AND?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
+    OR?: ComentarioScalarWhereInput[]
+    NOT?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
+    id?: IntFilter<"Comentario"> | number
+    receitaId?: IntFilter<"Comentario"> | number
+    usuarioId?: IntFilter<"Comentario"> | number
+    respostaDeId?: IntNullableFilter<"Comentario"> | number | null
+    texto?: StringFilter<"Comentario"> | string
+    criadoEm?: DateTimeFilter<"Comentario"> | Date | string
+  }
+
   export type UsuarioCreateWithoutPerfilInput = {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
     inventario?: InventarioCreateNestedManyWithoutUsuarioInput
     receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutPerfilInput = {
@@ -12633,12 +14413,14 @@ export namespace Prisma {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
     inventario?: InventarioUncheckedCreateNestedManyWithoutUsuarioInput
     receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutPerfilInput = {
@@ -12680,12 +14462,14 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     inventario?: InventarioUpdateManyWithoutUsuarioNestedInput
     receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPerfilInput = {
@@ -12693,12 +14477,14 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     inventario?: InventarioUncheckedUpdateManyWithoutUsuarioNestedInput
     receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type RestricaoAlimentarUpsertWithWhereUniqueWithoutPerfilInput = {
@@ -12866,12 +14652,14 @@ export namespace Prisma {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
     perfil?: PerfilAlimentarCreateNestedOneWithoutUsuarioInput
     receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutInventarioInput = {
@@ -12879,12 +14667,14 @@ export namespace Prisma {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
     perfil?: PerfilAlimentarUncheckedCreateNestedOneWithoutUsuarioInput
     receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutInventarioInput = {
@@ -12925,12 +14715,14 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     perfil?: PerfilAlimentarUpdateOneWithoutUsuarioNestedInput
     receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutInventarioInput = {
@@ -12938,12 +14730,14 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     perfil?: PerfilAlimentarUncheckedUpdateOneWithoutUsuarioNestedInput
     receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type IngredienteUpsertWithoutInventariosInput = {
@@ -12974,12 +14768,14 @@ export namespace Prisma {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
     perfil?: PerfilAlimentarCreateNestedOneWithoutUsuarioInput
     inventario?: InventarioCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutReceitasInput = {
@@ -12987,12 +14783,14 @@ export namespace Prisma {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
     perfil?: PerfilAlimentarUncheckedCreateNestedOneWithoutUsuarioInput
     inventario?: InventarioUncheckedCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutReceitasInput = {
@@ -13049,6 +14847,33 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ComentarioCreateWithoutReceitaInput = {
+    texto: string
+    criadoEm?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutComentariosInput
+    respostaDe?: ComentarioCreateNestedOneWithoutRespostasInput
+    respostas?: ComentarioCreateNestedManyWithoutRespostaDeInput
+  }
+
+  export type ComentarioUncheckedCreateWithoutReceitaInput = {
+    id?: number
+    usuarioId: number
+    respostaDeId?: number | null
+    texto: string
+    criadoEm?: Date | string
+    respostas?: ComentarioUncheckedCreateNestedManyWithoutRespostaDeInput
+  }
+
+  export type ComentarioCreateOrConnectWithoutReceitaInput = {
+    where: ComentarioWhereUniqueInput
+    create: XOR<ComentarioCreateWithoutReceitaInput, ComentarioUncheckedCreateWithoutReceitaInput>
+  }
+
+  export type ComentarioCreateManyReceitaInputEnvelope = {
+    data: ComentarioCreateManyReceitaInput | ComentarioCreateManyReceitaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UsuarioUpsertWithoutReceitasInput = {
     update: XOR<UsuarioUpdateWithoutReceitasInput, UsuarioUncheckedUpdateWithoutReceitasInput>
     create: XOR<UsuarioCreateWithoutReceitasInput, UsuarioUncheckedCreateWithoutReceitasInput>
@@ -13064,12 +14889,14 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     perfil?: PerfilAlimentarUpdateOneWithoutUsuarioNestedInput
     inventario?: InventarioUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutReceitasInput = {
@@ -13077,12 +14904,14 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     perfil?: PerfilAlimentarUncheckedUpdateOneWithoutUsuarioNestedInput
     inventario?: InventarioUncheckedUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type ReceitaIngredienteUpsertWithWhereUniqueWithoutReceitaInput = {
@@ -13117,17 +14946,35 @@ export namespace Prisma {
     data: XOR<PostagemUpdateManyMutationInput, PostagemUncheckedUpdateManyWithoutReceitaInput>
   }
 
+  export type ComentarioUpsertWithWhereUniqueWithoutReceitaInput = {
+    where: ComentarioWhereUniqueInput
+    update: XOR<ComentarioUpdateWithoutReceitaInput, ComentarioUncheckedUpdateWithoutReceitaInput>
+    create: XOR<ComentarioCreateWithoutReceitaInput, ComentarioUncheckedCreateWithoutReceitaInput>
+  }
+
+  export type ComentarioUpdateWithWhereUniqueWithoutReceitaInput = {
+    where: ComentarioWhereUniqueInput
+    data: XOR<ComentarioUpdateWithoutReceitaInput, ComentarioUncheckedUpdateWithoutReceitaInput>
+  }
+
+  export type ComentarioUpdateManyWithWhereWithoutReceitaInput = {
+    where: ComentarioScalarWhereInput
+    data: XOR<ComentarioUpdateManyMutationInput, ComentarioUncheckedUpdateManyWithoutReceitaInput>
+  }
+
   export type ReceitaCreateWithoutIngredientesInput = {
     titulo: string
     modoPreparo: string
     tempoEstimado: number
     porcoes?: number
+    imagem?: string | null
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: Date | string
     atualizadaEm?: Date | string
     usuario: UsuarioCreateNestedOneWithoutReceitasInput
     postagens?: PostagemCreateNestedManyWithoutReceitaInput
+    comentarios?: ComentarioCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUncheckedCreateWithoutIngredientesInput = {
@@ -13137,11 +14984,13 @@ export namespace Prisma {
     modoPreparo: string
     tempoEstimado: number
     porcoes?: number
+    imagem?: string | null
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: Date | string
     atualizadaEm?: Date | string
     postagens?: PostagemUncheckedCreateNestedManyWithoutReceitaInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaCreateOrConnectWithoutIngredientesInput = {
@@ -13183,12 +15032,14 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     usuario?: UsuarioUpdateOneRequiredWithoutReceitasNestedInput
     postagens?: PostagemUpdateManyWithoutReceitaNestedInput
+    comentarios?: ComentarioUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateWithoutIngredientesInput = {
@@ -13198,11 +15049,13 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     postagens?: PostagemUncheckedUpdateManyWithoutReceitaNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutReceitaNestedInput
   }
 
   export type IngredienteUpsertWithoutReceitaIngredientesInput = {
@@ -13229,16 +15082,263 @@ export namespace Prisma {
     inventarios?: InventarioUncheckedUpdateManyWithoutIngredienteNestedInput
   }
 
-  export type UsuarioCreateWithoutPostagensInput = {
+  export type ReceitaCreateWithoutComentariosInput = {
+    titulo: string
+    modoPreparo: string
+    tempoEstimado: number
+    porcoes?: number
+    imagem?: string | null
+    publica?: boolean
+    geradaPorIA?: boolean
+    criadaEm?: Date | string
+    atualizadaEm?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutReceitasInput
+    ingredientes?: ReceitaIngredienteCreateNestedManyWithoutReceitaInput
+    postagens?: PostagemCreateNestedManyWithoutReceitaInput
+  }
+
+  export type ReceitaUncheckedCreateWithoutComentariosInput = {
+    id?: number
+    usuarioId: number
+    titulo: string
+    modoPreparo: string
+    tempoEstimado: number
+    porcoes?: number
+    imagem?: string | null
+    publica?: boolean
+    geradaPorIA?: boolean
+    criadaEm?: Date | string
+    atualizadaEm?: Date | string
+    ingredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput
+    postagens?: PostagemUncheckedCreateNestedManyWithoutReceitaInput
+  }
+
+  export type ReceitaCreateOrConnectWithoutComentariosInput = {
+    where: ReceitaWhereUniqueInput
+    create: XOR<ReceitaCreateWithoutComentariosInput, ReceitaUncheckedCreateWithoutComentariosInput>
+  }
+
+  export type UsuarioCreateWithoutComentariosInput = {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
     perfil?: PerfilAlimentarCreateNestedOneWithoutUsuarioInput
     inventario?: InventarioCreateNestedManyWithoutUsuarioInput
     receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
+    postagens?: PostagemCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutComentariosInput = {
+    id?: number
+    nome: string
+    email: string
+    senha: string
+    avatar?: string | null
+    nivelHabilidade?: $Enums.NivelHabilidade
+    criadoEm?: Date | string
+    atualizadoEm?: Date | string
+    perfil?: PerfilAlimentarUncheckedCreateNestedOneWithoutUsuarioInput
+    inventario?: InventarioUncheckedCreateNestedManyWithoutUsuarioInput
+    receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
+    postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutComentariosInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutComentariosInput, UsuarioUncheckedCreateWithoutComentariosInput>
+  }
+
+  export type ComentarioCreateWithoutRespostasInput = {
+    texto: string
+    criadoEm?: Date | string
+    receita: ReceitaCreateNestedOneWithoutComentariosInput
+    usuario: UsuarioCreateNestedOneWithoutComentariosInput
+    respostaDe?: ComentarioCreateNestedOneWithoutRespostasInput
+  }
+
+  export type ComentarioUncheckedCreateWithoutRespostasInput = {
+    id?: number
+    receitaId: number
+    usuarioId: number
+    respostaDeId?: number | null
+    texto: string
+    criadoEm?: Date | string
+  }
+
+  export type ComentarioCreateOrConnectWithoutRespostasInput = {
+    where: ComentarioWhereUniqueInput
+    create: XOR<ComentarioCreateWithoutRespostasInput, ComentarioUncheckedCreateWithoutRespostasInput>
+  }
+
+  export type ComentarioCreateWithoutRespostaDeInput = {
+    texto: string
+    criadoEm?: Date | string
+    receita: ReceitaCreateNestedOneWithoutComentariosInput
+    usuario: UsuarioCreateNestedOneWithoutComentariosInput
+    respostas?: ComentarioCreateNestedManyWithoutRespostaDeInput
+  }
+
+  export type ComentarioUncheckedCreateWithoutRespostaDeInput = {
+    id?: number
+    receitaId: number
+    usuarioId: number
+    texto: string
+    criadoEm?: Date | string
+    respostas?: ComentarioUncheckedCreateNestedManyWithoutRespostaDeInput
+  }
+
+  export type ComentarioCreateOrConnectWithoutRespostaDeInput = {
+    where: ComentarioWhereUniqueInput
+    create: XOR<ComentarioCreateWithoutRespostaDeInput, ComentarioUncheckedCreateWithoutRespostaDeInput>
+  }
+
+  export type ComentarioCreateManyRespostaDeInputEnvelope = {
+    data: ComentarioCreateManyRespostaDeInput | ComentarioCreateManyRespostaDeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReceitaUpsertWithoutComentariosInput = {
+    update: XOR<ReceitaUpdateWithoutComentariosInput, ReceitaUncheckedUpdateWithoutComentariosInput>
+    create: XOR<ReceitaCreateWithoutComentariosInput, ReceitaUncheckedCreateWithoutComentariosInput>
+    where?: ReceitaWhereInput
+  }
+
+  export type ReceitaUpdateToOneWithWhereWithoutComentariosInput = {
+    where?: ReceitaWhereInput
+    data: XOR<ReceitaUpdateWithoutComentariosInput, ReceitaUncheckedUpdateWithoutComentariosInput>
+  }
+
+  export type ReceitaUpdateWithoutComentariosInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
+    modoPreparo?: StringFieldUpdateOperationsInput | string
+    tempoEstimado?: IntFieldUpdateOperationsInput | number
+    porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
+    publica?: BoolFieldUpdateOperationsInput | boolean
+    geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutReceitasNestedInput
+    ingredientes?: ReceitaIngredienteUpdateManyWithoutReceitaNestedInput
+    postagens?: PostagemUpdateManyWithoutReceitaNestedInput
+  }
+
+  export type ReceitaUncheckedUpdateWithoutComentariosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    modoPreparo?: StringFieldUpdateOperationsInput | string
+    tempoEstimado?: IntFieldUpdateOperationsInput | number
+    porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
+    publica?: BoolFieldUpdateOperationsInput | boolean
+    geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput
+    postagens?: PostagemUncheckedUpdateManyWithoutReceitaNestedInput
+  }
+
+  export type UsuarioUpsertWithoutComentariosInput = {
+    update: XOR<UsuarioUpdateWithoutComentariosInput, UsuarioUncheckedUpdateWithoutComentariosInput>
+    create: XOR<UsuarioCreateWithoutComentariosInput, UsuarioUncheckedCreateWithoutComentariosInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutComentariosInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutComentariosInput, UsuarioUncheckedUpdateWithoutComentariosInput>
+  }
+
+  export type UsuarioUpdateWithoutComentariosInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    perfil?: PerfilAlimentarUpdateOneWithoutUsuarioNestedInput
+    inventario?: InventarioUpdateManyWithoutUsuarioNestedInput
+    receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
+    postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutComentariosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    perfil?: PerfilAlimentarUncheckedUpdateOneWithoutUsuarioNestedInput
+    inventario?: InventarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
+    postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type ComentarioUpsertWithoutRespostasInput = {
+    update: XOR<ComentarioUpdateWithoutRespostasInput, ComentarioUncheckedUpdateWithoutRespostasInput>
+    create: XOR<ComentarioCreateWithoutRespostasInput, ComentarioUncheckedCreateWithoutRespostasInput>
+    where?: ComentarioWhereInput
+  }
+
+  export type ComentarioUpdateToOneWithWhereWithoutRespostasInput = {
+    where?: ComentarioWhereInput
+    data: XOR<ComentarioUpdateWithoutRespostasInput, ComentarioUncheckedUpdateWithoutRespostasInput>
+  }
+
+  export type ComentarioUpdateWithoutRespostasInput = {
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    receita?: ReceitaUpdateOneRequiredWithoutComentariosNestedInput
+    usuario?: UsuarioUpdateOneRequiredWithoutComentariosNestedInput
+    respostaDe?: ComentarioUpdateOneWithoutRespostasNestedInput
+  }
+
+  export type ComentarioUncheckedUpdateWithoutRespostasInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    respostaDeId?: NullableIntFieldUpdateOperationsInput | number | null
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComentarioUpsertWithWhereUniqueWithoutRespostaDeInput = {
+    where: ComentarioWhereUniqueInput
+    update: XOR<ComentarioUpdateWithoutRespostaDeInput, ComentarioUncheckedUpdateWithoutRespostaDeInput>
+    create: XOR<ComentarioCreateWithoutRespostaDeInput, ComentarioUncheckedCreateWithoutRespostaDeInput>
+  }
+
+  export type ComentarioUpdateWithWhereUniqueWithoutRespostaDeInput = {
+    where: ComentarioWhereUniqueInput
+    data: XOR<ComentarioUpdateWithoutRespostaDeInput, ComentarioUncheckedUpdateWithoutRespostaDeInput>
+  }
+
+  export type ComentarioUpdateManyWithWhereWithoutRespostaDeInput = {
+    where: ComentarioScalarWhereInput
+    data: XOR<ComentarioUpdateManyMutationInput, ComentarioUncheckedUpdateManyWithoutRespostaDeInput>
+  }
+
+  export type UsuarioCreateWithoutPostagensInput = {
+    nome: string
+    email: string
+    senha: string
+    avatar?: string | null
+    nivelHabilidade?: $Enums.NivelHabilidade
+    criadoEm?: Date | string
+    atualizadoEm?: Date | string
+    perfil?: PerfilAlimentarCreateNestedOneWithoutUsuarioInput
+    inventario?: InventarioCreateNestedManyWithoutUsuarioInput
+    receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutPostagensInput = {
@@ -13246,12 +15346,14 @@ export namespace Prisma {
     nome: string
     email: string
     senha: string
+    avatar?: string | null
     nivelHabilidade?: $Enums.NivelHabilidade
     criadoEm?: Date | string
     atualizadoEm?: Date | string
     perfil?: PerfilAlimentarUncheckedCreateNestedOneWithoutUsuarioInput
     inventario?: InventarioUncheckedCreateNestedManyWithoutUsuarioInput
     receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutPostagensInput = {
@@ -13264,12 +15366,14 @@ export namespace Prisma {
     modoPreparo: string
     tempoEstimado: number
     porcoes?: number
+    imagem?: string | null
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: Date | string
     atualizadaEm?: Date | string
     usuario: UsuarioCreateNestedOneWithoutReceitasInput
     ingredientes?: ReceitaIngredienteCreateNestedManyWithoutReceitaInput
+    comentarios?: ComentarioCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUncheckedCreateWithoutPostagensInput = {
@@ -13279,11 +15383,13 @@ export namespace Prisma {
     modoPreparo: string
     tempoEstimado: number
     porcoes?: number
+    imagem?: string | null
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: Date | string
     atualizadaEm?: Date | string
     ingredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaCreateOrConnectWithoutPostagensInput = {
@@ -13306,12 +15412,14 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     perfil?: PerfilAlimentarUpdateOneWithoutUsuarioNestedInput
     inventario?: InventarioUpdateManyWithoutUsuarioNestedInput
     receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPostagensInput = {
@@ -13319,12 +15427,14 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
     perfil?: PerfilAlimentarUncheckedUpdateOneWithoutUsuarioNestedInput
     inventario?: InventarioUncheckedUpdateManyWithoutUsuarioNestedInput
     receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type ReceitaUpsertWithoutPostagensInput = {
@@ -13343,12 +15453,14 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     usuario?: UsuarioUpdateOneRequiredWithoutReceitasNestedInput
     ingredientes?: ReceitaIngredienteUpdateManyWithoutReceitaNestedInput
+    comentarios?: ComentarioUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateWithoutPostagensInput = {
@@ -13358,11 +15470,13 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     ingredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutReceitaNestedInput
   }
 
   export type InventarioCreateManyUsuarioInput = {
@@ -13378,6 +15492,7 @@ export namespace Prisma {
     modoPreparo: string
     tempoEstimado: number
     porcoes?: number
+    imagem?: string | null
     publica?: boolean
     geradaPorIA?: boolean
     criadaEm?: Date | string
@@ -13390,6 +15505,14 @@ export namespace Prisma {
     imagemPrato?: string | null
     comentario?: string | null
     criadaEm?: Date | string
+  }
+
+  export type ComentarioCreateManyUsuarioInput = {
+    id?: number
+    receitaId: number
+    respostaDeId?: number | null
+    texto: string
+    criadoEm?: Date | string
   }
 
   export type InventarioUpdateWithoutUsuarioInput = {
@@ -13417,12 +15540,14 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     ingredientes?: ReceitaIngredienteUpdateManyWithoutReceitaNestedInput
     postagens?: PostagemUpdateManyWithoutReceitaNestedInput
+    comentarios?: ComentarioUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateWithoutUsuarioInput = {
@@ -13431,12 +15556,14 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     ingredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutReceitaNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateManyWithoutUsuarioInput = {
@@ -13445,6 +15572,7 @@ export namespace Prisma {
     modoPreparo?: StringFieldUpdateOperationsInput | string
     tempoEstimado?: IntFieldUpdateOperationsInput | number
     porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
     publica?: BoolFieldUpdateOperationsInput | boolean
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13472,6 +15600,31 @@ export namespace Prisma {
     imagemPrato?: NullableStringFieldUpdateOperationsInput | string | null
     comentario?: NullableStringFieldUpdateOperationsInput | string | null
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComentarioUpdateWithoutUsuarioInput = {
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    receita?: ReceitaUpdateOneRequiredWithoutComentariosNestedInput
+    respostaDe?: ComentarioUpdateOneWithoutRespostasNestedInput
+    respostas?: ComentarioUpdateManyWithoutRespostaDeNestedInput
+  }
+
+  export type ComentarioUncheckedUpdateWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    respostaDeId?: NullableIntFieldUpdateOperationsInput | number | null
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    respostas?: ComentarioUncheckedUpdateManyWithoutRespostaDeNestedInput
+  }
+
+  export type ComentarioUncheckedUpdateManyWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    respostaDeId?: NullableIntFieldUpdateOperationsInput | number | null
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RestricaoAlimentarCreateManyPerfilInput = {
@@ -13563,6 +15716,14 @@ export namespace Prisma {
     criadaEm?: Date | string
   }
 
+  export type ComentarioCreateManyReceitaInput = {
+    id?: number
+    usuarioId: number
+    respostaDeId?: number | null
+    texto: string
+    criadoEm?: Date | string
+  }
+
   export type ReceitaIngredienteUpdateWithoutReceitaInput = {
     quantidade?: FloatFieldUpdateOperationsInput | number
     unidade?: StringFieldUpdateOperationsInput | string
@@ -13605,6 +15766,64 @@ export namespace Prisma {
     imagemPrato?: NullableStringFieldUpdateOperationsInput | string | null
     comentario?: NullableStringFieldUpdateOperationsInput | string | null
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComentarioUpdateWithoutReceitaInput = {
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutComentariosNestedInput
+    respostaDe?: ComentarioUpdateOneWithoutRespostasNestedInput
+    respostas?: ComentarioUpdateManyWithoutRespostaDeNestedInput
+  }
+
+  export type ComentarioUncheckedUpdateWithoutReceitaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    respostaDeId?: NullableIntFieldUpdateOperationsInput | number | null
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    respostas?: ComentarioUncheckedUpdateManyWithoutRespostaDeNestedInput
+  }
+
+  export type ComentarioUncheckedUpdateManyWithoutReceitaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    respostaDeId?: NullableIntFieldUpdateOperationsInput | number | null
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComentarioCreateManyRespostaDeInput = {
+    id?: number
+    receitaId: number
+    usuarioId: number
+    texto: string
+    criadoEm?: Date | string
+  }
+
+  export type ComentarioUpdateWithoutRespostaDeInput = {
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    receita?: ReceitaUpdateOneRequiredWithoutComentariosNestedInput
+    usuario?: UsuarioUpdateOneRequiredWithoutComentariosNestedInput
+    respostas?: ComentarioUpdateManyWithoutRespostaDeNestedInput
+  }
+
+  export type ComentarioUncheckedUpdateWithoutRespostaDeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    respostas?: ComentarioUncheckedUpdateManyWithoutRespostaDeNestedInput
+  }
+
+  export type ComentarioUncheckedUpdateManyWithoutRespostaDeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

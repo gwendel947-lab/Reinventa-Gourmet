@@ -5,8 +5,21 @@ export type SavedRecipe = {
   title: string;
   time: string;
   difficulty: string;
+  servings?: string;
+  preparation?: string;
+  ingredients?: Array<{
+    ingredienteId?: number;
+    quantidade?: number;
+    unidade?: string;
+    opcional?: boolean;
+    ingrediente?: { nome: string };
+    nome?: string;
+  }>;
   author?: string;
+  authorId?: number;
   image?: string;
+  tags?: string[];
+  aiTip?: string;
 };
 
 export type User = {
