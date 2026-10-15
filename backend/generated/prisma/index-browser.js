@@ -148,7 +148,10 @@ exports.Prisma.RestricaoAlimentarScalarFieldEnum = {
 exports.Prisma.IngredienteScalarFieldEnum = {
   id: 'id',
   nome: 'nome',
-  categoria: 'categoria'
+  categoria: 'categoria',
+  classificacaoStatus: 'classificacaoStatus',
+  dietasPermitidas: 'dietasPermitidas',
+  restricoes: 'restricoes'
 };
 
 exports.Prisma.InventarioScalarFieldEnum = {
@@ -171,6 +174,27 @@ exports.Prisma.ReceitaScalarFieldEnum = {
   geradaPorIA: 'geradaPorIA',
   criadaEm: 'criadaEm',
   atualizadaEm: 'atualizadaEm'
+};
+
+exports.Prisma.FavoritoScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  receitaId: 'receitaId',
+  criadoEm: 'criadoEm'
+};
+
+exports.Prisma.ReceitaGeracaoScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  chaveCache: 'chaveCache',
+  modelo: 'modelo',
+  status: 'status',
+  payload: 'payload',
+  erroCodigo: 'erroCodigo',
+  rascunhoExpiraEm: 'rascunhoExpiraEm',
+  criadaEm: 'criadaEm',
+  finalizadaEm: 'finalizadaEm',
+  duracaoMs: 'duracaoMs'
 };
 
 exports.Prisma.ReceitaIngredienteScalarFieldEnum = {
@@ -204,6 +228,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
@@ -222,7 +251,10 @@ exports.Prisma.RestricaoAlimentarOrderByRelevanceFieldEnum = {
 
 exports.Prisma.IngredienteOrderByRelevanceFieldEnum = {
   nome: 'nome',
-  categoria: 'categoria'
+  categoria: 'categoria',
+  classificacaoStatus: 'classificacaoStatus',
+  dietasPermitidas: 'dietasPermitidas',
+  restricoes: 'restricoes'
 };
 
 exports.Prisma.InventarioOrderByRelevanceFieldEnum = {
@@ -233,6 +265,24 @@ exports.Prisma.ReceitaOrderByRelevanceFieldEnum = {
   titulo: 'titulo',
   modoPreparo: 'modoPreparo',
   imagem: 'imagem'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.ReceitaGeracaoOrderByRelevanceFieldEnum = {
+  chaveCache: 'chaveCache',
+  modelo: 'modelo',
+  status: 'status',
+  erroCodigo: 'erroCodigo'
 };
 
 exports.Prisma.ReceitaIngredienteOrderByRelevanceFieldEnum = {
@@ -269,6 +319,8 @@ exports.Prisma.ModelName = {
   Ingrediente: 'Ingrediente',
   Inventario: 'Inventario',
   Receita: 'Receita',
+  Favorito: 'Favorito',
+  ReceitaGeracao: 'ReceitaGeracao',
   ReceitaIngrediente: 'ReceitaIngrediente',
   Comentario: 'Comentario',
   Postagem: 'Postagem'

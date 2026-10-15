@@ -139,19 +139,25 @@ export const CommunityFeed = () => {
 
   const isFavorite = (recipeId: number) => user?.savedRecipes?.some((recipe) => recipe.id === recipeId) ?? false;
 
-  const toggleFavorite = (recipe: RecipeDetails) => {
+  const toggleFavorite = async (recipe: RecipeDetails) => {
     if (!user) {
       toast.error("Entre na sua conta para curtir receitas.");
       return;
     }
-    const savedRecipes = user.savedRecipes ?? [];
-    if (isFavorite(recipe.id)) {
-      updateUser({ savedRecipes: savedRecipes.filter((savedRecipe) => savedRecipe.id !== recipe.id) });
-      toast.success("Receita removida das favoritas.");
-      return;
+    try {
+      const savedRecipes = user.savedRecipes ?? [];
+      if (isFavorite(recipe.id)) {
+        await api.delete(`/favoritos/${recipe.id}`);
+        updateUser({ savedRecipes: savedRecipes.filter((savedRecipe) => savedRecipe.id !== recipe.id) });
+        toast.success("Receita removida das favoritas.");
+        return;
+      }
+      await api.put(`/favoritos/${recipe.id}`);
+      updateUser({ savedRecipes: [...savedRecipes, recipe] });
+      toast.success("Receita adicionada às favoritas!");
+    } catch {
+      toast.error("Não foi possível atualizar os favoritos.");
     }
-    updateUser({ savedRecipes: [...savedRecipes, recipe] });
-    toast.success("Receita adicionada às favoritas!");
   };
 
   const visiblePosts = posts.filter((post) => {

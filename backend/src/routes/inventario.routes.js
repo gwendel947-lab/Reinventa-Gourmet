@@ -7,6 +7,7 @@ router.use(authMiddleware);
 
 router.post("/", InventarioController.create);
 router.get("/usuario/:usuarioId", InventarioController.listByUsuario);
+router.put("/usuario/:usuarioId/ingrediente/:ingredienteId", InventarioController.update);
 router.delete("/usuario/:usuarioId/ingrediente/:ingredienteId", InventarioController.remove);
 
 export default router;

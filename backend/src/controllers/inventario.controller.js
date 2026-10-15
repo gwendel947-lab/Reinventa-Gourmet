@@ -6,7 +6,7 @@ const InventarioController = {
       const { ingredienteId, quantidade, unidade } = req.body;
       const usuarioId = req.user.id;
 
-      if (!ingredienteId || quantidade === undefined || !unidade) {
+      if (!ingredienteId || !Number.isFinite(Number(quantidade)) || Number(quantidade) < 0 || typeof unidade !== "string" || !unidade.trim()) {
         return res.status(400).json({
           message: "ingredienteId, quantidade e unidade são obrigatórios."
         });
@@ -33,6 +33,7 @@ const InventarioController = {
             ingredienteId: Number(ingredienteId)
           }
         },
+
         update: {
           quantidade: Number(quantidade),
           unidade
@@ -54,6 +55,27 @@ const InventarioController = {
       return res.status(500).json({
         message: "Erro interno ao cadastrar item de inventário."
       });
+    }
+  },
+
+  async update(req, res) {
+    try {
+      const { usuarioId, ingredienteId } = req.params;
+      const { quantidade, unidade } = req.body;
+      if (Number(usuarioId) !== req.user.id) return res.status(403).json({ message: "Acesso ao inventário não autorizado." });
+      if (!Number.isFinite(Number(quantidade)) || Number(quantidade) < 0 || typeof unidade !== "string" || !unidade.trim()) {
+        return res.status(400).json({ message: "Quantidade e unidade válidas são obrigatórias." });
+      }
+      const inventario = await prisma.inventario.update({
+        where: { usuarioId_ingredienteId: { usuarioId: Number(usuarioId), ingredienteId: Number(ingredienteId) } },
+        data: { quantidade: Number(quantidade), unidade: unidade.trim() },
+        include: { ingrediente: true }
+      });
+      return res.json({ inventario });
+    } catch (error) {
+      if (error.code === "P2025") return res.status(404).json({ message: "Item de inventário não encontrado." });
+      console.error(error);
+      return res.status(500).json({ message: "Erro interno ao atualizar item de inventário." });
     }
   },
 

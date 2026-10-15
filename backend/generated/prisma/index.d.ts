@@ -44,6 +44,16 @@ export type Inventario = $Result.DefaultSelection<Prisma.$InventarioPayload>
  */
 export type Receita = $Result.DefaultSelection<Prisma.$ReceitaPayload>
 /**
+ * Model Favorito
+ * 
+ */
+export type Favorito = $Result.DefaultSelection<Prisma.$FavoritoPayload>
+/**
+ * Model ReceitaGeracao
+ * 
+ */
+export type ReceitaGeracao = $Result.DefaultSelection<Prisma.$ReceitaGeracaoPayload>
+/**
  * Model ReceitaIngrediente
  * 
  */
@@ -273,6 +283,26 @@ export class PrismaClient<
     * ```
     */
   get receita(): Prisma.ReceitaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.favorito`: Exposes CRUD operations for the **Favorito** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Favoritos
+    * const favoritos = await prisma.favorito.findMany()
+    * ```
+    */
+  get favorito(): Prisma.FavoritoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.receitaGeracao`: Exposes CRUD operations for the **ReceitaGeracao** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ReceitaGeracaos
+    * const receitaGeracaos = await prisma.receitaGeracao.findMany()
+    * ```
+    */
+  get receitaGeracao(): Prisma.ReceitaGeracaoDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.receitaIngrediente`: Exposes CRUD operations for the **ReceitaIngrediente** model.
@@ -756,6 +786,8 @@ export namespace Prisma {
     Ingrediente: 'Ingrediente',
     Inventario: 'Inventario',
     Receita: 'Receita',
+    Favorito: 'Favorito',
+    ReceitaGeracao: 'ReceitaGeracao',
     ReceitaIngrediente: 'ReceitaIngrediente',
     Comentario: 'Comentario',
     Postagem: 'Postagem'
@@ -774,7 +806,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "perfilAlimentar" | "restricaoAlimentar" | "ingrediente" | "inventario" | "receita" | "receitaIngrediente" | "comentario" | "postagem"
+      modelProps: "usuario" | "perfilAlimentar" | "restricaoAlimentar" | "ingrediente" | "inventario" | "receita" | "favorito" | "receitaGeracao" | "receitaIngrediente" | "comentario" | "postagem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1174,6 +1206,138 @@ export namespace Prisma {
           }
         }
       }
+      Favorito: {
+        payload: Prisma.$FavoritoPayload<ExtArgs>
+        fields: Prisma.FavoritoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FavoritoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FavoritoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritoPayload>
+          }
+          findFirst: {
+            args: Prisma.FavoritoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FavoritoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritoPayload>
+          }
+          findMany: {
+            args: Prisma.FavoritoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritoPayload>[]
+          }
+          create: {
+            args: Prisma.FavoritoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritoPayload>
+          }
+          createMany: {
+            args: Prisma.FavoritoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.FavoritoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritoPayload>
+          }
+          update: {
+            args: Prisma.FavoritoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritoPayload>
+          }
+          deleteMany: {
+            args: Prisma.FavoritoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FavoritoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FavoritoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritoPayload>
+          }
+          aggregate: {
+            args: Prisma.FavoritoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFavorito>
+          }
+          groupBy: {
+            args: Prisma.FavoritoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FavoritoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FavoritoCountArgs<ExtArgs>
+            result: $Utils.Optional<FavoritoCountAggregateOutputType> | number
+          }
+        }
+      }
+      ReceitaGeracao: {
+        payload: Prisma.$ReceitaGeracaoPayload<ExtArgs>
+        fields: Prisma.ReceitaGeracaoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReceitaGeracaoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceitaGeracaoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReceitaGeracaoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceitaGeracaoPayload>
+          }
+          findFirst: {
+            args: Prisma.ReceitaGeracaoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceitaGeracaoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReceitaGeracaoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceitaGeracaoPayload>
+          }
+          findMany: {
+            args: Prisma.ReceitaGeracaoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceitaGeracaoPayload>[]
+          }
+          create: {
+            args: Prisma.ReceitaGeracaoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceitaGeracaoPayload>
+          }
+          createMany: {
+            args: Prisma.ReceitaGeracaoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ReceitaGeracaoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceitaGeracaoPayload>
+          }
+          update: {
+            args: Prisma.ReceitaGeracaoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceitaGeracaoPayload>
+          }
+          deleteMany: {
+            args: Prisma.ReceitaGeracaoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReceitaGeracaoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ReceitaGeracaoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceitaGeracaoPayload>
+          }
+          aggregate: {
+            args: Prisma.ReceitaGeracaoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReceitaGeracao>
+          }
+          groupBy: {
+            args: Prisma.ReceitaGeracaoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReceitaGeracaoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReceitaGeracaoCountArgs<ExtArgs>
+            result: $Utils.Optional<ReceitaGeracaoCountAggregateOutputType> | number
+          }
+        }
+      }
       ReceitaIngrediente: {
         payload: Prisma.$ReceitaIngredientePayload<ExtArgs>
         fields: Prisma.ReceitaIngredienteFieldRefs
@@ -1501,6 +1665,8 @@ export namespace Prisma {
     ingrediente?: IngredienteOmit
     inventario?: InventarioOmit
     receita?: ReceitaOmit
+    favorito?: FavoritoOmit
+    receitaGeracao?: ReceitaGeracaoOmit
     receitaIngrediente?: ReceitaIngredienteOmit
     comentario?: ComentarioOmit
     postagem?: PostagemOmit
@@ -1588,6 +1754,8 @@ export namespace Prisma {
     receitas: number
     postagens: number
     comentarios: number
+    favoritos: number
+    geracoes: number
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1595,6 +1763,8 @@ export namespace Prisma {
     receitas?: boolean | UsuarioCountOutputTypeCountReceitasArgs
     postagens?: boolean | UsuarioCountOutputTypeCountPostagensArgs
     comentarios?: boolean | UsuarioCountOutputTypeCountComentariosArgs
+    favoritos?: boolean | UsuarioCountOutputTypeCountFavoritosArgs
+    geracoes?: boolean | UsuarioCountOutputTypeCountGeracoesArgs
   }
 
   // Custom InputTypes
@@ -1634,6 +1804,20 @@ export namespace Prisma {
    */
   export type UsuarioCountOutputTypeCountComentariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ComentarioWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountFavoritosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoritoWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountGeracoesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReceitaGeracaoWhereInput
   }
 
 
@@ -1716,12 +1900,14 @@ export namespace Prisma {
     ingredientes: number
     postagens: number
     comentarios: number
+    favoritos: number
   }
 
   export type ReceitaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ingredientes?: boolean | ReceitaCountOutputTypeCountIngredientesArgs
     postagens?: boolean | ReceitaCountOutputTypeCountPostagensArgs
     comentarios?: boolean | ReceitaCountOutputTypeCountComentariosArgs
+    favoritos?: boolean | ReceitaCountOutputTypeCountFavoritosArgs
   }
 
   // Custom InputTypes
@@ -1754,6 +1940,13 @@ export namespace Prisma {
    */
   export type ReceitaCountOutputTypeCountComentariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ComentarioWhereInput
+  }
+
+  /**
+   * ReceitaCountOutputType without action
+   */
+  export type ReceitaCountOutputTypeCountFavoritosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoritoWhereInput
   }
 
 
@@ -2019,6 +2212,8 @@ export namespace Prisma {
     receitas?: boolean | Usuario$receitasArgs<ExtArgs>
     postagens?: boolean | Usuario$postagensArgs<ExtArgs>
     comentarios?: boolean | Usuario$comentariosArgs<ExtArgs>
+    favoritos?: boolean | Usuario$favoritosArgs<ExtArgs>
+    geracoes?: boolean | Usuario$geracoesArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
@@ -2042,6 +2237,8 @@ export namespace Prisma {
     receitas?: boolean | Usuario$receitasArgs<ExtArgs>
     postagens?: boolean | Usuario$postagensArgs<ExtArgs>
     comentarios?: boolean | Usuario$comentariosArgs<ExtArgs>
+    favoritos?: boolean | Usuario$favoritosArgs<ExtArgs>
+    geracoes?: boolean | Usuario$geracoesArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -2053,6 +2250,8 @@ export namespace Prisma {
       receitas: Prisma.$ReceitaPayload<ExtArgs>[]
       postagens: Prisma.$PostagemPayload<ExtArgs>[]
       comentarios: Prisma.$ComentarioPayload<ExtArgs>[]
+      favoritos: Prisma.$FavoritoPayload<ExtArgs>[]
+      geracoes: Prisma.$ReceitaGeracaoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2408,6 +2607,8 @@ export namespace Prisma {
     receitas<T extends Usuario$receitasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$receitasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReceitaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     postagens<T extends Usuario$postagensArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$postagensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostagemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comentarios<T extends Usuario$comentariosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$comentariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    favoritos<T extends Usuario$favoritosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$favoritosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    geracoes<T extends Usuario$geracoesArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$geracoesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReceitaGeracaoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2905,6 +3106,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ComentarioScalarFieldEnum | ComentarioScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.favoritos
+   */
+  export type Usuario$favoritosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    where?: FavoritoWhereInput
+    orderBy?: FavoritoOrderByWithRelationInput | FavoritoOrderByWithRelationInput[]
+    cursor?: FavoritoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FavoritoScalarFieldEnum | FavoritoScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.geracoes
+   */
+  export type Usuario$geracoesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
+    where?: ReceitaGeracaoWhereInput
+    orderBy?: ReceitaGeracaoOrderByWithRelationInput | ReceitaGeracaoOrderByWithRelationInput[]
+    cursor?: ReceitaGeracaoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReceitaGeracaoScalarFieldEnum | ReceitaGeracaoScalarFieldEnum[]
   }
 
   /**
@@ -4902,18 +5151,27 @@ export namespace Prisma {
     id: number | null
     nome: string | null
     categoria: string | null
+    classificacaoStatus: string | null
+    dietasPermitidas: string | null
+    restricoes: string | null
   }
 
   export type IngredienteMaxAggregateOutputType = {
     id: number | null
     nome: string | null
     categoria: string | null
+    classificacaoStatus: string | null
+    dietasPermitidas: string | null
+    restricoes: string | null
   }
 
   export type IngredienteCountAggregateOutputType = {
     id: number
     nome: number
     categoria: number
+    classificacaoStatus: number
+    dietasPermitidas: number
+    restricoes: number
     _all: number
   }
 
@@ -4930,18 +5188,27 @@ export namespace Prisma {
     id?: true
     nome?: true
     categoria?: true
+    classificacaoStatus?: true
+    dietasPermitidas?: true
+    restricoes?: true
   }
 
   export type IngredienteMaxAggregateInputType = {
     id?: true
     nome?: true
     categoria?: true
+    classificacaoStatus?: true
+    dietasPermitidas?: true
+    restricoes?: true
   }
 
   export type IngredienteCountAggregateInputType = {
     id?: true
     nome?: true
     categoria?: true
+    classificacaoStatus?: true
+    dietasPermitidas?: true
+    restricoes?: true
     _all?: true
   }
 
@@ -5035,6 +5302,9 @@ export namespace Prisma {
     id: number
     nome: string
     categoria: string
+    classificacaoStatus: string
+    dietasPermitidas: string | null
+    restricoes: string | null
     _count: IngredienteCountAggregateOutputType | null
     _avg: IngredienteAvgAggregateOutputType | null
     _sum: IngredienteSumAggregateOutputType | null
@@ -5060,6 +5330,9 @@ export namespace Prisma {
     id?: boolean
     nome?: boolean
     categoria?: boolean
+    classificacaoStatus?: boolean
+    dietasPermitidas?: boolean
+    restricoes?: boolean
     inventarios?: boolean | Ingrediente$inventariosArgs<ExtArgs>
     receitaIngredientes?: boolean | Ingrediente$receitaIngredientesArgs<ExtArgs>
     _count?: boolean | IngredienteCountOutputTypeDefaultArgs<ExtArgs>
@@ -5071,9 +5344,12 @@ export namespace Prisma {
     id?: boolean
     nome?: boolean
     categoria?: boolean
+    classificacaoStatus?: boolean
+    dietasPermitidas?: boolean
+    restricoes?: boolean
   }
 
-  export type IngredienteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "categoria", ExtArgs["result"]["ingrediente"]>
+  export type IngredienteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "categoria" | "classificacaoStatus" | "dietasPermitidas" | "restricoes", ExtArgs["result"]["ingrediente"]>
   export type IngredienteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     inventarios?: boolean | Ingrediente$inventariosArgs<ExtArgs>
     receitaIngredientes?: boolean | Ingrediente$receitaIngredientesArgs<ExtArgs>
@@ -5090,6 +5366,9 @@ export namespace Prisma {
       id: number
       nome: string
       categoria: string
+      classificacaoStatus: string
+      dietasPermitidas: string | null
+      restricoes: string | null
     }, ExtArgs["result"]["ingrediente"]>
     composites: {}
   }
@@ -5464,6 +5743,9 @@ export namespace Prisma {
     readonly id: FieldRef<"Ingrediente", 'Int'>
     readonly nome: FieldRef<"Ingrediente", 'String'>
     readonly categoria: FieldRef<"Ingrediente", 'String'>
+    readonly classificacaoStatus: FieldRef<"Ingrediente", 'String'>
+    readonly dietasPermitidas: FieldRef<"Ingrediente", 'String'>
+    readonly restricoes: FieldRef<"Ingrediente", 'String'>
   }
     
 
@@ -7124,6 +7406,7 @@ export namespace Prisma {
     ingredientes?: boolean | Receita$ingredientesArgs<ExtArgs>
     postagens?: boolean | Receita$postagensArgs<ExtArgs>
     comentarios?: boolean | Receita$comentariosArgs<ExtArgs>
+    favoritos?: boolean | Receita$favoritosArgs<ExtArgs>
     _count?: boolean | ReceitaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["receita"]>
 
@@ -7149,6 +7432,7 @@ export namespace Prisma {
     ingredientes?: boolean | Receita$ingredientesArgs<ExtArgs>
     postagens?: boolean | Receita$postagensArgs<ExtArgs>
     comentarios?: boolean | Receita$comentariosArgs<ExtArgs>
+    favoritos?: boolean | Receita$favoritosArgs<ExtArgs>
     _count?: boolean | ReceitaCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -7159,6 +7443,7 @@ export namespace Prisma {
       ingredientes: Prisma.$ReceitaIngredientePayload<ExtArgs>[]
       postagens: Prisma.$PostagemPayload<ExtArgs>[]
       comentarios: Prisma.$ComentarioPayload<ExtArgs>[]
+      favoritos: Prisma.$FavoritoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -7516,6 +7801,7 @@ export namespace Prisma {
     ingredientes<T extends Receita$ingredientesArgs<ExtArgs> = {}>(args?: Subset<T, Receita$ingredientesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReceitaIngredientePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     postagens<T extends Receita$postagensArgs<ExtArgs> = {}>(args?: Subset<T, Receita$postagensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostagemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comentarios<T extends Receita$comentariosArgs<ExtArgs> = {}>(args?: Subset<T, Receita$comentariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComentarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    favoritos<T extends Receita$favoritosArgs<ExtArgs> = {}>(args?: Subset<T, Receita$favoritosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7976,6 +8262,30 @@ export namespace Prisma {
   }
 
   /**
+   * Receita.favoritos
+   */
+  export type Receita$favoritosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    where?: FavoritoWhereInput
+    orderBy?: FavoritoOrderByWithRelationInput | FavoritoOrderByWithRelationInput[]
+    cursor?: FavoritoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FavoritoScalarFieldEnum | FavoritoScalarFieldEnum[]
+  }
+
+  /**
    * Receita without action
    */
   export type ReceitaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7991,6 +8301,2013 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ReceitaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Favorito
+   */
+
+  export type AggregateFavorito = {
+    _count: FavoritoCountAggregateOutputType | null
+    _avg: FavoritoAvgAggregateOutputType | null
+    _sum: FavoritoSumAggregateOutputType | null
+    _min: FavoritoMinAggregateOutputType | null
+    _max: FavoritoMaxAggregateOutputType | null
+  }
+
+  export type FavoritoAvgAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    receitaId: number | null
+  }
+
+  export type FavoritoSumAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    receitaId: number | null
+  }
+
+  export type FavoritoMinAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    receitaId: number | null
+    criadoEm: Date | null
+  }
+
+  export type FavoritoMaxAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    receitaId: number | null
+    criadoEm: Date | null
+  }
+
+  export type FavoritoCountAggregateOutputType = {
+    id: number
+    usuarioId: number
+    receitaId: number
+    criadoEm: number
+    _all: number
+  }
+
+
+  export type FavoritoAvgAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    receitaId?: true
+  }
+
+  export type FavoritoSumAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    receitaId?: true
+  }
+
+  export type FavoritoMinAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    receitaId?: true
+    criadoEm?: true
+  }
+
+  export type FavoritoMaxAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    receitaId?: true
+    criadoEm?: true
+  }
+
+  export type FavoritoCountAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    receitaId?: true
+    criadoEm?: true
+    _all?: true
+  }
+
+  export type FavoritoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Favorito to aggregate.
+     */
+    where?: FavoritoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favoritos to fetch.
+     */
+    orderBy?: FavoritoOrderByWithRelationInput | FavoritoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FavoritoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favoritos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favoritos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Favoritos
+    **/
+    _count?: true | FavoritoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FavoritoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FavoritoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FavoritoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FavoritoMaxAggregateInputType
+  }
+
+  export type GetFavoritoAggregateType<T extends FavoritoAggregateArgs> = {
+        [P in keyof T & keyof AggregateFavorito]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFavorito[P]>
+      : GetScalarType<T[P], AggregateFavorito[P]>
+  }
+
+
+
+
+  export type FavoritoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoritoWhereInput
+    orderBy?: FavoritoOrderByWithAggregationInput | FavoritoOrderByWithAggregationInput[]
+    by: FavoritoScalarFieldEnum[] | FavoritoScalarFieldEnum
+    having?: FavoritoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FavoritoCountAggregateInputType | true
+    _avg?: FavoritoAvgAggregateInputType
+    _sum?: FavoritoSumAggregateInputType
+    _min?: FavoritoMinAggregateInputType
+    _max?: FavoritoMaxAggregateInputType
+  }
+
+  export type FavoritoGroupByOutputType = {
+    id: number
+    usuarioId: number
+    receitaId: number
+    criadoEm: Date
+    _count: FavoritoCountAggregateOutputType | null
+    _avg: FavoritoAvgAggregateOutputType | null
+    _sum: FavoritoSumAggregateOutputType | null
+    _min: FavoritoMinAggregateOutputType | null
+    _max: FavoritoMaxAggregateOutputType | null
+  }
+
+  type GetFavoritoGroupByPayload<T extends FavoritoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FavoritoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FavoritoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FavoritoGroupByOutputType[P]>
+            : GetScalarType<T[P], FavoritoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FavoritoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    receitaId?: boolean
+    criadoEm?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    receita?: boolean | ReceitaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["favorito"]>
+
+
+
+  export type FavoritoSelectScalar = {
+    id?: boolean
+    usuarioId?: boolean
+    receitaId?: boolean
+    criadoEm?: boolean
+  }
+
+  export type FavoritoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "receitaId" | "criadoEm", ExtArgs["result"]["favorito"]>
+  export type FavoritoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    receita?: boolean | ReceitaDefaultArgs<ExtArgs>
+  }
+
+  export type $FavoritoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Favorito"
+    objects: {
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
+      receita: Prisma.$ReceitaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      usuarioId: number
+      receitaId: number
+      criadoEm: Date
+    }, ExtArgs["result"]["favorito"]>
+    composites: {}
+  }
+
+  type FavoritoGetPayload<S extends boolean | null | undefined | FavoritoDefaultArgs> = $Result.GetResult<Prisma.$FavoritoPayload, S>
+
+  type FavoritoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FavoritoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FavoritoCountAggregateInputType | true
+    }
+
+  export interface FavoritoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Favorito'], meta: { name: 'Favorito' } }
+    /**
+     * Find zero or one Favorito that matches the filter.
+     * @param {FavoritoFindUniqueArgs} args - Arguments to find a Favorito
+     * @example
+     * // Get one Favorito
+     * const favorito = await prisma.favorito.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FavoritoFindUniqueArgs>(args: SelectSubset<T, FavoritoFindUniqueArgs<ExtArgs>>): Prisma__FavoritoClient<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Favorito that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FavoritoFindUniqueOrThrowArgs} args - Arguments to find a Favorito
+     * @example
+     * // Get one Favorito
+     * const favorito = await prisma.favorito.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FavoritoFindUniqueOrThrowArgs>(args: SelectSubset<T, FavoritoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FavoritoClient<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Favorito that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoritoFindFirstArgs} args - Arguments to find a Favorito
+     * @example
+     * // Get one Favorito
+     * const favorito = await prisma.favorito.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FavoritoFindFirstArgs>(args?: SelectSubset<T, FavoritoFindFirstArgs<ExtArgs>>): Prisma__FavoritoClient<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Favorito that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoritoFindFirstOrThrowArgs} args - Arguments to find a Favorito
+     * @example
+     * // Get one Favorito
+     * const favorito = await prisma.favorito.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FavoritoFindFirstOrThrowArgs>(args?: SelectSubset<T, FavoritoFindFirstOrThrowArgs<ExtArgs>>): Prisma__FavoritoClient<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Favoritos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoritoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Favoritos
+     * const favoritos = await prisma.favorito.findMany()
+     * 
+     * // Get first 10 Favoritos
+     * const favoritos = await prisma.favorito.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const favoritoWithIdOnly = await prisma.favorito.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FavoritoFindManyArgs>(args?: SelectSubset<T, FavoritoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Favorito.
+     * @param {FavoritoCreateArgs} args - Arguments to create a Favorito.
+     * @example
+     * // Create one Favorito
+     * const Favorito = await prisma.favorito.create({
+     *   data: {
+     *     // ... data to create a Favorito
+     *   }
+     * })
+     * 
+     */
+    create<T extends FavoritoCreateArgs>(args: SelectSubset<T, FavoritoCreateArgs<ExtArgs>>): Prisma__FavoritoClient<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Favoritos.
+     * @param {FavoritoCreateManyArgs} args - Arguments to create many Favoritos.
+     * @example
+     * // Create many Favoritos
+     * const favorito = await prisma.favorito.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FavoritoCreateManyArgs>(args?: SelectSubset<T, FavoritoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Favorito.
+     * @param {FavoritoDeleteArgs} args - Arguments to delete one Favorito.
+     * @example
+     * // Delete one Favorito
+     * const Favorito = await prisma.favorito.delete({
+     *   where: {
+     *     // ... filter to delete one Favorito
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FavoritoDeleteArgs>(args: SelectSubset<T, FavoritoDeleteArgs<ExtArgs>>): Prisma__FavoritoClient<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Favorito.
+     * @param {FavoritoUpdateArgs} args - Arguments to update one Favorito.
+     * @example
+     * // Update one Favorito
+     * const favorito = await prisma.favorito.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FavoritoUpdateArgs>(args: SelectSubset<T, FavoritoUpdateArgs<ExtArgs>>): Prisma__FavoritoClient<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Favoritos.
+     * @param {FavoritoDeleteManyArgs} args - Arguments to filter Favoritos to delete.
+     * @example
+     * // Delete a few Favoritos
+     * const { count } = await prisma.favorito.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FavoritoDeleteManyArgs>(args?: SelectSubset<T, FavoritoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Favoritos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoritoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Favoritos
+     * const favorito = await prisma.favorito.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FavoritoUpdateManyArgs>(args: SelectSubset<T, FavoritoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Favorito.
+     * @param {FavoritoUpsertArgs} args - Arguments to update or create a Favorito.
+     * @example
+     * // Update or create a Favorito
+     * const favorito = await prisma.favorito.upsert({
+     *   create: {
+     *     // ... data to create a Favorito
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Favorito we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FavoritoUpsertArgs>(args: SelectSubset<T, FavoritoUpsertArgs<ExtArgs>>): Prisma__FavoritoClient<$Result.GetResult<Prisma.$FavoritoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Favoritos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoritoCountArgs} args - Arguments to filter Favoritos to count.
+     * @example
+     * // Count the number of Favoritos
+     * const count = await prisma.favorito.count({
+     *   where: {
+     *     // ... the filter for the Favoritos we want to count
+     *   }
+     * })
+    **/
+    count<T extends FavoritoCountArgs>(
+      args?: Subset<T, FavoritoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FavoritoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Favorito.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoritoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FavoritoAggregateArgs>(args: Subset<T, FavoritoAggregateArgs>): Prisma.PrismaPromise<GetFavoritoAggregateType<T>>
+
+    /**
+     * Group by Favorito.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoritoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FavoritoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FavoritoGroupByArgs['orderBy'] }
+        : { orderBy?: FavoritoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FavoritoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFavoritoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Favorito model
+   */
+  readonly fields: FavoritoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Favorito.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FavoritoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    receita<T extends ReceitaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ReceitaDefaultArgs<ExtArgs>>): Prisma__ReceitaClient<$Result.GetResult<Prisma.$ReceitaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Favorito model
+   */
+  interface FavoritoFieldRefs {
+    readonly id: FieldRef<"Favorito", 'Int'>
+    readonly usuarioId: FieldRef<"Favorito", 'Int'>
+    readonly receitaId: FieldRef<"Favorito", 'Int'>
+    readonly criadoEm: FieldRef<"Favorito", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Favorito findUnique
+   */
+  export type FavoritoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorito to fetch.
+     */
+    where: FavoritoWhereUniqueInput
+  }
+
+  /**
+   * Favorito findUniqueOrThrow
+   */
+  export type FavoritoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorito to fetch.
+     */
+    where: FavoritoWhereUniqueInput
+  }
+
+  /**
+   * Favorito findFirst
+   */
+  export type FavoritoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorito to fetch.
+     */
+    where?: FavoritoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favoritos to fetch.
+     */
+    orderBy?: FavoritoOrderByWithRelationInput | FavoritoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Favoritos.
+     */
+    cursor?: FavoritoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favoritos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favoritos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Favoritos.
+     */
+    distinct?: FavoritoScalarFieldEnum | FavoritoScalarFieldEnum[]
+  }
+
+  /**
+   * Favorito findFirstOrThrow
+   */
+  export type FavoritoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorito to fetch.
+     */
+    where?: FavoritoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favoritos to fetch.
+     */
+    orderBy?: FavoritoOrderByWithRelationInput | FavoritoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Favoritos.
+     */
+    cursor?: FavoritoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favoritos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favoritos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Favoritos.
+     */
+    distinct?: FavoritoScalarFieldEnum | FavoritoScalarFieldEnum[]
+  }
+
+  /**
+   * Favorito findMany
+   */
+  export type FavoritoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    /**
+     * Filter, which Favoritos to fetch.
+     */
+    where?: FavoritoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favoritos to fetch.
+     */
+    orderBy?: FavoritoOrderByWithRelationInput | FavoritoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Favoritos.
+     */
+    cursor?: FavoritoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favoritos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favoritos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Favoritos.
+     */
+    distinct?: FavoritoScalarFieldEnum | FavoritoScalarFieldEnum[]
+  }
+
+  /**
+   * Favorito create
+   */
+  export type FavoritoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Favorito.
+     */
+    data: XOR<FavoritoCreateInput, FavoritoUncheckedCreateInput>
+  }
+
+  /**
+   * Favorito createMany
+   */
+  export type FavoritoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Favoritos.
+     */
+    data: FavoritoCreateManyInput | FavoritoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Favorito update
+   */
+  export type FavoritoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Favorito.
+     */
+    data: XOR<FavoritoUpdateInput, FavoritoUncheckedUpdateInput>
+    /**
+     * Choose, which Favorito to update.
+     */
+    where: FavoritoWhereUniqueInput
+  }
+
+  /**
+   * Favorito updateMany
+   */
+  export type FavoritoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Favoritos.
+     */
+    data: XOR<FavoritoUpdateManyMutationInput, FavoritoUncheckedUpdateManyInput>
+    /**
+     * Filter which Favoritos to update
+     */
+    where?: FavoritoWhereInput
+    /**
+     * Limit how many Favoritos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Favorito upsert
+   */
+  export type FavoritoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Favorito to update in case it exists.
+     */
+    where: FavoritoWhereUniqueInput
+    /**
+     * In case the Favorito found by the `where` argument doesn't exist, create a new Favorito with this data.
+     */
+    create: XOR<FavoritoCreateInput, FavoritoUncheckedCreateInput>
+    /**
+     * In case the Favorito was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FavoritoUpdateInput, FavoritoUncheckedUpdateInput>
+  }
+
+  /**
+   * Favorito delete
+   */
+  export type FavoritoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+    /**
+     * Filter which Favorito to delete.
+     */
+    where: FavoritoWhereUniqueInput
+  }
+
+  /**
+   * Favorito deleteMany
+   */
+  export type FavoritoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Favoritos to delete
+     */
+    where?: FavoritoWhereInput
+    /**
+     * Limit how many Favoritos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Favorito without action
+   */
+  export type FavoritoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorito
+     */
+    select?: FavoritoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorito
+     */
+    omit?: FavoritoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoritoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ReceitaGeracao
+   */
+
+  export type AggregateReceitaGeracao = {
+    _count: ReceitaGeracaoCountAggregateOutputType | null
+    _avg: ReceitaGeracaoAvgAggregateOutputType | null
+    _sum: ReceitaGeracaoSumAggregateOutputType | null
+    _min: ReceitaGeracaoMinAggregateOutputType | null
+    _max: ReceitaGeracaoMaxAggregateOutputType | null
+  }
+
+  export type ReceitaGeracaoAvgAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    duracaoMs: number | null
+  }
+
+  export type ReceitaGeracaoSumAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    duracaoMs: number | null
+  }
+
+  export type ReceitaGeracaoMinAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    chaveCache: string | null
+    modelo: string | null
+    status: string | null
+    erroCodigo: string | null
+    rascunhoExpiraEm: Date | null
+    criadaEm: Date | null
+    finalizadaEm: Date | null
+    duracaoMs: number | null
+  }
+
+  export type ReceitaGeracaoMaxAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    chaveCache: string | null
+    modelo: string | null
+    status: string | null
+    erroCodigo: string | null
+    rascunhoExpiraEm: Date | null
+    criadaEm: Date | null
+    finalizadaEm: Date | null
+    duracaoMs: number | null
+  }
+
+  export type ReceitaGeracaoCountAggregateOutputType = {
+    id: number
+    usuarioId: number
+    chaveCache: number
+    modelo: number
+    status: number
+    payload: number
+    erroCodigo: number
+    rascunhoExpiraEm: number
+    criadaEm: number
+    finalizadaEm: number
+    duracaoMs: number
+    _all: number
+  }
+
+
+  export type ReceitaGeracaoAvgAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    duracaoMs?: true
+  }
+
+  export type ReceitaGeracaoSumAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    duracaoMs?: true
+  }
+
+  export type ReceitaGeracaoMinAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    chaveCache?: true
+    modelo?: true
+    status?: true
+    erroCodigo?: true
+    rascunhoExpiraEm?: true
+    criadaEm?: true
+    finalizadaEm?: true
+    duracaoMs?: true
+  }
+
+  export type ReceitaGeracaoMaxAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    chaveCache?: true
+    modelo?: true
+    status?: true
+    erroCodigo?: true
+    rascunhoExpiraEm?: true
+    criadaEm?: true
+    finalizadaEm?: true
+    duracaoMs?: true
+  }
+
+  export type ReceitaGeracaoCountAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    chaveCache?: true
+    modelo?: true
+    status?: true
+    payload?: true
+    erroCodigo?: true
+    rascunhoExpiraEm?: true
+    criadaEm?: true
+    finalizadaEm?: true
+    duracaoMs?: true
+    _all?: true
+  }
+
+  export type ReceitaGeracaoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReceitaGeracao to aggregate.
+     */
+    where?: ReceitaGeracaoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReceitaGeracaos to fetch.
+     */
+    orderBy?: ReceitaGeracaoOrderByWithRelationInput | ReceitaGeracaoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReceitaGeracaoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReceitaGeracaos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReceitaGeracaos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ReceitaGeracaos
+    **/
+    _count?: true | ReceitaGeracaoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ReceitaGeracaoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ReceitaGeracaoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReceitaGeracaoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReceitaGeracaoMaxAggregateInputType
+  }
+
+  export type GetReceitaGeracaoAggregateType<T extends ReceitaGeracaoAggregateArgs> = {
+        [P in keyof T & keyof AggregateReceitaGeracao]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReceitaGeracao[P]>
+      : GetScalarType<T[P], AggregateReceitaGeracao[P]>
+  }
+
+
+
+
+  export type ReceitaGeracaoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReceitaGeracaoWhereInput
+    orderBy?: ReceitaGeracaoOrderByWithAggregationInput | ReceitaGeracaoOrderByWithAggregationInput[]
+    by: ReceitaGeracaoScalarFieldEnum[] | ReceitaGeracaoScalarFieldEnum
+    having?: ReceitaGeracaoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReceitaGeracaoCountAggregateInputType | true
+    _avg?: ReceitaGeracaoAvgAggregateInputType
+    _sum?: ReceitaGeracaoSumAggregateInputType
+    _min?: ReceitaGeracaoMinAggregateInputType
+    _max?: ReceitaGeracaoMaxAggregateInputType
+  }
+
+  export type ReceitaGeracaoGroupByOutputType = {
+    id: number
+    usuarioId: number
+    chaveCache: string
+    modelo: string
+    status: string
+    payload: JsonValue | null
+    erroCodigo: string | null
+    rascunhoExpiraEm: Date | null
+    criadaEm: Date
+    finalizadaEm: Date | null
+    duracaoMs: number | null
+    _count: ReceitaGeracaoCountAggregateOutputType | null
+    _avg: ReceitaGeracaoAvgAggregateOutputType | null
+    _sum: ReceitaGeracaoSumAggregateOutputType | null
+    _min: ReceitaGeracaoMinAggregateOutputType | null
+    _max: ReceitaGeracaoMaxAggregateOutputType | null
+  }
+
+  type GetReceitaGeracaoGroupByPayload<T extends ReceitaGeracaoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReceitaGeracaoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReceitaGeracaoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReceitaGeracaoGroupByOutputType[P]>
+            : GetScalarType<T[P], ReceitaGeracaoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReceitaGeracaoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    chaveCache?: boolean
+    modelo?: boolean
+    status?: boolean
+    payload?: boolean
+    erroCodigo?: boolean
+    rascunhoExpiraEm?: boolean
+    criadaEm?: boolean
+    finalizadaEm?: boolean
+    duracaoMs?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["receitaGeracao"]>
+
+
+
+  export type ReceitaGeracaoSelectScalar = {
+    id?: boolean
+    usuarioId?: boolean
+    chaveCache?: boolean
+    modelo?: boolean
+    status?: boolean
+    payload?: boolean
+    erroCodigo?: boolean
+    rascunhoExpiraEm?: boolean
+    criadaEm?: boolean
+    finalizadaEm?: boolean
+    duracaoMs?: boolean
+  }
+
+  export type ReceitaGeracaoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "chaveCache" | "modelo" | "status" | "payload" | "erroCodigo" | "rascunhoExpiraEm" | "criadaEm" | "finalizadaEm" | "duracaoMs", ExtArgs["result"]["receitaGeracao"]>
+  export type ReceitaGeracaoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $ReceitaGeracaoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ReceitaGeracao"
+    objects: {
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      usuarioId: number
+      chaveCache: string
+      modelo: string
+      status: string
+      payload: Prisma.JsonValue | null
+      erroCodigo: string | null
+      rascunhoExpiraEm: Date | null
+      criadaEm: Date
+      finalizadaEm: Date | null
+      duracaoMs: number | null
+    }, ExtArgs["result"]["receitaGeracao"]>
+    composites: {}
+  }
+
+  type ReceitaGeracaoGetPayload<S extends boolean | null | undefined | ReceitaGeracaoDefaultArgs> = $Result.GetResult<Prisma.$ReceitaGeracaoPayload, S>
+
+  type ReceitaGeracaoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ReceitaGeracaoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ReceitaGeracaoCountAggregateInputType | true
+    }
+
+  export interface ReceitaGeracaoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ReceitaGeracao'], meta: { name: 'ReceitaGeracao' } }
+    /**
+     * Find zero or one ReceitaGeracao that matches the filter.
+     * @param {ReceitaGeracaoFindUniqueArgs} args - Arguments to find a ReceitaGeracao
+     * @example
+     * // Get one ReceitaGeracao
+     * const receitaGeracao = await prisma.receitaGeracao.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReceitaGeracaoFindUniqueArgs>(args: SelectSubset<T, ReceitaGeracaoFindUniqueArgs<ExtArgs>>): Prisma__ReceitaGeracaoClient<$Result.GetResult<Prisma.$ReceitaGeracaoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ReceitaGeracao that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ReceitaGeracaoFindUniqueOrThrowArgs} args - Arguments to find a ReceitaGeracao
+     * @example
+     * // Get one ReceitaGeracao
+     * const receitaGeracao = await prisma.receitaGeracao.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReceitaGeracaoFindUniqueOrThrowArgs>(args: SelectSubset<T, ReceitaGeracaoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReceitaGeracaoClient<$Result.GetResult<Prisma.$ReceitaGeracaoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ReceitaGeracao that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceitaGeracaoFindFirstArgs} args - Arguments to find a ReceitaGeracao
+     * @example
+     * // Get one ReceitaGeracao
+     * const receitaGeracao = await prisma.receitaGeracao.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReceitaGeracaoFindFirstArgs>(args?: SelectSubset<T, ReceitaGeracaoFindFirstArgs<ExtArgs>>): Prisma__ReceitaGeracaoClient<$Result.GetResult<Prisma.$ReceitaGeracaoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ReceitaGeracao that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceitaGeracaoFindFirstOrThrowArgs} args - Arguments to find a ReceitaGeracao
+     * @example
+     * // Get one ReceitaGeracao
+     * const receitaGeracao = await prisma.receitaGeracao.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReceitaGeracaoFindFirstOrThrowArgs>(args?: SelectSubset<T, ReceitaGeracaoFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReceitaGeracaoClient<$Result.GetResult<Prisma.$ReceitaGeracaoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ReceitaGeracaos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceitaGeracaoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ReceitaGeracaos
+     * const receitaGeracaos = await prisma.receitaGeracao.findMany()
+     * 
+     * // Get first 10 ReceitaGeracaos
+     * const receitaGeracaos = await prisma.receitaGeracao.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const receitaGeracaoWithIdOnly = await prisma.receitaGeracao.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ReceitaGeracaoFindManyArgs>(args?: SelectSubset<T, ReceitaGeracaoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReceitaGeracaoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ReceitaGeracao.
+     * @param {ReceitaGeracaoCreateArgs} args - Arguments to create a ReceitaGeracao.
+     * @example
+     * // Create one ReceitaGeracao
+     * const ReceitaGeracao = await prisma.receitaGeracao.create({
+     *   data: {
+     *     // ... data to create a ReceitaGeracao
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReceitaGeracaoCreateArgs>(args: SelectSubset<T, ReceitaGeracaoCreateArgs<ExtArgs>>): Prisma__ReceitaGeracaoClient<$Result.GetResult<Prisma.$ReceitaGeracaoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ReceitaGeracaos.
+     * @param {ReceitaGeracaoCreateManyArgs} args - Arguments to create many ReceitaGeracaos.
+     * @example
+     * // Create many ReceitaGeracaos
+     * const receitaGeracao = await prisma.receitaGeracao.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReceitaGeracaoCreateManyArgs>(args?: SelectSubset<T, ReceitaGeracaoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ReceitaGeracao.
+     * @param {ReceitaGeracaoDeleteArgs} args - Arguments to delete one ReceitaGeracao.
+     * @example
+     * // Delete one ReceitaGeracao
+     * const ReceitaGeracao = await prisma.receitaGeracao.delete({
+     *   where: {
+     *     // ... filter to delete one ReceitaGeracao
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReceitaGeracaoDeleteArgs>(args: SelectSubset<T, ReceitaGeracaoDeleteArgs<ExtArgs>>): Prisma__ReceitaGeracaoClient<$Result.GetResult<Prisma.$ReceitaGeracaoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ReceitaGeracao.
+     * @param {ReceitaGeracaoUpdateArgs} args - Arguments to update one ReceitaGeracao.
+     * @example
+     * // Update one ReceitaGeracao
+     * const receitaGeracao = await prisma.receitaGeracao.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReceitaGeracaoUpdateArgs>(args: SelectSubset<T, ReceitaGeracaoUpdateArgs<ExtArgs>>): Prisma__ReceitaGeracaoClient<$Result.GetResult<Prisma.$ReceitaGeracaoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ReceitaGeracaos.
+     * @param {ReceitaGeracaoDeleteManyArgs} args - Arguments to filter ReceitaGeracaos to delete.
+     * @example
+     * // Delete a few ReceitaGeracaos
+     * const { count } = await prisma.receitaGeracao.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReceitaGeracaoDeleteManyArgs>(args?: SelectSubset<T, ReceitaGeracaoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ReceitaGeracaos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceitaGeracaoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ReceitaGeracaos
+     * const receitaGeracao = await prisma.receitaGeracao.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReceitaGeracaoUpdateManyArgs>(args: SelectSubset<T, ReceitaGeracaoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ReceitaGeracao.
+     * @param {ReceitaGeracaoUpsertArgs} args - Arguments to update or create a ReceitaGeracao.
+     * @example
+     * // Update or create a ReceitaGeracao
+     * const receitaGeracao = await prisma.receitaGeracao.upsert({
+     *   create: {
+     *     // ... data to create a ReceitaGeracao
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ReceitaGeracao we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReceitaGeracaoUpsertArgs>(args: SelectSubset<T, ReceitaGeracaoUpsertArgs<ExtArgs>>): Prisma__ReceitaGeracaoClient<$Result.GetResult<Prisma.$ReceitaGeracaoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ReceitaGeracaos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceitaGeracaoCountArgs} args - Arguments to filter ReceitaGeracaos to count.
+     * @example
+     * // Count the number of ReceitaGeracaos
+     * const count = await prisma.receitaGeracao.count({
+     *   where: {
+     *     // ... the filter for the ReceitaGeracaos we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReceitaGeracaoCountArgs>(
+      args?: Subset<T, ReceitaGeracaoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReceitaGeracaoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ReceitaGeracao.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceitaGeracaoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReceitaGeracaoAggregateArgs>(args: Subset<T, ReceitaGeracaoAggregateArgs>): Prisma.PrismaPromise<GetReceitaGeracaoAggregateType<T>>
+
+    /**
+     * Group by ReceitaGeracao.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceitaGeracaoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReceitaGeracaoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReceitaGeracaoGroupByArgs['orderBy'] }
+        : { orderBy?: ReceitaGeracaoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReceitaGeracaoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReceitaGeracaoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ReceitaGeracao model
+   */
+  readonly fields: ReceitaGeracaoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ReceitaGeracao.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReceitaGeracaoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ReceitaGeracao model
+   */
+  interface ReceitaGeracaoFieldRefs {
+    readonly id: FieldRef<"ReceitaGeracao", 'Int'>
+    readonly usuarioId: FieldRef<"ReceitaGeracao", 'Int'>
+    readonly chaveCache: FieldRef<"ReceitaGeracao", 'String'>
+    readonly modelo: FieldRef<"ReceitaGeracao", 'String'>
+    readonly status: FieldRef<"ReceitaGeracao", 'String'>
+    readonly payload: FieldRef<"ReceitaGeracao", 'Json'>
+    readonly erroCodigo: FieldRef<"ReceitaGeracao", 'String'>
+    readonly rascunhoExpiraEm: FieldRef<"ReceitaGeracao", 'DateTime'>
+    readonly criadaEm: FieldRef<"ReceitaGeracao", 'DateTime'>
+    readonly finalizadaEm: FieldRef<"ReceitaGeracao", 'DateTime'>
+    readonly duracaoMs: FieldRef<"ReceitaGeracao", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ReceitaGeracao findUnique
+   */
+  export type ReceitaGeracaoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
+    /**
+     * Filter, which ReceitaGeracao to fetch.
+     */
+    where: ReceitaGeracaoWhereUniqueInput
+  }
+
+  /**
+   * ReceitaGeracao findUniqueOrThrow
+   */
+  export type ReceitaGeracaoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
+    /**
+     * Filter, which ReceitaGeracao to fetch.
+     */
+    where: ReceitaGeracaoWhereUniqueInput
+  }
+
+  /**
+   * ReceitaGeracao findFirst
+   */
+  export type ReceitaGeracaoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
+    /**
+     * Filter, which ReceitaGeracao to fetch.
+     */
+    where?: ReceitaGeracaoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReceitaGeracaos to fetch.
+     */
+    orderBy?: ReceitaGeracaoOrderByWithRelationInput | ReceitaGeracaoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReceitaGeracaos.
+     */
+    cursor?: ReceitaGeracaoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReceitaGeracaos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReceitaGeracaos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReceitaGeracaos.
+     */
+    distinct?: ReceitaGeracaoScalarFieldEnum | ReceitaGeracaoScalarFieldEnum[]
+  }
+
+  /**
+   * ReceitaGeracao findFirstOrThrow
+   */
+  export type ReceitaGeracaoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
+    /**
+     * Filter, which ReceitaGeracao to fetch.
+     */
+    where?: ReceitaGeracaoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReceitaGeracaos to fetch.
+     */
+    orderBy?: ReceitaGeracaoOrderByWithRelationInput | ReceitaGeracaoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReceitaGeracaos.
+     */
+    cursor?: ReceitaGeracaoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReceitaGeracaos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReceitaGeracaos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReceitaGeracaos.
+     */
+    distinct?: ReceitaGeracaoScalarFieldEnum | ReceitaGeracaoScalarFieldEnum[]
+  }
+
+  /**
+   * ReceitaGeracao findMany
+   */
+  export type ReceitaGeracaoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
+    /**
+     * Filter, which ReceitaGeracaos to fetch.
+     */
+    where?: ReceitaGeracaoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReceitaGeracaos to fetch.
+     */
+    orderBy?: ReceitaGeracaoOrderByWithRelationInput | ReceitaGeracaoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ReceitaGeracaos.
+     */
+    cursor?: ReceitaGeracaoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReceitaGeracaos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReceitaGeracaos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReceitaGeracaos.
+     */
+    distinct?: ReceitaGeracaoScalarFieldEnum | ReceitaGeracaoScalarFieldEnum[]
+  }
+
+  /**
+   * ReceitaGeracao create
+   */
+  export type ReceitaGeracaoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ReceitaGeracao.
+     */
+    data: XOR<ReceitaGeracaoCreateInput, ReceitaGeracaoUncheckedCreateInput>
+  }
+
+  /**
+   * ReceitaGeracao createMany
+   */
+  export type ReceitaGeracaoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ReceitaGeracaos.
+     */
+    data: ReceitaGeracaoCreateManyInput | ReceitaGeracaoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ReceitaGeracao update
+   */
+  export type ReceitaGeracaoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ReceitaGeracao.
+     */
+    data: XOR<ReceitaGeracaoUpdateInput, ReceitaGeracaoUncheckedUpdateInput>
+    /**
+     * Choose, which ReceitaGeracao to update.
+     */
+    where: ReceitaGeracaoWhereUniqueInput
+  }
+
+  /**
+   * ReceitaGeracao updateMany
+   */
+  export type ReceitaGeracaoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ReceitaGeracaos.
+     */
+    data: XOR<ReceitaGeracaoUpdateManyMutationInput, ReceitaGeracaoUncheckedUpdateManyInput>
+    /**
+     * Filter which ReceitaGeracaos to update
+     */
+    where?: ReceitaGeracaoWhereInput
+    /**
+     * Limit how many ReceitaGeracaos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ReceitaGeracao upsert
+   */
+  export type ReceitaGeracaoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ReceitaGeracao to update in case it exists.
+     */
+    where: ReceitaGeracaoWhereUniqueInput
+    /**
+     * In case the ReceitaGeracao found by the `where` argument doesn't exist, create a new ReceitaGeracao with this data.
+     */
+    create: XOR<ReceitaGeracaoCreateInput, ReceitaGeracaoUncheckedCreateInput>
+    /**
+     * In case the ReceitaGeracao was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReceitaGeracaoUpdateInput, ReceitaGeracaoUncheckedUpdateInput>
+  }
+
+  /**
+   * ReceitaGeracao delete
+   */
+  export type ReceitaGeracaoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
+    /**
+     * Filter which ReceitaGeracao to delete.
+     */
+    where: ReceitaGeracaoWhereUniqueInput
+  }
+
+  /**
+   * ReceitaGeracao deleteMany
+   */
+  export type ReceitaGeracaoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReceitaGeracaos to delete
+     */
+    where?: ReceitaGeracaoWhereInput
+    /**
+     * Limit how many ReceitaGeracaos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ReceitaGeracao without action
+   */
+  export type ReceitaGeracaoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReceitaGeracao
+     */
+    select?: ReceitaGeracaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReceitaGeracao
+     */
+    omit?: ReceitaGeracaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceitaGeracaoInclude<ExtArgs> | null
   }
 
 
@@ -11083,7 +13400,10 @@ export namespace Prisma {
   export const IngredienteScalarFieldEnum: {
     id: 'id',
     nome: 'nome',
-    categoria: 'categoria'
+    categoria: 'categoria',
+    classificacaoStatus: 'classificacaoStatus',
+    dietasPermitidas: 'dietasPermitidas',
+    restricoes: 'restricoes'
   };
 
   export type IngredienteScalarFieldEnum = (typeof IngredienteScalarFieldEnum)[keyof typeof IngredienteScalarFieldEnum]
@@ -11115,6 +13435,33 @@ export namespace Prisma {
   };
 
   export type ReceitaScalarFieldEnum = (typeof ReceitaScalarFieldEnum)[keyof typeof ReceitaScalarFieldEnum]
+
+
+  export const FavoritoScalarFieldEnum: {
+    id: 'id',
+    usuarioId: 'usuarioId',
+    receitaId: 'receitaId',
+    criadoEm: 'criadoEm'
+  };
+
+  export type FavoritoScalarFieldEnum = (typeof FavoritoScalarFieldEnum)[keyof typeof FavoritoScalarFieldEnum]
+
+
+  export const ReceitaGeracaoScalarFieldEnum: {
+    id: 'id',
+    usuarioId: 'usuarioId',
+    chaveCache: 'chaveCache',
+    modelo: 'modelo',
+    status: 'status',
+    payload: 'payload',
+    erroCodigo: 'erroCodigo',
+    rascunhoExpiraEm: 'rascunhoExpiraEm',
+    criadaEm: 'criadaEm',
+    finalizadaEm: 'finalizadaEm',
+    duracaoMs: 'duracaoMs'
+  };
+
+  export type ReceitaGeracaoScalarFieldEnum = (typeof ReceitaGeracaoScalarFieldEnum)[keyof typeof ReceitaGeracaoScalarFieldEnum]
 
 
   export const ReceitaIngredienteScalarFieldEnum: {
@@ -11160,6 +13507,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const NullsOrder: {
     first: 'first',
     last: 'last'
@@ -11187,7 +13542,10 @@ export namespace Prisma {
 
   export const IngredienteOrderByRelevanceFieldEnum: {
     nome: 'nome',
-    categoria: 'categoria'
+    categoria: 'categoria',
+    classificacaoStatus: 'classificacaoStatus',
+    dietasPermitidas: 'dietasPermitidas',
+    restricoes: 'restricoes'
   };
 
   export type IngredienteOrderByRelevanceFieldEnum = (typeof IngredienteOrderByRelevanceFieldEnum)[keyof typeof IngredienteOrderByRelevanceFieldEnum]
@@ -11207,6 +13565,33 @@ export namespace Prisma {
   };
 
   export type ReceitaOrderByRelevanceFieldEnum = (typeof ReceitaOrderByRelevanceFieldEnum)[keyof typeof ReceitaOrderByRelevanceFieldEnum]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+  export const QueryMode: {
+    default: 'default',
+    insensitive: 'insensitive'
+  };
+
+  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const ReceitaGeracaoOrderByRelevanceFieldEnum: {
+    chaveCache: 'chaveCache',
+    modelo: 'modelo',
+    status: 'status',
+    erroCodigo: 'erroCodigo'
+  };
+
+  export type ReceitaGeracaoOrderByRelevanceFieldEnum = (typeof ReceitaGeracaoOrderByRelevanceFieldEnum)[keyof typeof ReceitaGeracaoOrderByRelevanceFieldEnum]
 
 
   export const ReceitaIngredienteOrderByRelevanceFieldEnum: {
@@ -11283,6 +13668,20 @@ export namespace Prisma {
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
   /**
    * Deep Input Types
    */
@@ -11305,6 +13704,8 @@ export namespace Prisma {
     receitas?: ReceitaListRelationFilter
     postagens?: PostagemListRelationFilter
     comentarios?: ComentarioListRelationFilter
+    favoritos?: FavoritoListRelationFilter
+    geracoes?: ReceitaGeracaoListRelationFilter
   }
 
   export type UsuarioOrderByWithRelationInput = {
@@ -11321,6 +13722,8 @@ export namespace Prisma {
     receitas?: ReceitaOrderByRelationAggregateInput
     postagens?: PostagemOrderByRelationAggregateInput
     comentarios?: ComentarioOrderByRelationAggregateInput
+    favoritos?: FavoritoOrderByRelationAggregateInput
+    geracoes?: ReceitaGeracaoOrderByRelationAggregateInput
     _relevance?: UsuarioOrderByRelevanceInput
   }
 
@@ -11341,6 +13744,8 @@ export namespace Prisma {
     receitas?: ReceitaListRelationFilter
     postagens?: PostagemListRelationFilter
     comentarios?: ComentarioListRelationFilter
+    favoritos?: FavoritoListRelationFilter
+    geracoes?: ReceitaGeracaoListRelationFilter
   }, "id" | "email">
 
   export type UsuarioOrderByWithAggregationInput = {
@@ -11488,6 +13893,9 @@ export namespace Prisma {
     id?: IntFilter<"Ingrediente"> | number
     nome?: StringFilter<"Ingrediente"> | string
     categoria?: StringFilter<"Ingrediente"> | string
+    classificacaoStatus?: StringFilter<"Ingrediente"> | string
+    dietasPermitidas?: StringNullableFilter<"Ingrediente"> | string | null
+    restricoes?: StringNullableFilter<"Ingrediente"> | string | null
     inventarios?: InventarioListRelationFilter
     receitaIngredientes?: ReceitaIngredienteListRelationFilter
   }
@@ -11496,6 +13904,9 @@ export namespace Prisma {
     id?: SortOrder
     nome?: SortOrder
     categoria?: SortOrder
+    classificacaoStatus?: SortOrder
+    dietasPermitidas?: SortOrderInput | SortOrder
+    restricoes?: SortOrderInput | SortOrder
     inventarios?: InventarioOrderByRelationAggregateInput
     receitaIngredientes?: ReceitaIngredienteOrderByRelationAggregateInput
     _relevance?: IngredienteOrderByRelevanceInput
@@ -11508,6 +13919,9 @@ export namespace Prisma {
     OR?: IngredienteWhereInput[]
     NOT?: IngredienteWhereInput | IngredienteWhereInput[]
     categoria?: StringFilter<"Ingrediente"> | string
+    classificacaoStatus?: StringFilter<"Ingrediente"> | string
+    dietasPermitidas?: StringNullableFilter<"Ingrediente"> | string | null
+    restricoes?: StringNullableFilter<"Ingrediente"> | string | null
     inventarios?: InventarioListRelationFilter
     receitaIngredientes?: ReceitaIngredienteListRelationFilter
   }, "id" | "nome">
@@ -11516,6 +13930,9 @@ export namespace Prisma {
     id?: SortOrder
     nome?: SortOrder
     categoria?: SortOrder
+    classificacaoStatus?: SortOrder
+    dietasPermitidas?: SortOrderInput | SortOrder
+    restricoes?: SortOrderInput | SortOrder
     _count?: IngredienteCountOrderByAggregateInput
     _avg?: IngredienteAvgOrderByAggregateInput
     _max?: IngredienteMaxOrderByAggregateInput
@@ -11530,6 +13947,9 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Ingrediente"> | number
     nome?: StringWithAggregatesFilter<"Ingrediente"> | string
     categoria?: StringWithAggregatesFilter<"Ingrediente"> | string
+    classificacaoStatus?: StringWithAggregatesFilter<"Ingrediente"> | string
+    dietasPermitidas?: StringNullableWithAggregatesFilter<"Ingrediente"> | string | null
+    restricoes?: StringNullableWithAggregatesFilter<"Ingrediente"> | string | null
   }
 
   export type InventarioWhereInput = {
@@ -11613,6 +14033,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteListRelationFilter
     postagens?: PostagemListRelationFilter
     comentarios?: ComentarioListRelationFilter
+    favoritos?: FavoritoListRelationFilter
   }
 
   export type ReceitaOrderByWithRelationInput = {
@@ -11631,6 +14052,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteOrderByRelationAggregateInput
     postagens?: PostagemOrderByRelationAggregateInput
     comentarios?: ComentarioOrderByRelationAggregateInput
+    favoritos?: FavoritoOrderByRelationAggregateInput
     _relevance?: ReceitaOrderByRelevanceInput
   }
 
@@ -11653,6 +14075,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteListRelationFilter
     postagens?: PostagemListRelationFilter
     comentarios?: ComentarioListRelationFilter
+    favoritos?: FavoritoListRelationFilter
   }, "id">
 
   export type ReceitaOrderByWithAggregationInput = {
@@ -11689,6 +14112,150 @@ export namespace Prisma {
     geradaPorIA?: BoolWithAggregatesFilter<"Receita"> | boolean
     criadaEm?: DateTimeWithAggregatesFilter<"Receita"> | Date | string
     atualizadaEm?: DateTimeWithAggregatesFilter<"Receita"> | Date | string
+  }
+
+  export type FavoritoWhereInput = {
+    AND?: FavoritoWhereInput | FavoritoWhereInput[]
+    OR?: FavoritoWhereInput[]
+    NOT?: FavoritoWhereInput | FavoritoWhereInput[]
+    id?: IntFilter<"Favorito"> | number
+    usuarioId?: IntFilter<"Favorito"> | number
+    receitaId?: IntFilter<"Favorito"> | number
+    criadoEm?: DateTimeFilter<"Favorito"> | Date | string
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    receita?: XOR<ReceitaScalarRelationFilter, ReceitaWhereInput>
+  }
+
+  export type FavoritoOrderByWithRelationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    receitaId?: SortOrder
+    criadoEm?: SortOrder
+    usuario?: UsuarioOrderByWithRelationInput
+    receita?: ReceitaOrderByWithRelationInput
+  }
+
+  export type FavoritoWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    usuarioId_receitaId?: FavoritoUsuarioIdReceitaIdCompoundUniqueInput
+    AND?: FavoritoWhereInput | FavoritoWhereInput[]
+    OR?: FavoritoWhereInput[]
+    NOT?: FavoritoWhereInput | FavoritoWhereInput[]
+    usuarioId?: IntFilter<"Favorito"> | number
+    receitaId?: IntFilter<"Favorito"> | number
+    criadoEm?: DateTimeFilter<"Favorito"> | Date | string
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    receita?: XOR<ReceitaScalarRelationFilter, ReceitaWhereInput>
+  }, "id" | "usuarioId_receitaId">
+
+  export type FavoritoOrderByWithAggregationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    receitaId?: SortOrder
+    criadoEm?: SortOrder
+    _count?: FavoritoCountOrderByAggregateInput
+    _avg?: FavoritoAvgOrderByAggregateInput
+    _max?: FavoritoMaxOrderByAggregateInput
+    _min?: FavoritoMinOrderByAggregateInput
+    _sum?: FavoritoSumOrderByAggregateInput
+  }
+
+  export type FavoritoScalarWhereWithAggregatesInput = {
+    AND?: FavoritoScalarWhereWithAggregatesInput | FavoritoScalarWhereWithAggregatesInput[]
+    OR?: FavoritoScalarWhereWithAggregatesInput[]
+    NOT?: FavoritoScalarWhereWithAggregatesInput | FavoritoScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Favorito"> | number
+    usuarioId?: IntWithAggregatesFilter<"Favorito"> | number
+    receitaId?: IntWithAggregatesFilter<"Favorito"> | number
+    criadoEm?: DateTimeWithAggregatesFilter<"Favorito"> | Date | string
+  }
+
+  export type ReceitaGeracaoWhereInput = {
+    AND?: ReceitaGeracaoWhereInput | ReceitaGeracaoWhereInput[]
+    OR?: ReceitaGeracaoWhereInput[]
+    NOT?: ReceitaGeracaoWhereInput | ReceitaGeracaoWhereInput[]
+    id?: IntFilter<"ReceitaGeracao"> | number
+    usuarioId?: IntFilter<"ReceitaGeracao"> | number
+    chaveCache?: StringFilter<"ReceitaGeracao"> | string
+    modelo?: StringFilter<"ReceitaGeracao"> | string
+    status?: StringFilter<"ReceitaGeracao"> | string
+    payload?: JsonNullableFilter<"ReceitaGeracao">
+    erroCodigo?: StringNullableFilter<"ReceitaGeracao"> | string | null
+    rascunhoExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
+    criadaEm?: DateTimeFilter<"ReceitaGeracao"> | Date | string
+    finalizadaEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
+    duracaoMs?: IntNullableFilter<"ReceitaGeracao"> | number | null
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type ReceitaGeracaoOrderByWithRelationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    chaveCache?: SortOrder
+    modelo?: SortOrder
+    status?: SortOrder
+    payload?: SortOrderInput | SortOrder
+    erroCodigo?: SortOrderInput | SortOrder
+    rascunhoExpiraEm?: SortOrderInput | SortOrder
+    criadaEm?: SortOrder
+    finalizadaEm?: SortOrderInput | SortOrder
+    duracaoMs?: SortOrderInput | SortOrder
+    usuario?: UsuarioOrderByWithRelationInput
+    _relevance?: ReceitaGeracaoOrderByRelevanceInput
+  }
+
+  export type ReceitaGeracaoWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ReceitaGeracaoWhereInput | ReceitaGeracaoWhereInput[]
+    OR?: ReceitaGeracaoWhereInput[]
+    NOT?: ReceitaGeracaoWhereInput | ReceitaGeracaoWhereInput[]
+    usuarioId?: IntFilter<"ReceitaGeracao"> | number
+    chaveCache?: StringFilter<"ReceitaGeracao"> | string
+    modelo?: StringFilter<"ReceitaGeracao"> | string
+    status?: StringFilter<"ReceitaGeracao"> | string
+    payload?: JsonNullableFilter<"ReceitaGeracao">
+    erroCodigo?: StringNullableFilter<"ReceitaGeracao"> | string | null
+    rascunhoExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
+    criadaEm?: DateTimeFilter<"ReceitaGeracao"> | Date | string
+    finalizadaEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
+    duracaoMs?: IntNullableFilter<"ReceitaGeracao"> | number | null
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id">
+
+  export type ReceitaGeracaoOrderByWithAggregationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    chaveCache?: SortOrder
+    modelo?: SortOrder
+    status?: SortOrder
+    payload?: SortOrderInput | SortOrder
+    erroCodigo?: SortOrderInput | SortOrder
+    rascunhoExpiraEm?: SortOrderInput | SortOrder
+    criadaEm?: SortOrder
+    finalizadaEm?: SortOrderInput | SortOrder
+    duracaoMs?: SortOrderInput | SortOrder
+    _count?: ReceitaGeracaoCountOrderByAggregateInput
+    _avg?: ReceitaGeracaoAvgOrderByAggregateInput
+    _max?: ReceitaGeracaoMaxOrderByAggregateInput
+    _min?: ReceitaGeracaoMinOrderByAggregateInput
+    _sum?: ReceitaGeracaoSumOrderByAggregateInput
+  }
+
+  export type ReceitaGeracaoScalarWhereWithAggregatesInput = {
+    AND?: ReceitaGeracaoScalarWhereWithAggregatesInput | ReceitaGeracaoScalarWhereWithAggregatesInput[]
+    OR?: ReceitaGeracaoScalarWhereWithAggregatesInput[]
+    NOT?: ReceitaGeracaoScalarWhereWithAggregatesInput | ReceitaGeracaoScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ReceitaGeracao"> | number
+    usuarioId?: IntWithAggregatesFilter<"ReceitaGeracao"> | number
+    chaveCache?: StringWithAggregatesFilter<"ReceitaGeracao"> | string
+    modelo?: StringWithAggregatesFilter<"ReceitaGeracao"> | string
+    status?: StringWithAggregatesFilter<"ReceitaGeracao"> | string
+    payload?: JsonNullableWithAggregatesFilter<"ReceitaGeracao">
+    erroCodigo?: StringNullableWithAggregatesFilter<"ReceitaGeracao"> | string | null
+    rascunhoExpiraEm?: DateTimeNullableWithAggregatesFilter<"ReceitaGeracao"> | Date | string | null
+    criadaEm?: DateTimeWithAggregatesFilter<"ReceitaGeracao"> | Date | string
+    finalizadaEm?: DateTimeNullableWithAggregatesFilter<"ReceitaGeracao"> | Date | string | null
+    duracaoMs?: IntNullableWithAggregatesFilter<"ReceitaGeracao"> | number | null
   }
 
   export type ReceitaIngredienteWhereInput = {
@@ -11904,6 +14471,8 @@ export namespace Prisma {
     receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemCreateNestedManyWithoutUsuarioInput
     comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateInput = {
@@ -11920,6 +14489,8 @@ export namespace Prisma {
     receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUpdateInput = {
@@ -11935,6 +14506,8 @@ export namespace Prisma {
     receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
     comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateInput = {
@@ -11951,6 +14524,8 @@ export namespace Prisma {
     receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
     comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioCreateManyInput = {
@@ -12082,6 +14657,9 @@ export namespace Prisma {
   export type IngredienteCreateInput = {
     nome: string
     categoria: string
+    classificacaoStatus?: string
+    dietasPermitidas?: string | null
+    restricoes?: string | null
     inventarios?: InventarioCreateNestedManyWithoutIngredienteInput
     receitaIngredientes?: ReceitaIngredienteCreateNestedManyWithoutIngredienteInput
   }
@@ -12090,6 +14668,9 @@ export namespace Prisma {
     id?: number
     nome: string
     categoria: string
+    classificacaoStatus?: string
+    dietasPermitidas?: string | null
+    restricoes?: string | null
     inventarios?: InventarioUncheckedCreateNestedManyWithoutIngredienteInput
     receitaIngredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutIngredienteInput
   }
@@ -12097,6 +14678,9 @@ export namespace Prisma {
   export type IngredienteUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
     categoria?: StringFieldUpdateOperationsInput | string
+    classificacaoStatus?: StringFieldUpdateOperationsInput | string
+    dietasPermitidas?: NullableStringFieldUpdateOperationsInput | string | null
+    restricoes?: NullableStringFieldUpdateOperationsInput | string | null
     inventarios?: InventarioUpdateManyWithoutIngredienteNestedInput
     receitaIngredientes?: ReceitaIngredienteUpdateManyWithoutIngredienteNestedInput
   }
@@ -12105,6 +14689,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
     categoria?: StringFieldUpdateOperationsInput | string
+    classificacaoStatus?: StringFieldUpdateOperationsInput | string
+    dietasPermitidas?: NullableStringFieldUpdateOperationsInput | string | null
+    restricoes?: NullableStringFieldUpdateOperationsInput | string | null
     inventarios?: InventarioUncheckedUpdateManyWithoutIngredienteNestedInput
     receitaIngredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutIngredienteNestedInput
   }
@@ -12113,17 +14700,26 @@ export namespace Prisma {
     id?: number
     nome: string
     categoria: string
+    classificacaoStatus?: string
+    dietasPermitidas?: string | null
+    restricoes?: string | null
   }
 
   export type IngredienteUpdateManyMutationInput = {
     nome?: StringFieldUpdateOperationsInput | string
     categoria?: StringFieldUpdateOperationsInput | string
+    classificacaoStatus?: StringFieldUpdateOperationsInput | string
+    dietasPermitidas?: NullableStringFieldUpdateOperationsInput | string | null
+    restricoes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IngredienteUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
     categoria?: StringFieldUpdateOperationsInput | string
+    classificacaoStatus?: StringFieldUpdateOperationsInput | string
+    dietasPermitidas?: NullableStringFieldUpdateOperationsInput | string | null
+    restricoes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type InventarioCreateInput = {
@@ -12191,6 +14787,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteCreateNestedManyWithoutReceitaInput
     postagens?: PostagemCreateNestedManyWithoutReceitaInput
     comentarios?: ComentarioCreateNestedManyWithoutReceitaInput
+    favoritos?: FavoritoCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUncheckedCreateInput = {
@@ -12208,6 +14805,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutReceitaInput
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutReceitaInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUpdateInput = {
@@ -12224,6 +14822,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteUpdateManyWithoutReceitaNestedInput
     postagens?: PostagemUpdateManyWithoutReceitaNestedInput
     comentarios?: ComentarioUpdateManyWithoutReceitaNestedInput
+    favoritos?: FavoritoUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateInput = {
@@ -12241,6 +14840,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutReceitaNestedInput
     comentarios?: ComentarioUncheckedUpdateManyWithoutReceitaNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaCreateManyInput = {
@@ -12281,6 +14881,144 @@ export namespace Prisma {
     geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoritoCreateInput = {
+    criadoEm?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutFavoritosInput
+    receita: ReceitaCreateNestedOneWithoutFavoritosInput
+  }
+
+  export type FavoritoUncheckedCreateInput = {
+    id?: number
+    usuarioId: number
+    receitaId: number
+    criadoEm?: Date | string
+  }
+
+  export type FavoritoUpdateInput = {
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutFavoritosNestedInput
+    receita?: ReceitaUpdateOneRequiredWithoutFavoritosNestedInput
+  }
+
+  export type FavoritoUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoritoCreateManyInput = {
+    id?: number
+    usuarioId: number
+    receitaId: number
+    criadoEm?: Date | string
+  }
+
+  export type FavoritoUpdateManyMutationInput = {
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoritoUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReceitaGeracaoCreateInput = {
+    chaveCache: string
+    modelo: string
+    status: string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: string | null
+    rascunhoExpiraEm?: Date | string | null
+    criadaEm?: Date | string
+    finalizadaEm?: Date | string | null
+    duracaoMs?: number | null
+    usuario: UsuarioCreateNestedOneWithoutGeracoesInput
+  }
+
+  export type ReceitaGeracaoUncheckedCreateInput = {
+    id?: number
+    usuarioId: number
+    chaveCache: string
+    modelo: string
+    status: string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: string | null
+    rascunhoExpiraEm?: Date | string | null
+    criadaEm?: Date | string
+    finalizadaEm?: Date | string | null
+    duracaoMs?: number | null
+  }
+
+  export type ReceitaGeracaoUpdateInput = {
+    chaveCache?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+    usuario?: UsuarioUpdateOneRequiredWithoutGeracoesNestedInput
+  }
+
+  export type ReceitaGeracaoUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    chaveCache?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ReceitaGeracaoCreateManyInput = {
+    id?: number
+    usuarioId: number
+    chaveCache: string
+    modelo: string
+    status: string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: string | null
+    rascunhoExpiraEm?: Date | string | null
+    criadaEm?: Date | string
+    finalizadaEm?: Date | string | null
+    duracaoMs?: number | null
+  }
+
+  export type ReceitaGeracaoUpdateManyMutationInput = {
+    chaveCache?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ReceitaGeracaoUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    chaveCache?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ReceitaIngredienteCreateInput = {
@@ -12544,6 +15282,18 @@ export namespace Prisma {
     none?: ComentarioWhereInput
   }
 
+  export type FavoritoListRelationFilter = {
+    every?: FavoritoWhereInput
+    some?: FavoritoWhereInput
+    none?: FavoritoWhereInput
+  }
+
+  export type ReceitaGeracaoListRelationFilter = {
+    every?: ReceitaGeracaoWhereInput
+    some?: ReceitaGeracaoWhereInput
+    none?: ReceitaGeracaoWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -12562,6 +15312,14 @@ export namespace Prisma {
   }
 
   export type ComentarioOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FavoritoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ReceitaGeracaoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12813,6 +15571,9 @@ export namespace Prisma {
     id?: SortOrder
     nome?: SortOrder
     categoria?: SortOrder
+    classificacaoStatus?: SortOrder
+    dietasPermitidas?: SortOrder
+    restricoes?: SortOrder
   }
 
   export type IngredienteAvgOrderByAggregateInput = {
@@ -12823,12 +15584,18 @@ export namespace Prisma {
     id?: SortOrder
     nome?: SortOrder
     categoria?: SortOrder
+    classificacaoStatus?: SortOrder
+    dietasPermitidas?: SortOrder
+    restricoes?: SortOrder
   }
 
   export type IngredienteMinOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
     categoria?: SortOrder
+    classificacaoStatus?: SortOrder
+    dietasPermitidas?: SortOrder
+    restricoes?: SortOrder
   }
 
   export type IngredienteSumOrderByAggregateInput = {
@@ -12996,6 +15763,203 @@ export namespace Prisma {
     isNot?: ReceitaWhereInput
   }
 
+  export type FavoritoUsuarioIdReceitaIdCompoundUniqueInput = {
+    usuarioId: number
+    receitaId: number
+  }
+
+  export type FavoritoCountOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    receitaId?: SortOrder
+    criadoEm?: SortOrder
+  }
+
+  export type FavoritoAvgOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    receitaId?: SortOrder
+  }
+
+  export type FavoritoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    receitaId?: SortOrder
+    criadoEm?: SortOrder
+  }
+
+  export type FavoritoMinOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    receitaId?: SortOrder
+    criadoEm?: SortOrder
+  }
+
+  export type FavoritoSumOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    receitaId?: SortOrder
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue
+    lte?: InputJsonValue
+    gt?: InputJsonValue
+    gte?: InputJsonValue
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type ReceitaGeracaoOrderByRelevanceInput = {
+    fields: ReceitaGeracaoOrderByRelevanceFieldEnum | ReceitaGeracaoOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ReceitaGeracaoCountOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    chaveCache?: SortOrder
+    modelo?: SortOrder
+    status?: SortOrder
+    payload?: SortOrder
+    erroCodigo?: SortOrder
+    rascunhoExpiraEm?: SortOrder
+    criadaEm?: SortOrder
+    finalizadaEm?: SortOrder
+    duracaoMs?: SortOrder
+  }
+
+  export type ReceitaGeracaoAvgOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    duracaoMs?: SortOrder
+  }
+
+  export type ReceitaGeracaoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    chaveCache?: SortOrder
+    modelo?: SortOrder
+    status?: SortOrder
+    erroCodigo?: SortOrder
+    rascunhoExpiraEm?: SortOrder
+    criadaEm?: SortOrder
+    finalizadaEm?: SortOrder
+    duracaoMs?: SortOrder
+  }
+
+  export type ReceitaGeracaoMinOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    chaveCache?: SortOrder
+    modelo?: SortOrder
+    status?: SortOrder
+    erroCodigo?: SortOrder
+    rascunhoExpiraEm?: SortOrder
+    criadaEm?: SortOrder
+    finalizadaEm?: SortOrder
+    duracaoMs?: SortOrder
+  }
+
+  export type ReceitaGeracaoSumOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    duracaoMs?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue
+    lte?: InputJsonValue
+    gt?: InputJsonValue
+    gte?: InputJsonValue
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
   export type ReceitaIngredienteOrderByRelevanceInput = {
     fields: ReceitaIngredienteOrderByRelevanceFieldEnum | ReceitaIngredienteOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -13041,17 +16005,6 @@ export namespace Prisma {
     receitaId?: SortOrder
     ingredienteId?: SortOrder
     quantidade?: SortOrder
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type ComentarioNullableScalarRelationFilter = {
@@ -13104,22 +16057,6 @@ export namespace Prisma {
     receitaId?: SortOrder
     usuarioId?: SortOrder
     respostaDeId?: SortOrder
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type ReceitaNullableScalarRelationFilter = {
@@ -13206,6 +16143,20 @@ export namespace Prisma {
     connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
   }
 
+  export type FavoritoCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<FavoritoCreateWithoutUsuarioInput, FavoritoUncheckedCreateWithoutUsuarioInput> | FavoritoCreateWithoutUsuarioInput[] | FavoritoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: FavoritoCreateOrConnectWithoutUsuarioInput | FavoritoCreateOrConnectWithoutUsuarioInput[]
+    createMany?: FavoritoCreateManyUsuarioInputEnvelope
+    connect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+  }
+
+  export type ReceitaGeracaoCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<ReceitaGeracaoCreateWithoutUsuarioInput, ReceitaGeracaoUncheckedCreateWithoutUsuarioInput> | ReceitaGeracaoCreateWithoutUsuarioInput[] | ReceitaGeracaoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ReceitaGeracaoCreateOrConnectWithoutUsuarioInput | ReceitaGeracaoCreateOrConnectWithoutUsuarioInput[]
+    createMany?: ReceitaGeracaoCreateManyUsuarioInputEnvelope
+    connect?: ReceitaGeracaoWhereUniqueInput | ReceitaGeracaoWhereUniqueInput[]
+  }
+
   export type PerfilAlimentarUncheckedCreateNestedOneWithoutUsuarioInput = {
     create?: XOR<PerfilAlimentarCreateWithoutUsuarioInput, PerfilAlimentarUncheckedCreateWithoutUsuarioInput>
     connectOrCreate?: PerfilAlimentarCreateOrConnectWithoutUsuarioInput
@@ -13238,6 +16189,20 @@ export namespace Prisma {
     connectOrCreate?: ComentarioCreateOrConnectWithoutUsuarioInput | ComentarioCreateOrConnectWithoutUsuarioInput[]
     createMany?: ComentarioCreateManyUsuarioInputEnvelope
     connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+  }
+
+  export type FavoritoUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<FavoritoCreateWithoutUsuarioInput, FavoritoUncheckedCreateWithoutUsuarioInput> | FavoritoCreateWithoutUsuarioInput[] | FavoritoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: FavoritoCreateOrConnectWithoutUsuarioInput | FavoritoCreateOrConnectWithoutUsuarioInput[]
+    createMany?: FavoritoCreateManyUsuarioInputEnvelope
+    connect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+  }
+
+  export type ReceitaGeracaoUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<ReceitaGeracaoCreateWithoutUsuarioInput, ReceitaGeracaoUncheckedCreateWithoutUsuarioInput> | ReceitaGeracaoCreateWithoutUsuarioInput[] | ReceitaGeracaoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ReceitaGeracaoCreateOrConnectWithoutUsuarioInput | ReceitaGeracaoCreateOrConnectWithoutUsuarioInput[]
+    createMany?: ReceitaGeracaoCreateManyUsuarioInputEnvelope
+    connect?: ReceitaGeracaoWhereUniqueInput | ReceitaGeracaoWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -13322,6 +16287,34 @@ export namespace Prisma {
     deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
   }
 
+  export type FavoritoUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<FavoritoCreateWithoutUsuarioInput, FavoritoUncheckedCreateWithoutUsuarioInput> | FavoritoCreateWithoutUsuarioInput[] | FavoritoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: FavoritoCreateOrConnectWithoutUsuarioInput | FavoritoCreateOrConnectWithoutUsuarioInput[]
+    upsert?: FavoritoUpsertWithWhereUniqueWithoutUsuarioInput | FavoritoUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: FavoritoCreateManyUsuarioInputEnvelope
+    set?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    disconnect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    delete?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    connect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    update?: FavoritoUpdateWithWhereUniqueWithoutUsuarioInput | FavoritoUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: FavoritoUpdateManyWithWhereWithoutUsuarioInput | FavoritoUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: FavoritoScalarWhereInput | FavoritoScalarWhereInput[]
+  }
+
+  export type ReceitaGeracaoUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<ReceitaGeracaoCreateWithoutUsuarioInput, ReceitaGeracaoUncheckedCreateWithoutUsuarioInput> | ReceitaGeracaoCreateWithoutUsuarioInput[] | ReceitaGeracaoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ReceitaGeracaoCreateOrConnectWithoutUsuarioInput | ReceitaGeracaoCreateOrConnectWithoutUsuarioInput[]
+    upsert?: ReceitaGeracaoUpsertWithWhereUniqueWithoutUsuarioInput | ReceitaGeracaoUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: ReceitaGeracaoCreateManyUsuarioInputEnvelope
+    set?: ReceitaGeracaoWhereUniqueInput | ReceitaGeracaoWhereUniqueInput[]
+    disconnect?: ReceitaGeracaoWhereUniqueInput | ReceitaGeracaoWhereUniqueInput[]
+    delete?: ReceitaGeracaoWhereUniqueInput | ReceitaGeracaoWhereUniqueInput[]
+    connect?: ReceitaGeracaoWhereUniqueInput | ReceitaGeracaoWhereUniqueInput[]
+    update?: ReceitaGeracaoUpdateWithWhereUniqueWithoutUsuarioInput | ReceitaGeracaoUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: ReceitaGeracaoUpdateManyWithWhereWithoutUsuarioInput | ReceitaGeracaoUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: ReceitaGeracaoScalarWhereInput | ReceitaGeracaoScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -13394,6 +16387,34 @@ export namespace Prisma {
     update?: ComentarioUpdateWithWhereUniqueWithoutUsuarioInput | ComentarioUpdateWithWhereUniqueWithoutUsuarioInput[]
     updateMany?: ComentarioUpdateManyWithWhereWithoutUsuarioInput | ComentarioUpdateManyWithWhereWithoutUsuarioInput[]
     deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
+  }
+
+  export type FavoritoUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<FavoritoCreateWithoutUsuarioInput, FavoritoUncheckedCreateWithoutUsuarioInput> | FavoritoCreateWithoutUsuarioInput[] | FavoritoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: FavoritoCreateOrConnectWithoutUsuarioInput | FavoritoCreateOrConnectWithoutUsuarioInput[]
+    upsert?: FavoritoUpsertWithWhereUniqueWithoutUsuarioInput | FavoritoUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: FavoritoCreateManyUsuarioInputEnvelope
+    set?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    disconnect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    delete?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    connect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    update?: FavoritoUpdateWithWhereUniqueWithoutUsuarioInput | FavoritoUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: FavoritoUpdateManyWithWhereWithoutUsuarioInput | FavoritoUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: FavoritoScalarWhereInput | FavoritoScalarWhereInput[]
+  }
+
+  export type ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<ReceitaGeracaoCreateWithoutUsuarioInput, ReceitaGeracaoUncheckedCreateWithoutUsuarioInput> | ReceitaGeracaoCreateWithoutUsuarioInput[] | ReceitaGeracaoUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: ReceitaGeracaoCreateOrConnectWithoutUsuarioInput | ReceitaGeracaoCreateOrConnectWithoutUsuarioInput[]
+    upsert?: ReceitaGeracaoUpsertWithWhereUniqueWithoutUsuarioInput | ReceitaGeracaoUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: ReceitaGeracaoCreateManyUsuarioInputEnvelope
+    set?: ReceitaGeracaoWhereUniqueInput | ReceitaGeracaoWhereUniqueInput[]
+    disconnect?: ReceitaGeracaoWhereUniqueInput | ReceitaGeracaoWhereUniqueInput[]
+    delete?: ReceitaGeracaoWhereUniqueInput | ReceitaGeracaoWhereUniqueInput[]
+    connect?: ReceitaGeracaoWhereUniqueInput | ReceitaGeracaoWhereUniqueInput[]
+    update?: ReceitaGeracaoUpdateWithWhereUniqueWithoutUsuarioInput | ReceitaGeracaoUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: ReceitaGeracaoUpdateManyWithWhereWithoutUsuarioInput | ReceitaGeracaoUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: ReceitaGeracaoScalarWhereInput | ReceitaGeracaoScalarWhereInput[]
   }
 
   export type UsuarioCreateNestedOneWithoutPerfilInput = {
@@ -13617,6 +16638,13 @@ export namespace Prisma {
     connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
   }
 
+  export type FavoritoCreateNestedManyWithoutReceitaInput = {
+    create?: XOR<FavoritoCreateWithoutReceitaInput, FavoritoUncheckedCreateWithoutReceitaInput> | FavoritoCreateWithoutReceitaInput[] | FavoritoUncheckedCreateWithoutReceitaInput[]
+    connectOrCreate?: FavoritoCreateOrConnectWithoutReceitaInput | FavoritoCreateOrConnectWithoutReceitaInput[]
+    createMany?: FavoritoCreateManyReceitaInputEnvelope
+    connect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+  }
+
   export type ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput = {
     create?: XOR<ReceitaIngredienteCreateWithoutReceitaInput, ReceitaIngredienteUncheckedCreateWithoutReceitaInput> | ReceitaIngredienteCreateWithoutReceitaInput[] | ReceitaIngredienteUncheckedCreateWithoutReceitaInput[]
     connectOrCreate?: ReceitaIngredienteCreateOrConnectWithoutReceitaInput | ReceitaIngredienteCreateOrConnectWithoutReceitaInput[]
@@ -13636,6 +16664,13 @@ export namespace Prisma {
     connectOrCreate?: ComentarioCreateOrConnectWithoutReceitaInput | ComentarioCreateOrConnectWithoutReceitaInput[]
     createMany?: ComentarioCreateManyReceitaInputEnvelope
     connect?: ComentarioWhereUniqueInput | ComentarioWhereUniqueInput[]
+  }
+
+  export type FavoritoUncheckedCreateNestedManyWithoutReceitaInput = {
+    create?: XOR<FavoritoCreateWithoutReceitaInput, FavoritoUncheckedCreateWithoutReceitaInput> | FavoritoCreateWithoutReceitaInput[] | FavoritoUncheckedCreateWithoutReceitaInput[]
+    connectOrCreate?: FavoritoCreateOrConnectWithoutReceitaInput | FavoritoCreateOrConnectWithoutReceitaInput[]
+    createMany?: FavoritoCreateManyReceitaInputEnvelope
+    connect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -13692,6 +16727,20 @@ export namespace Prisma {
     deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
   }
 
+  export type FavoritoUpdateManyWithoutReceitaNestedInput = {
+    create?: XOR<FavoritoCreateWithoutReceitaInput, FavoritoUncheckedCreateWithoutReceitaInput> | FavoritoCreateWithoutReceitaInput[] | FavoritoUncheckedCreateWithoutReceitaInput[]
+    connectOrCreate?: FavoritoCreateOrConnectWithoutReceitaInput | FavoritoCreateOrConnectWithoutReceitaInput[]
+    upsert?: FavoritoUpsertWithWhereUniqueWithoutReceitaInput | FavoritoUpsertWithWhereUniqueWithoutReceitaInput[]
+    createMany?: FavoritoCreateManyReceitaInputEnvelope
+    set?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    disconnect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    delete?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    connect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    update?: FavoritoUpdateWithWhereUniqueWithoutReceitaInput | FavoritoUpdateWithWhereUniqueWithoutReceitaInput[]
+    updateMany?: FavoritoUpdateManyWithWhereWithoutReceitaInput | FavoritoUpdateManyWithWhereWithoutReceitaInput[]
+    deleteMany?: FavoritoScalarWhereInput | FavoritoScalarWhereInput[]
+  }
+
   export type ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput = {
     create?: XOR<ReceitaIngredienteCreateWithoutReceitaInput, ReceitaIngredienteUncheckedCreateWithoutReceitaInput> | ReceitaIngredienteCreateWithoutReceitaInput[] | ReceitaIngredienteUncheckedCreateWithoutReceitaInput[]
     connectOrCreate?: ReceitaIngredienteCreateOrConnectWithoutReceitaInput | ReceitaIngredienteCreateOrConnectWithoutReceitaInput[]
@@ -13732,6 +16781,74 @@ export namespace Prisma {
     update?: ComentarioUpdateWithWhereUniqueWithoutReceitaInput | ComentarioUpdateWithWhereUniqueWithoutReceitaInput[]
     updateMany?: ComentarioUpdateManyWithWhereWithoutReceitaInput | ComentarioUpdateManyWithWhereWithoutReceitaInput[]
     deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
+  }
+
+  export type FavoritoUncheckedUpdateManyWithoutReceitaNestedInput = {
+    create?: XOR<FavoritoCreateWithoutReceitaInput, FavoritoUncheckedCreateWithoutReceitaInput> | FavoritoCreateWithoutReceitaInput[] | FavoritoUncheckedCreateWithoutReceitaInput[]
+    connectOrCreate?: FavoritoCreateOrConnectWithoutReceitaInput | FavoritoCreateOrConnectWithoutReceitaInput[]
+    upsert?: FavoritoUpsertWithWhereUniqueWithoutReceitaInput | FavoritoUpsertWithWhereUniqueWithoutReceitaInput[]
+    createMany?: FavoritoCreateManyReceitaInputEnvelope
+    set?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    disconnect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    delete?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    connect?: FavoritoWhereUniqueInput | FavoritoWhereUniqueInput[]
+    update?: FavoritoUpdateWithWhereUniqueWithoutReceitaInput | FavoritoUpdateWithWhereUniqueWithoutReceitaInput[]
+    updateMany?: FavoritoUpdateManyWithWhereWithoutReceitaInput | FavoritoUpdateManyWithWhereWithoutReceitaInput[]
+    deleteMany?: FavoritoScalarWhereInput | FavoritoScalarWhereInput[]
+  }
+
+  export type UsuarioCreateNestedOneWithoutFavoritosInput = {
+    create?: XOR<UsuarioCreateWithoutFavoritosInput, UsuarioUncheckedCreateWithoutFavoritosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutFavoritosInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type ReceitaCreateNestedOneWithoutFavoritosInput = {
+    create?: XOR<ReceitaCreateWithoutFavoritosInput, ReceitaUncheckedCreateWithoutFavoritosInput>
+    connectOrCreate?: ReceitaCreateOrConnectWithoutFavoritosInput
+    connect?: ReceitaWhereUniqueInput
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutFavoritosNestedInput = {
+    create?: XOR<UsuarioCreateWithoutFavoritosInput, UsuarioUncheckedCreateWithoutFavoritosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutFavoritosInput
+    upsert?: UsuarioUpsertWithoutFavoritosInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutFavoritosInput, UsuarioUpdateWithoutFavoritosInput>, UsuarioUncheckedUpdateWithoutFavoritosInput>
+  }
+
+  export type ReceitaUpdateOneRequiredWithoutFavoritosNestedInput = {
+    create?: XOR<ReceitaCreateWithoutFavoritosInput, ReceitaUncheckedCreateWithoutFavoritosInput>
+    connectOrCreate?: ReceitaCreateOrConnectWithoutFavoritosInput
+    upsert?: ReceitaUpsertWithoutFavoritosInput
+    connect?: ReceitaWhereUniqueInput
+    update?: XOR<XOR<ReceitaUpdateToOneWithWhereWithoutFavoritosInput, ReceitaUpdateWithoutFavoritosInput>, ReceitaUncheckedUpdateWithoutFavoritosInput>
+  }
+
+  export type UsuarioCreateNestedOneWithoutGeracoesInput = {
+    create?: XOR<UsuarioCreateWithoutGeracoesInput, UsuarioUncheckedCreateWithoutGeracoesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutGeracoesInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutGeracoesNestedInput = {
+    create?: XOR<UsuarioCreateWithoutGeracoesInput, UsuarioUncheckedCreateWithoutGeracoesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutGeracoesInput
+    upsert?: UsuarioUpsertWithoutGeracoesInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutGeracoesInput, UsuarioUpdateWithoutGeracoesInput>, UsuarioUncheckedUpdateWithoutGeracoesInput>
   }
 
   export type ReceitaCreateNestedOneWithoutIngredientesInput = {
@@ -13832,14 +16949,6 @@ export namespace Prisma {
     update?: ComentarioUpdateWithWhereUniqueWithoutRespostaDeInput | ComentarioUpdateWithWhereUniqueWithoutRespostaDeInput[]
     updateMany?: ComentarioUpdateManyWithWhereWithoutRespostaDeInput | ComentarioUpdateManyWithWhereWithoutRespostaDeInput[]
     deleteMany?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[]
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type ComentarioUncheckedUpdateManyWithoutRespostaDeNestedInput = {
@@ -14089,6 +17198,54 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue
+    lte?: InputJsonValue
+    gt?: InputJsonValue
+    gte?: InputJsonValue
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -14172,6 +17329,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteCreateNestedManyWithoutReceitaInput
     postagens?: PostagemCreateNestedManyWithoutReceitaInput
     comentarios?: ComentarioCreateNestedManyWithoutReceitaInput
+    favoritos?: FavoritoCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUncheckedCreateWithoutUsuarioInput = {
@@ -14188,6 +17346,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutReceitaInput
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutReceitaInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaCreateOrConnectWithoutUsuarioInput = {
@@ -14249,6 +17408,62 @@ export namespace Prisma {
 
   export type ComentarioCreateManyUsuarioInputEnvelope = {
     data: ComentarioCreateManyUsuarioInput | ComentarioCreateManyUsuarioInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FavoritoCreateWithoutUsuarioInput = {
+    criadoEm?: Date | string
+    receita: ReceitaCreateNestedOneWithoutFavoritosInput
+  }
+
+  export type FavoritoUncheckedCreateWithoutUsuarioInput = {
+    id?: number
+    receitaId: number
+    criadoEm?: Date | string
+  }
+
+  export type FavoritoCreateOrConnectWithoutUsuarioInput = {
+    where: FavoritoWhereUniqueInput
+    create: XOR<FavoritoCreateWithoutUsuarioInput, FavoritoUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type FavoritoCreateManyUsuarioInputEnvelope = {
+    data: FavoritoCreateManyUsuarioInput | FavoritoCreateManyUsuarioInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReceitaGeracaoCreateWithoutUsuarioInput = {
+    chaveCache: string
+    modelo: string
+    status: string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: string | null
+    rascunhoExpiraEm?: Date | string | null
+    criadaEm?: Date | string
+    finalizadaEm?: Date | string | null
+    duracaoMs?: number | null
+  }
+
+  export type ReceitaGeracaoUncheckedCreateWithoutUsuarioInput = {
+    id?: number
+    chaveCache: string
+    modelo: string
+    status: string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: string | null
+    rascunhoExpiraEm?: Date | string | null
+    criadaEm?: Date | string
+    finalizadaEm?: Date | string | null
+    duracaoMs?: number | null
+  }
+
+  export type ReceitaGeracaoCreateOrConnectWithoutUsuarioInput = {
+    where: ReceitaGeracaoWhereUniqueInput
+    create: XOR<ReceitaGeracaoCreateWithoutUsuarioInput, ReceitaGeracaoUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type ReceitaGeracaoCreateManyUsuarioInputEnvelope = {
+    data: ReceitaGeracaoCreateManyUsuarioInput | ReceitaGeracaoCreateManyUsuarioInput[]
     skipDuplicates?: boolean
   }
 
@@ -14394,6 +17609,65 @@ export namespace Prisma {
     criadoEm?: DateTimeFilter<"Comentario"> | Date | string
   }
 
+  export type FavoritoUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: FavoritoWhereUniqueInput
+    update: XOR<FavoritoUpdateWithoutUsuarioInput, FavoritoUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<FavoritoCreateWithoutUsuarioInput, FavoritoUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type FavoritoUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: FavoritoWhereUniqueInput
+    data: XOR<FavoritoUpdateWithoutUsuarioInput, FavoritoUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type FavoritoUpdateManyWithWhereWithoutUsuarioInput = {
+    where: FavoritoScalarWhereInput
+    data: XOR<FavoritoUpdateManyMutationInput, FavoritoUncheckedUpdateManyWithoutUsuarioInput>
+  }
+
+  export type FavoritoScalarWhereInput = {
+    AND?: FavoritoScalarWhereInput | FavoritoScalarWhereInput[]
+    OR?: FavoritoScalarWhereInput[]
+    NOT?: FavoritoScalarWhereInput | FavoritoScalarWhereInput[]
+    id?: IntFilter<"Favorito"> | number
+    usuarioId?: IntFilter<"Favorito"> | number
+    receitaId?: IntFilter<"Favorito"> | number
+    criadoEm?: DateTimeFilter<"Favorito"> | Date | string
+  }
+
+  export type ReceitaGeracaoUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: ReceitaGeracaoWhereUniqueInput
+    update: XOR<ReceitaGeracaoUpdateWithoutUsuarioInput, ReceitaGeracaoUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<ReceitaGeracaoCreateWithoutUsuarioInput, ReceitaGeracaoUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type ReceitaGeracaoUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: ReceitaGeracaoWhereUniqueInput
+    data: XOR<ReceitaGeracaoUpdateWithoutUsuarioInput, ReceitaGeracaoUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type ReceitaGeracaoUpdateManyWithWhereWithoutUsuarioInput = {
+    where: ReceitaGeracaoScalarWhereInput
+    data: XOR<ReceitaGeracaoUpdateManyMutationInput, ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioInput>
+  }
+
+  export type ReceitaGeracaoScalarWhereInput = {
+    AND?: ReceitaGeracaoScalarWhereInput | ReceitaGeracaoScalarWhereInput[]
+    OR?: ReceitaGeracaoScalarWhereInput[]
+    NOT?: ReceitaGeracaoScalarWhereInput | ReceitaGeracaoScalarWhereInput[]
+    id?: IntFilter<"ReceitaGeracao"> | number
+    usuarioId?: IntFilter<"ReceitaGeracao"> | number
+    chaveCache?: StringFilter<"ReceitaGeracao"> | string
+    modelo?: StringFilter<"ReceitaGeracao"> | string
+    status?: StringFilter<"ReceitaGeracao"> | string
+    payload?: JsonNullableFilter<"ReceitaGeracao">
+    erroCodigo?: StringNullableFilter<"ReceitaGeracao"> | string | null
+    rascunhoExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
+    criadaEm?: DateTimeFilter<"ReceitaGeracao"> | Date | string
+    finalizadaEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
+    duracaoMs?: IntNullableFilter<"ReceitaGeracao"> | number | null
+  }
+
   export type UsuarioCreateWithoutPerfilInput = {
     nome: string
     email: string
@@ -14406,6 +17680,8 @@ export namespace Prisma {
     receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemCreateNestedManyWithoutUsuarioInput
     comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutPerfilInput = {
@@ -14421,6 +17697,8 @@ export namespace Prisma {
     receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutPerfilInput = {
@@ -14470,6 +17748,8 @@ export namespace Prisma {
     receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
     comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPerfilInput = {
@@ -14485,6 +17765,8 @@ export namespace Prisma {
     receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
     comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type RestricaoAlimentarUpsertWithWhereUniqueWithoutPerfilInput = {
@@ -14660,6 +17942,8 @@ export namespace Prisma {
     receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemCreateNestedManyWithoutUsuarioInput
     comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutInventarioInput = {
@@ -14675,6 +17959,8 @@ export namespace Prisma {
     receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutInventarioInput = {
@@ -14685,6 +17971,9 @@ export namespace Prisma {
   export type IngredienteCreateWithoutInventariosInput = {
     nome: string
     categoria: string
+    classificacaoStatus?: string
+    dietasPermitidas?: string | null
+    restricoes?: string | null
     receitaIngredientes?: ReceitaIngredienteCreateNestedManyWithoutIngredienteInput
   }
 
@@ -14692,6 +17981,9 @@ export namespace Prisma {
     id?: number
     nome: string
     categoria: string
+    classificacaoStatus?: string
+    dietasPermitidas?: string | null
+    restricoes?: string | null
     receitaIngredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutIngredienteInput
   }
 
@@ -14723,6 +18015,8 @@ export namespace Prisma {
     receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
     comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutInventarioInput = {
@@ -14738,6 +18032,8 @@ export namespace Prisma {
     receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
     comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type IngredienteUpsertWithoutInventariosInput = {
@@ -14754,6 +18050,9 @@ export namespace Prisma {
   export type IngredienteUpdateWithoutInventariosInput = {
     nome?: StringFieldUpdateOperationsInput | string
     categoria?: StringFieldUpdateOperationsInput | string
+    classificacaoStatus?: StringFieldUpdateOperationsInput | string
+    dietasPermitidas?: NullableStringFieldUpdateOperationsInput | string | null
+    restricoes?: NullableStringFieldUpdateOperationsInput | string | null
     receitaIngredientes?: ReceitaIngredienteUpdateManyWithoutIngredienteNestedInput
   }
 
@@ -14761,6 +18060,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
     categoria?: StringFieldUpdateOperationsInput | string
+    classificacaoStatus?: StringFieldUpdateOperationsInput | string
+    dietasPermitidas?: NullableStringFieldUpdateOperationsInput | string | null
+    restricoes?: NullableStringFieldUpdateOperationsInput | string | null
     receitaIngredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutIngredienteNestedInput
   }
 
@@ -14776,6 +18078,8 @@ export namespace Prisma {
     inventario?: InventarioCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemCreateNestedManyWithoutUsuarioInput
     comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutReceitasInput = {
@@ -14791,6 +18095,8 @@ export namespace Prisma {
     inventario?: InventarioUncheckedCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutReceitasInput = {
@@ -14874,6 +18180,27 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FavoritoCreateWithoutReceitaInput = {
+    criadoEm?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutFavoritosInput
+  }
+
+  export type FavoritoUncheckedCreateWithoutReceitaInput = {
+    id?: number
+    usuarioId: number
+    criadoEm?: Date | string
+  }
+
+  export type FavoritoCreateOrConnectWithoutReceitaInput = {
+    where: FavoritoWhereUniqueInput
+    create: XOR<FavoritoCreateWithoutReceitaInput, FavoritoUncheckedCreateWithoutReceitaInput>
+  }
+
+  export type FavoritoCreateManyReceitaInputEnvelope = {
+    data: FavoritoCreateManyReceitaInput | FavoritoCreateManyReceitaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UsuarioUpsertWithoutReceitasInput = {
     update: XOR<UsuarioUpdateWithoutReceitasInput, UsuarioUncheckedUpdateWithoutReceitasInput>
     create: XOR<UsuarioCreateWithoutReceitasInput, UsuarioUncheckedCreateWithoutReceitasInput>
@@ -14897,6 +18224,8 @@ export namespace Prisma {
     inventario?: InventarioUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
     comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutReceitasInput = {
@@ -14912,6 +18241,8 @@ export namespace Prisma {
     inventario?: InventarioUncheckedUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
     comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type ReceitaIngredienteUpsertWithWhereUniqueWithoutReceitaInput = {
@@ -14962,6 +18293,268 @@ export namespace Prisma {
     data: XOR<ComentarioUpdateManyMutationInput, ComentarioUncheckedUpdateManyWithoutReceitaInput>
   }
 
+  export type FavoritoUpsertWithWhereUniqueWithoutReceitaInput = {
+    where: FavoritoWhereUniqueInput
+    update: XOR<FavoritoUpdateWithoutReceitaInput, FavoritoUncheckedUpdateWithoutReceitaInput>
+    create: XOR<FavoritoCreateWithoutReceitaInput, FavoritoUncheckedCreateWithoutReceitaInput>
+  }
+
+  export type FavoritoUpdateWithWhereUniqueWithoutReceitaInput = {
+    where: FavoritoWhereUniqueInput
+    data: XOR<FavoritoUpdateWithoutReceitaInput, FavoritoUncheckedUpdateWithoutReceitaInput>
+  }
+
+  export type FavoritoUpdateManyWithWhereWithoutReceitaInput = {
+    where: FavoritoScalarWhereInput
+    data: XOR<FavoritoUpdateManyMutationInput, FavoritoUncheckedUpdateManyWithoutReceitaInput>
+  }
+
+  export type UsuarioCreateWithoutFavoritosInput = {
+    nome: string
+    email: string
+    senha: string
+    avatar?: string | null
+    nivelHabilidade?: $Enums.NivelHabilidade
+    criadoEm?: Date | string
+    atualizadoEm?: Date | string
+    perfil?: PerfilAlimentarCreateNestedOneWithoutUsuarioInput
+    inventario?: InventarioCreateNestedManyWithoutUsuarioInput
+    receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
+    postagens?: PostagemCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutFavoritosInput = {
+    id?: number
+    nome: string
+    email: string
+    senha: string
+    avatar?: string | null
+    nivelHabilidade?: $Enums.NivelHabilidade
+    criadoEm?: Date | string
+    atualizadoEm?: Date | string
+    perfil?: PerfilAlimentarUncheckedCreateNestedOneWithoutUsuarioInput
+    inventario?: InventarioUncheckedCreateNestedManyWithoutUsuarioInput
+    receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
+    postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutFavoritosInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutFavoritosInput, UsuarioUncheckedCreateWithoutFavoritosInput>
+  }
+
+  export type ReceitaCreateWithoutFavoritosInput = {
+    titulo: string
+    modoPreparo: string
+    tempoEstimado: number
+    porcoes?: number
+    imagem?: string | null
+    publica?: boolean
+    geradaPorIA?: boolean
+    criadaEm?: Date | string
+    atualizadaEm?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutReceitasInput
+    ingredientes?: ReceitaIngredienteCreateNestedManyWithoutReceitaInput
+    postagens?: PostagemCreateNestedManyWithoutReceitaInput
+    comentarios?: ComentarioCreateNestedManyWithoutReceitaInput
+  }
+
+  export type ReceitaUncheckedCreateWithoutFavoritosInput = {
+    id?: number
+    usuarioId: number
+    titulo: string
+    modoPreparo: string
+    tempoEstimado: number
+    porcoes?: number
+    imagem?: string | null
+    publica?: boolean
+    geradaPorIA?: boolean
+    criadaEm?: Date | string
+    atualizadaEm?: Date | string
+    ingredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput
+    postagens?: PostagemUncheckedCreateNestedManyWithoutReceitaInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutReceitaInput
+  }
+
+  export type ReceitaCreateOrConnectWithoutFavoritosInput = {
+    where: ReceitaWhereUniqueInput
+    create: XOR<ReceitaCreateWithoutFavoritosInput, ReceitaUncheckedCreateWithoutFavoritosInput>
+  }
+
+  export type UsuarioUpsertWithoutFavoritosInput = {
+    update: XOR<UsuarioUpdateWithoutFavoritosInput, UsuarioUncheckedUpdateWithoutFavoritosInput>
+    create: XOR<UsuarioCreateWithoutFavoritosInput, UsuarioUncheckedCreateWithoutFavoritosInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutFavoritosInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutFavoritosInput, UsuarioUncheckedUpdateWithoutFavoritosInput>
+  }
+
+  export type UsuarioUpdateWithoutFavoritosInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    perfil?: PerfilAlimentarUpdateOneWithoutUsuarioNestedInput
+    inventario?: InventarioUpdateManyWithoutUsuarioNestedInput
+    receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
+    postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutFavoritosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    perfil?: PerfilAlimentarUncheckedUpdateOneWithoutUsuarioNestedInput
+    inventario?: InventarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
+    postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type ReceitaUpsertWithoutFavoritosInput = {
+    update: XOR<ReceitaUpdateWithoutFavoritosInput, ReceitaUncheckedUpdateWithoutFavoritosInput>
+    create: XOR<ReceitaCreateWithoutFavoritosInput, ReceitaUncheckedCreateWithoutFavoritosInput>
+    where?: ReceitaWhereInput
+  }
+
+  export type ReceitaUpdateToOneWithWhereWithoutFavoritosInput = {
+    where?: ReceitaWhereInput
+    data: XOR<ReceitaUpdateWithoutFavoritosInput, ReceitaUncheckedUpdateWithoutFavoritosInput>
+  }
+
+  export type ReceitaUpdateWithoutFavoritosInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
+    modoPreparo?: StringFieldUpdateOperationsInput | string
+    tempoEstimado?: IntFieldUpdateOperationsInput | number
+    porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
+    publica?: BoolFieldUpdateOperationsInput | boolean
+    geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutReceitasNestedInput
+    ingredientes?: ReceitaIngredienteUpdateManyWithoutReceitaNestedInput
+    postagens?: PostagemUpdateManyWithoutReceitaNestedInput
+    comentarios?: ComentarioUpdateManyWithoutReceitaNestedInput
+  }
+
+  export type ReceitaUncheckedUpdateWithoutFavoritosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    modoPreparo?: StringFieldUpdateOperationsInput | string
+    tempoEstimado?: IntFieldUpdateOperationsInput | number
+    porcoes?: IntFieldUpdateOperationsInput | number
+    imagem?: NullableStringFieldUpdateOperationsInput | string | null
+    publica?: BoolFieldUpdateOperationsInput | boolean
+    geradaPorIA?: BoolFieldUpdateOperationsInput | boolean
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput
+    postagens?: PostagemUncheckedUpdateManyWithoutReceitaNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutReceitaNestedInput
+  }
+
+  export type UsuarioCreateWithoutGeracoesInput = {
+    nome: string
+    email: string
+    senha: string
+    avatar?: string | null
+    nivelHabilidade?: $Enums.NivelHabilidade
+    criadoEm?: Date | string
+    atualizadoEm?: Date | string
+    perfil?: PerfilAlimentarCreateNestedOneWithoutUsuarioInput
+    inventario?: InventarioCreateNestedManyWithoutUsuarioInput
+    receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
+    postagens?: PostagemCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutGeracoesInput = {
+    id?: number
+    nome: string
+    email: string
+    senha: string
+    avatar?: string | null
+    nivelHabilidade?: $Enums.NivelHabilidade
+    criadoEm?: Date | string
+    atualizadoEm?: Date | string
+    perfil?: PerfilAlimentarUncheckedCreateNestedOneWithoutUsuarioInput
+    inventario?: InventarioUncheckedCreateNestedManyWithoutUsuarioInput
+    receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
+    postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutGeracoesInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutGeracoesInput, UsuarioUncheckedCreateWithoutGeracoesInput>
+  }
+
+  export type UsuarioUpsertWithoutGeracoesInput = {
+    update: XOR<UsuarioUpdateWithoutGeracoesInput, UsuarioUncheckedUpdateWithoutGeracoesInput>
+    create: XOR<UsuarioCreateWithoutGeracoesInput, UsuarioUncheckedCreateWithoutGeracoesInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutGeracoesInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutGeracoesInput, UsuarioUncheckedUpdateWithoutGeracoesInput>
+  }
+
+  export type UsuarioUpdateWithoutGeracoesInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    perfil?: PerfilAlimentarUpdateOneWithoutUsuarioNestedInput
+    inventario?: InventarioUpdateManyWithoutUsuarioNestedInput
+    receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
+    postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutGeracoesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    nivelHabilidade?: EnumNivelHabilidadeFieldUpdateOperationsInput | $Enums.NivelHabilidade
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    atualizadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    perfil?: PerfilAlimentarUncheckedUpdateOneWithoutUsuarioNestedInput
+    inventario?: InventarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
+    postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
+    comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
   export type ReceitaCreateWithoutIngredientesInput = {
     titulo: string
     modoPreparo: string
@@ -14975,6 +18568,7 @@ export namespace Prisma {
     usuario: UsuarioCreateNestedOneWithoutReceitasInput
     postagens?: PostagemCreateNestedManyWithoutReceitaInput
     comentarios?: ComentarioCreateNestedManyWithoutReceitaInput
+    favoritos?: FavoritoCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUncheckedCreateWithoutIngredientesInput = {
@@ -14991,6 +18585,7 @@ export namespace Prisma {
     atualizadaEm?: Date | string
     postagens?: PostagemUncheckedCreateNestedManyWithoutReceitaInput
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutReceitaInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaCreateOrConnectWithoutIngredientesInput = {
@@ -15001,6 +18596,9 @@ export namespace Prisma {
   export type IngredienteCreateWithoutReceitaIngredientesInput = {
     nome: string
     categoria: string
+    classificacaoStatus?: string
+    dietasPermitidas?: string | null
+    restricoes?: string | null
     inventarios?: InventarioCreateNestedManyWithoutIngredienteInput
   }
 
@@ -15008,6 +18606,9 @@ export namespace Prisma {
     id?: number
     nome: string
     categoria: string
+    classificacaoStatus?: string
+    dietasPermitidas?: string | null
+    restricoes?: string | null
     inventarios?: InventarioUncheckedCreateNestedManyWithoutIngredienteInput
   }
 
@@ -15040,6 +18641,7 @@ export namespace Prisma {
     usuario?: UsuarioUpdateOneRequiredWithoutReceitasNestedInput
     postagens?: PostagemUpdateManyWithoutReceitaNestedInput
     comentarios?: ComentarioUpdateManyWithoutReceitaNestedInput
+    favoritos?: FavoritoUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateWithoutIngredientesInput = {
@@ -15056,6 +18658,7 @@ export namespace Prisma {
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     postagens?: PostagemUncheckedUpdateManyWithoutReceitaNestedInput
     comentarios?: ComentarioUncheckedUpdateManyWithoutReceitaNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutReceitaNestedInput
   }
 
   export type IngredienteUpsertWithoutReceitaIngredientesInput = {
@@ -15072,6 +18675,9 @@ export namespace Prisma {
   export type IngredienteUpdateWithoutReceitaIngredientesInput = {
     nome?: StringFieldUpdateOperationsInput | string
     categoria?: StringFieldUpdateOperationsInput | string
+    classificacaoStatus?: StringFieldUpdateOperationsInput | string
+    dietasPermitidas?: NullableStringFieldUpdateOperationsInput | string | null
+    restricoes?: NullableStringFieldUpdateOperationsInput | string | null
     inventarios?: InventarioUpdateManyWithoutIngredienteNestedInput
   }
 
@@ -15079,6 +18685,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
     categoria?: StringFieldUpdateOperationsInput | string
+    classificacaoStatus?: StringFieldUpdateOperationsInput | string
+    dietasPermitidas?: NullableStringFieldUpdateOperationsInput | string | null
+    restricoes?: NullableStringFieldUpdateOperationsInput | string | null
     inventarios?: InventarioUncheckedUpdateManyWithoutIngredienteNestedInput
   }
 
@@ -15095,6 +18704,7 @@ export namespace Prisma {
     usuario: UsuarioCreateNestedOneWithoutReceitasInput
     ingredientes?: ReceitaIngredienteCreateNestedManyWithoutReceitaInput
     postagens?: PostagemCreateNestedManyWithoutReceitaInput
+    favoritos?: FavoritoCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUncheckedCreateWithoutComentariosInput = {
@@ -15111,6 +18721,7 @@ export namespace Prisma {
     atualizadaEm?: Date | string
     ingredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutReceitaInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaCreateOrConnectWithoutComentariosInput = {
@@ -15130,6 +18741,8 @@ export namespace Prisma {
     inventario?: InventarioCreateNestedManyWithoutUsuarioInput
     receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutComentariosInput = {
@@ -15145,6 +18758,8 @@ export namespace Prisma {
     inventario?: InventarioUncheckedCreateNestedManyWithoutUsuarioInput
     receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
     postagens?: PostagemUncheckedCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutComentariosInput = {
@@ -15225,6 +18840,7 @@ export namespace Prisma {
     usuario?: UsuarioUpdateOneRequiredWithoutReceitasNestedInput
     ingredientes?: ReceitaIngredienteUpdateManyWithoutReceitaNestedInput
     postagens?: PostagemUpdateManyWithoutReceitaNestedInput
+    favoritos?: FavoritoUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateWithoutComentariosInput = {
@@ -15241,6 +18857,7 @@ export namespace Prisma {
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     ingredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutReceitaNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutReceitaNestedInput
   }
 
   export type UsuarioUpsertWithoutComentariosInput = {
@@ -15266,6 +18883,8 @@ export namespace Prisma {
     inventario?: InventarioUpdateManyWithoutUsuarioNestedInput
     receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutComentariosInput = {
@@ -15281,6 +18900,8 @@ export namespace Prisma {
     inventario?: InventarioUncheckedUpdateManyWithoutUsuarioNestedInput
     receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type ComentarioUpsertWithoutRespostasInput = {
@@ -15339,6 +18960,8 @@ export namespace Prisma {
     inventario?: InventarioCreateNestedManyWithoutUsuarioInput
     receitas?: ReceitaCreateNestedManyWithoutUsuarioInput
     comentarios?: ComentarioCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutPostagensInput = {
@@ -15354,6 +18977,8 @@ export namespace Prisma {
     inventario?: InventarioUncheckedCreateNestedManyWithoutUsuarioInput
     receitas?: ReceitaUncheckedCreateNestedManyWithoutUsuarioInput
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutUsuarioInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutUsuarioInput
+    geracoes?: ReceitaGeracaoUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutPostagensInput = {
@@ -15374,6 +18999,7 @@ export namespace Prisma {
     usuario: UsuarioCreateNestedOneWithoutReceitasInput
     ingredientes?: ReceitaIngredienteCreateNestedManyWithoutReceitaInput
     comentarios?: ComentarioCreateNestedManyWithoutReceitaInput
+    favoritos?: FavoritoCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaUncheckedCreateWithoutPostagensInput = {
@@ -15390,6 +19016,7 @@ export namespace Prisma {
     atualizadaEm?: Date | string
     ingredientes?: ReceitaIngredienteUncheckedCreateNestedManyWithoutReceitaInput
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutReceitaInput
+    favoritos?: FavoritoUncheckedCreateNestedManyWithoutReceitaInput
   }
 
   export type ReceitaCreateOrConnectWithoutPostagensInput = {
@@ -15420,6 +19047,8 @@ export namespace Prisma {
     inventario?: InventarioUpdateManyWithoutUsuarioNestedInput
     receitas?: ReceitaUpdateManyWithoutUsuarioNestedInput
     comentarios?: ComentarioUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUpdateManyWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPostagensInput = {
@@ -15435,6 +19064,8 @@ export namespace Prisma {
     inventario?: InventarioUncheckedUpdateManyWithoutUsuarioNestedInput
     receitas?: ReceitaUncheckedUpdateManyWithoutUsuarioNestedInput
     comentarios?: ComentarioUncheckedUpdateManyWithoutUsuarioNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutUsuarioNestedInput
+    geracoes?: ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type ReceitaUpsertWithoutPostagensInput = {
@@ -15461,6 +19092,7 @@ export namespace Prisma {
     usuario?: UsuarioUpdateOneRequiredWithoutReceitasNestedInput
     ingredientes?: ReceitaIngredienteUpdateManyWithoutReceitaNestedInput
     comentarios?: ComentarioUpdateManyWithoutReceitaNestedInput
+    favoritos?: FavoritoUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateWithoutPostagensInput = {
@@ -15477,6 +19109,7 @@ export namespace Prisma {
     atualizadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     ingredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput
     comentarios?: ComentarioUncheckedUpdateManyWithoutReceitaNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutReceitaNestedInput
   }
 
   export type InventarioCreateManyUsuarioInput = {
@@ -15515,6 +19148,25 @@ export namespace Prisma {
     criadoEm?: Date | string
   }
 
+  export type FavoritoCreateManyUsuarioInput = {
+    id?: number
+    receitaId: number
+    criadoEm?: Date | string
+  }
+
+  export type ReceitaGeracaoCreateManyUsuarioInput = {
+    id?: number
+    chaveCache: string
+    modelo: string
+    status: string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: string | null
+    rascunhoExpiraEm?: Date | string | null
+    criadaEm?: Date | string
+    finalizadaEm?: Date | string | null
+    duracaoMs?: number | null
+  }
+
   export type InventarioUpdateWithoutUsuarioInput = {
     quantidade?: FloatFieldUpdateOperationsInput | number
     unidade?: StringFieldUpdateOperationsInput | string
@@ -15548,6 +19200,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteUpdateManyWithoutReceitaNestedInput
     postagens?: PostagemUpdateManyWithoutReceitaNestedInput
     comentarios?: ComentarioUpdateManyWithoutReceitaNestedInput
+    favoritos?: FavoritoUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateWithoutUsuarioInput = {
@@ -15564,6 +19217,7 @@ export namespace Prisma {
     ingredientes?: ReceitaIngredienteUncheckedUpdateManyWithoutReceitaNestedInput
     postagens?: PostagemUncheckedUpdateManyWithoutReceitaNestedInput
     comentarios?: ComentarioUncheckedUpdateManyWithoutReceitaNestedInput
+    favoritos?: FavoritoUncheckedUpdateManyWithoutReceitaNestedInput
   }
 
   export type ReceitaUncheckedUpdateManyWithoutUsuarioInput = {
@@ -15625,6 +19279,61 @@ export namespace Prisma {
     respostaDeId?: NullableIntFieldUpdateOperationsInput | number | null
     texto?: StringFieldUpdateOperationsInput | string
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoritoUpdateWithoutUsuarioInput = {
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    receita?: ReceitaUpdateOneRequiredWithoutFavoritosNestedInput
+  }
+
+  export type FavoritoUncheckedUpdateWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoritoUncheckedUpdateManyWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    receitaId?: IntFieldUpdateOperationsInput | number
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReceitaGeracaoUpdateWithoutUsuarioInput = {
+    chaveCache?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ReceitaGeracaoUncheckedUpdateWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    chaveCache?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    chaveCache?: StringFieldUpdateOperationsInput | string
+    modelo?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type RestricaoAlimentarCreateManyPerfilInput = {
@@ -15724,6 +19433,12 @@ export namespace Prisma {
     criadoEm?: Date | string
   }
 
+  export type FavoritoCreateManyReceitaInput = {
+    id?: number
+    usuarioId: number
+    criadoEm?: Date | string
+  }
+
   export type ReceitaIngredienteUpdateWithoutReceitaInput = {
     quantidade?: FloatFieldUpdateOperationsInput | number
     unidade?: StringFieldUpdateOperationsInput | string
@@ -15790,6 +19505,23 @@ export namespace Prisma {
     usuarioId?: IntFieldUpdateOperationsInput | number
     respostaDeId?: NullableIntFieldUpdateOperationsInput | number | null
     texto?: StringFieldUpdateOperationsInput | string
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoritoUpdateWithoutReceitaInput = {
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutFavoritosNestedInput
+  }
+
+  export type FavoritoUncheckedUpdateWithoutReceitaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoritoUncheckedUpdateManyWithoutReceitaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
     criadoEm?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

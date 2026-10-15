@@ -29,6 +29,7 @@ export type User = {
   avatar?: string | null;
   diet: string;
   allergies: string[];
+  profileLoaded?: boolean;
   savedRecipes?: SavedRecipe[];
 };
 
