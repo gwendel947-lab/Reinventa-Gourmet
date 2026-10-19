@@ -9288,12 +9288,14 @@ export namespace Prisma {
   export type ReceitaGeracaoAvgAggregateOutputType = {
     id: number | null
     usuarioId: number | null
+    receitaId: number | null
     duracaoMs: number | null
   }
 
   export type ReceitaGeracaoSumAggregateOutputType = {
     id: number | null
     usuarioId: number | null
+    receitaId: number | null
     duracaoMs: number | null
   }
 
@@ -9304,6 +9306,8 @@ export namespace Prisma {
     modelo: string | null
     status: string | null
     erroCodigo: string | null
+    receitaId: number | null
+    cacheExpiraEm: Date | null
     rascunhoExpiraEm: Date | null
     criadaEm: Date | null
     finalizadaEm: Date | null
@@ -9317,6 +9321,8 @@ export namespace Prisma {
     modelo: string | null
     status: string | null
     erroCodigo: string | null
+    receitaId: number | null
+    cacheExpiraEm: Date | null
     rascunhoExpiraEm: Date | null
     criadaEm: Date | null
     finalizadaEm: Date | null
@@ -9330,7 +9336,10 @@ export namespace Prisma {
     modelo: number
     status: number
     payload: number
+    consumo: number
     erroCodigo: number
+    receitaId: number
+    cacheExpiraEm: number
     rascunhoExpiraEm: number
     criadaEm: number
     finalizadaEm: number
@@ -9342,12 +9351,14 @@ export namespace Prisma {
   export type ReceitaGeracaoAvgAggregateInputType = {
     id?: true
     usuarioId?: true
+    receitaId?: true
     duracaoMs?: true
   }
 
   export type ReceitaGeracaoSumAggregateInputType = {
     id?: true
     usuarioId?: true
+    receitaId?: true
     duracaoMs?: true
   }
 
@@ -9358,6 +9369,8 @@ export namespace Prisma {
     modelo?: true
     status?: true
     erroCodigo?: true
+    receitaId?: true
+    cacheExpiraEm?: true
     rascunhoExpiraEm?: true
     criadaEm?: true
     finalizadaEm?: true
@@ -9371,6 +9384,8 @@ export namespace Prisma {
     modelo?: true
     status?: true
     erroCodigo?: true
+    receitaId?: true
+    cacheExpiraEm?: true
     rascunhoExpiraEm?: true
     criadaEm?: true
     finalizadaEm?: true
@@ -9384,7 +9399,10 @@ export namespace Prisma {
     modelo?: true
     status?: true
     payload?: true
+    consumo?: true
     erroCodigo?: true
+    receitaId?: true
+    cacheExpiraEm?: true
     rascunhoExpiraEm?: true
     criadaEm?: true
     finalizadaEm?: true
@@ -9485,7 +9503,10 @@ export namespace Prisma {
     modelo: string
     status: string
     payload: JsonValue | null
+    consumo: JsonValue | null
     erroCodigo: string | null
+    receitaId: number | null
+    cacheExpiraEm: Date | null
     rascunhoExpiraEm: Date | null
     criadaEm: Date
     finalizadaEm: Date | null
@@ -9518,7 +9539,10 @@ export namespace Prisma {
     modelo?: boolean
     status?: boolean
     payload?: boolean
+    consumo?: boolean
     erroCodigo?: boolean
+    receitaId?: boolean
+    cacheExpiraEm?: boolean
     rascunhoExpiraEm?: boolean
     criadaEm?: boolean
     finalizadaEm?: boolean
@@ -9535,14 +9559,17 @@ export namespace Prisma {
     modelo?: boolean
     status?: boolean
     payload?: boolean
+    consumo?: boolean
     erroCodigo?: boolean
+    receitaId?: boolean
+    cacheExpiraEm?: boolean
     rascunhoExpiraEm?: boolean
     criadaEm?: boolean
     finalizadaEm?: boolean
     duracaoMs?: boolean
   }
 
-  export type ReceitaGeracaoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "chaveCache" | "modelo" | "status" | "payload" | "erroCodigo" | "rascunhoExpiraEm" | "criadaEm" | "finalizadaEm" | "duracaoMs", ExtArgs["result"]["receitaGeracao"]>
+  export type ReceitaGeracaoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "chaveCache" | "modelo" | "status" | "payload" | "consumo" | "erroCodigo" | "receitaId" | "cacheExpiraEm" | "rascunhoExpiraEm" | "criadaEm" | "finalizadaEm" | "duracaoMs", ExtArgs["result"]["receitaGeracao"]>
   export type ReceitaGeracaoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
@@ -9559,7 +9586,10 @@ export namespace Prisma {
       modelo: string
       status: string
       payload: Prisma.JsonValue | null
+      consumo: Prisma.JsonValue | null
       erroCodigo: string | null
+      receitaId: number | null
+      cacheExpiraEm: Date | null
       rascunhoExpiraEm: Date | null
       criadaEm: Date
       finalizadaEm: Date | null
@@ -9940,7 +9970,10 @@ export namespace Prisma {
     readonly modelo: FieldRef<"ReceitaGeracao", 'String'>
     readonly status: FieldRef<"ReceitaGeracao", 'String'>
     readonly payload: FieldRef<"ReceitaGeracao", 'Json'>
+    readonly consumo: FieldRef<"ReceitaGeracao", 'Json'>
     readonly erroCodigo: FieldRef<"ReceitaGeracao", 'String'>
+    readonly receitaId: FieldRef<"ReceitaGeracao", 'Int'>
+    readonly cacheExpiraEm: FieldRef<"ReceitaGeracao", 'DateTime'>
     readonly rascunhoExpiraEm: FieldRef<"ReceitaGeracao", 'DateTime'>
     readonly criadaEm: FieldRef<"ReceitaGeracao", 'DateTime'>
     readonly finalizadaEm: FieldRef<"ReceitaGeracao", 'DateTime'>
@@ -13454,7 +13487,10 @@ export namespace Prisma {
     modelo: 'modelo',
     status: 'status',
     payload: 'payload',
+    consumo: 'consumo',
     erroCodigo: 'erroCodigo',
+    receitaId: 'receitaId',
+    cacheExpiraEm: 'cacheExpiraEm',
     rascunhoExpiraEm: 'rascunhoExpiraEm',
     criadaEm: 'criadaEm',
     finalizadaEm: 'finalizadaEm',
@@ -14180,7 +14216,10 @@ export namespace Prisma {
     modelo?: StringFilter<"ReceitaGeracao"> | string
     status?: StringFilter<"ReceitaGeracao"> | string
     payload?: JsonNullableFilter<"ReceitaGeracao">
+    consumo?: JsonNullableFilter<"ReceitaGeracao">
     erroCodigo?: StringNullableFilter<"ReceitaGeracao"> | string | null
+    receitaId?: IntNullableFilter<"ReceitaGeracao"> | number | null
+    cacheExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     rascunhoExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     criadaEm?: DateTimeFilter<"ReceitaGeracao"> | Date | string
     finalizadaEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
@@ -14195,7 +14234,10 @@ export namespace Prisma {
     modelo?: SortOrder
     status?: SortOrder
     payload?: SortOrderInput | SortOrder
+    consumo?: SortOrderInput | SortOrder
     erroCodigo?: SortOrderInput | SortOrder
+    receitaId?: SortOrderInput | SortOrder
+    cacheExpiraEm?: SortOrderInput | SortOrder
     rascunhoExpiraEm?: SortOrderInput | SortOrder
     criadaEm?: SortOrder
     finalizadaEm?: SortOrderInput | SortOrder
@@ -14214,7 +14256,10 @@ export namespace Prisma {
     modelo?: StringFilter<"ReceitaGeracao"> | string
     status?: StringFilter<"ReceitaGeracao"> | string
     payload?: JsonNullableFilter<"ReceitaGeracao">
+    consumo?: JsonNullableFilter<"ReceitaGeracao">
     erroCodigo?: StringNullableFilter<"ReceitaGeracao"> | string | null
+    receitaId?: IntNullableFilter<"ReceitaGeracao"> | number | null
+    cacheExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     rascunhoExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     criadaEm?: DateTimeFilter<"ReceitaGeracao"> | Date | string
     finalizadaEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
@@ -14229,7 +14274,10 @@ export namespace Prisma {
     modelo?: SortOrder
     status?: SortOrder
     payload?: SortOrderInput | SortOrder
+    consumo?: SortOrderInput | SortOrder
     erroCodigo?: SortOrderInput | SortOrder
+    receitaId?: SortOrderInput | SortOrder
+    cacheExpiraEm?: SortOrderInput | SortOrder
     rascunhoExpiraEm?: SortOrderInput | SortOrder
     criadaEm?: SortOrder
     finalizadaEm?: SortOrderInput | SortOrder
@@ -14251,7 +14299,10 @@ export namespace Prisma {
     modelo?: StringWithAggregatesFilter<"ReceitaGeracao"> | string
     status?: StringWithAggregatesFilter<"ReceitaGeracao"> | string
     payload?: JsonNullableWithAggregatesFilter<"ReceitaGeracao">
+    consumo?: JsonNullableWithAggregatesFilter<"ReceitaGeracao">
     erroCodigo?: StringNullableWithAggregatesFilter<"ReceitaGeracao"> | string | null
+    receitaId?: IntNullableWithAggregatesFilter<"ReceitaGeracao"> | number | null
+    cacheExpiraEm?: DateTimeNullableWithAggregatesFilter<"ReceitaGeracao"> | Date | string | null
     rascunhoExpiraEm?: DateTimeNullableWithAggregatesFilter<"ReceitaGeracao"> | Date | string | null
     criadaEm?: DateTimeWithAggregatesFilter<"ReceitaGeracao"> | Date | string
     finalizadaEm?: DateTimeNullableWithAggregatesFilter<"ReceitaGeracao"> | Date | string | null
@@ -14932,7 +14983,10 @@ export namespace Prisma {
     modelo: string
     status: string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: string | null
+    receitaId?: number | null
+    cacheExpiraEm?: Date | string | null
     rascunhoExpiraEm?: Date | string | null
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
@@ -14947,7 +15001,10 @@ export namespace Prisma {
     modelo: string
     status: string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: string | null
+    receitaId?: number | null
+    cacheExpiraEm?: Date | string | null
     rascunhoExpiraEm?: Date | string | null
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
@@ -14959,7 +15016,10 @@ export namespace Prisma {
     modelo?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    receitaId?: NullableIntFieldUpdateOperationsInput | number | null
+    cacheExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14974,7 +15034,10 @@ export namespace Prisma {
     modelo?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    receitaId?: NullableIntFieldUpdateOperationsInput | number | null
+    cacheExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14988,7 +15051,10 @@ export namespace Prisma {
     modelo: string
     status: string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: string | null
+    receitaId?: number | null
+    cacheExpiraEm?: Date | string | null
     rascunhoExpiraEm?: Date | string | null
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
@@ -15000,7 +15066,10 @@ export namespace Prisma {
     modelo?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    receitaId?: NullableIntFieldUpdateOperationsInput | number | null
+    cacheExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15014,7 +15083,10 @@ export namespace Prisma {
     modelo?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    receitaId?: NullableIntFieldUpdateOperationsInput | number | null
+    cacheExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15824,17 +15896,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -15844,6 +15905,17 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type ReceitaGeracaoOrderByRelevanceInput = {
@@ -15859,7 +15931,10 @@ export namespace Prisma {
     modelo?: SortOrder
     status?: SortOrder
     payload?: SortOrder
+    consumo?: SortOrder
     erroCodigo?: SortOrder
+    receitaId?: SortOrder
+    cacheExpiraEm?: SortOrder
     rascunhoExpiraEm?: SortOrder
     criadaEm?: SortOrder
     finalizadaEm?: SortOrder
@@ -15869,6 +15944,7 @@ export namespace Prisma {
   export type ReceitaGeracaoAvgOrderByAggregateInput = {
     id?: SortOrder
     usuarioId?: SortOrder
+    receitaId?: SortOrder
     duracaoMs?: SortOrder
   }
 
@@ -15879,6 +15955,8 @@ export namespace Prisma {
     modelo?: SortOrder
     status?: SortOrder
     erroCodigo?: SortOrder
+    receitaId?: SortOrder
+    cacheExpiraEm?: SortOrder
     rascunhoExpiraEm?: SortOrder
     criadaEm?: SortOrder
     finalizadaEm?: SortOrder
@@ -15892,6 +15970,8 @@ export namespace Prisma {
     modelo?: SortOrder
     status?: SortOrder
     erroCodigo?: SortOrder
+    receitaId?: SortOrder
+    cacheExpiraEm?: SortOrder
     rascunhoExpiraEm?: SortOrder
     criadaEm?: SortOrder
     finalizadaEm?: SortOrder
@@ -15901,6 +15981,7 @@ export namespace Prisma {
   export type ReceitaGeracaoSumOrderByAggregateInput = {
     id?: SortOrder
     usuarioId?: SortOrder
+    receitaId?: SortOrder
     duracaoMs?: SortOrder
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
@@ -15930,20 +16011,6 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -15958,6 +16025,20 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type ReceitaIngredienteOrderByRelevanceInput = {
@@ -16831,16 +16912,16 @@ export namespace Prisma {
     connect?: UsuarioWhereUniqueInput
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type UsuarioUpdateOneRequiredWithoutGeracoesNestedInput = {
@@ -17232,20 +17313,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -17271,6 +17338,20 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type PerfilAlimentarCreateWithoutUsuarioInput = {
@@ -17437,7 +17518,10 @@ export namespace Prisma {
     modelo: string
     status: string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: string | null
+    receitaId?: number | null
+    cacheExpiraEm?: Date | string | null
     rascunhoExpiraEm?: Date | string | null
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
@@ -17450,7 +17534,10 @@ export namespace Prisma {
     modelo: string
     status: string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: string | null
+    receitaId?: number | null
+    cacheExpiraEm?: Date | string | null
     rascunhoExpiraEm?: Date | string | null
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
@@ -17661,7 +17748,10 @@ export namespace Prisma {
     modelo?: StringFilter<"ReceitaGeracao"> | string
     status?: StringFilter<"ReceitaGeracao"> | string
     payload?: JsonNullableFilter<"ReceitaGeracao">
+    consumo?: JsonNullableFilter<"ReceitaGeracao">
     erroCodigo?: StringNullableFilter<"ReceitaGeracao"> | string | null
+    receitaId?: IntNullableFilter<"ReceitaGeracao"> | number | null
+    cacheExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     rascunhoExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     criadaEm?: DateTimeFilter<"ReceitaGeracao"> | Date | string
     finalizadaEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
@@ -19160,7 +19250,10 @@ export namespace Prisma {
     modelo: string
     status: string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: string | null
+    receitaId?: number | null
+    cacheExpiraEm?: Date | string | null
     rascunhoExpiraEm?: Date | string | null
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
@@ -19303,7 +19396,10 @@ export namespace Prisma {
     modelo?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    receitaId?: NullableIntFieldUpdateOperationsInput | number | null
+    cacheExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19316,7 +19412,10 @@ export namespace Prisma {
     modelo?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    receitaId?: NullableIntFieldUpdateOperationsInput | number | null
+    cacheExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19329,7 +19428,10 @@ export namespace Prisma {
     modelo?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    consumo?: NullableJsonNullValueInput | InputJsonValue
     erroCodigo?: NullableStringFieldUpdateOperationsInput | string | null
+    receitaId?: NullableIntFieldUpdateOperationsInput | number | null
+    cacheExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rascunhoExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

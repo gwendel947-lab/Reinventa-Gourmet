@@ -38,9 +38,22 @@ function cacheKey(body, inventory, profile, model) {
 
 function errorCode(error) {
   const text = String(error?.message || error).toLowerCase();
-  if (text.includes("quota") || text.includes("429")) return "COTA_EXCEDIDA";
+  if (error?.status === 429 || text.includes("quota") || text.includes("429")) return "COTA_EXCEDIDA";
+  if (error?.status === 403 || text.includes("safety") || text.includes("blocked")) return "CONTEUDO_BLOQUEADO";
   if (text.includes("timeout") || text.includes("deadline")) return "TIMEOUT";
   return "INDISPONIVEL";
+}
+
+function ingredientCompatible(ingredient, profile) {
+  if ((profile.tipoDieta !== "ONIVORO" || profile.restricoes.length) && ingredient.classificacaoStatus !== "VERIFICADO") {
+    return false;
+  }
+  if (profile.tipoDieta !== "ONIVORO") {
+    const allowed = ingredient.dietasPermitidas?.split(",").map((item) => item.trim()) || [];
+    if (!allowed.includes(profile.tipoDieta)) return false;
+  }
+  const blocked = ingredient.restricoes?.toLowerCase() || "";
+  return !profile.restricoes.some((restriction) => blocked.includes(restriction.toLowerCase()));
 }
 
 async function loadContext(userId) {
@@ -87,7 +100,7 @@ export async function generateRecipe(req, res) {
   };
   const key = cacheKey({ selectedIds, filters }, selected.map((item) => ({ ingredienteId: item.ingredienteId, quantidade: item.quantidade, unidade: item.unidade })), profile, model);
   const cached = await prisma.receitaGeracao.findFirst({
-    where: { usuarioId: userId, chaveCache: key, status: "SUCESSO", rascunhoExpiraEm: { gt: new Date() } },
+    where: { usuarioId: userId, chaveCache: key, status: { in: ["SUCESSO", "SALVO"] }, cacheExpiraEm: { gt: new Date() } },
     orderBy: { criadaEm: "desc" }
   });
   if (cached) return res.json({ geracao: { id: cached.id, receita: cached.payload, reutilizada: true } });
@@ -103,27 +116,48 @@ export async function generateRecipe(req, res) {
       client.models.generateContent({ model, contents: prompt, config: { responseMimeType: "application/json", responseSchema: outputSchema } }),
       new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 30_000))
     ]);
+    const consumo = response.usageMetadata
+      ? {
+          promptTokenCount: response.usageMetadata.promptTokenCount,
+          candidatesTokenCount: response.usageMetadata.candidatesTokenCount,
+          totalTokenCount: response.usageMetadata.totalTokenCount
+        }
+      : null;
     const parsed = JSON.parse(response.text);
     if (!parsed.titulo || !Array.isArray(parsed.ingredientes) || !Array.isArray(parsed.passos) || !parsed.ingredientes.length) throw new Error("resposta_invalida");
-    const catalog = await prisma.ingrediente.findMany({ where: { nome: { in: parsed.ingredientes.map((item) => item.nome) } } });
+    if (!Number.isInteger(filters.servings) || filters.servings < 1 || filters.servings > 50) throw new Error("porcoes_invalidas");
+    const catalog = await prisma.ingrediente.findMany();
     const catalogByName = new Map(catalog.map((item) => [normalize(item.nome), item]));
-    const additions = parsed.ingredientes.filter((item) => !catalogByName.has(normalize(item.nome)));
-    if (!filters.allowMissing && additions.length) throw new Error("ingrediente_de_catalogo_invalido");
+    const additions = parsed.ingredientes.filter((item) => !selectedIds.includes(catalogByName.get(normalize(item.nome))?.id));
+    if (parsed.ingredientes.some((item) => !catalogByName.has(normalize(item.nome)))) throw new Error("ingrediente_de_catalogo_invalido");
+    if (!filters.allowMissing && additions.length) throw new Error("ingrediente_adicional_restrito");
     if (additions.length > 3) throw new Error("ingredientes_adicionais_excedidos");
     const ingredients = parsed.ingredientes.map((item) => {
       const catalogItem = catalogByName.get(normalize(item.nome));
-      if (!catalogItem) throw new Error("ingrediente_de_catalogo_invalido");
-      if (catalogItem.classificacaoStatus !== "VERIFICADO" && (profile.tipoDieta !== "ONIVORO" || profile.restricoes.length)) throw new Error("classificacao_incompleta");
+      if (!catalogItem || !ingredientCompatible(catalogItem, profile)) throw new Error("classificacao_incompleta");
+      if (!Number.isFinite(Number(item.quantidade)) || Number(item.quantidade) <= 0 || typeof item.unidade !== "string" || !item.unidade.trim()) throw new Error("quantidade_invalida");
       return { ingredienteId: catalogItem.id, nome: catalogItem.nome, quantidade: Number(item.quantidade), unidade: item.unidade, opcional: Boolean(item.opcional) };
     });
     generation = { titulo: String(parsed.titulo).slice(0, 200), ingredientes: ingredients, passos: parsed.passos.map(String).slice(0, 30), tempoEstimado: Number(parsed.tempoEstimado), porcoes: filters.servings };
     if (!Number.isFinite(generation.tempoEstimado) || generation.tempoEstimado < 1 || (filters.maxTime && generation.tempoEstimado > filters.maxTime)) throw new Error("tempo_invalido");
     const record = await prisma.receitaGeracao.create({
-      data: { usuarioId: userId, chaveCache: key, modelo: model, status: "SUCESSO", payload: generation, rascunhoExpiraEm: new Date(Date.now() + Number(process.env.AI_CACHE_TTL_SECONDS || 900) * 1000), finalizadaEm: new Date(), duracaoMs: Date.now() - startedAt }
+      data: {
+        usuarioId: userId,
+        chaveCache: key,
+        modelo: model,
+        status: "SUCESSO",
+        payload: generation,
+        consumo,
+        cacheExpiraEm: new Date(Date.now() + Number(process.env.AI_CACHE_TTL_SECONDS || 900) * 1000),
+        rascunhoExpiraEm: new Date(Date.now() + Number(process.env.AI_DRAFT_TTL_SECONDS || 86400) * 1000),
+        finalizadaEm: new Date(),
+        duracaoMs: Date.now() - startedAt
+      }
     });
     return res.json({ geracao: { id: record.id, receita: generation, reutilizada: false } });
   } catch (error) {
-    const code = error.message === "resposta_invalida" || error.message.includes("ingrediente") || error.message.includes("classificacao") || error.message.includes("tempo") ? "RESPOSTA_INVALIDA" : errorCode(error);
+    const message = String(error?.message || error);
+    const code = message === "resposta_invalida" || message.includes("ingrediente") || message.includes("classificacao") || message.includes("tempo") || message.includes("quantidade") || message.includes("porcoes") ? "RESPOSTA_INVALIDA" : errorCode(error);
     await prisma.receitaGeracao.create({ data: { usuarioId: userId, chaveCache: key, modelo: model, status: "ERRO", erroCodigo: code, finalizadaEm: new Date(), duracaoMs: Date.now() - startedAt } });
     return res.status(code === "TIMEOUT" ? 504 : 502).json({ code, message: "Não foi possível gerar uma receita válida. A busca no banco continua disponível." });
   } finally {
@@ -132,8 +166,12 @@ export async function generateRecipe(req, res) {
 }
 
 export async function saveGeneration(req, res) {
-  const generation = await prisma.receitaGeracao.findFirst({ where: { id: Number(req.params.id), usuarioId: Number(req.user.id), status: "SUCESSO", rascunhoExpiraEm: { gt: new Date() } } });
+  const generation = await prisma.receitaGeracao.findFirst({ where: { id: Number(req.params.id), usuarioId: Number(req.user.id), status: { in: ["SUCESSO", "SALVO"] }, rascunhoExpiraEm: { gt: new Date() } } });
   if (!generation || !generation.payload) return res.status(404).json({ message: "Rascunho não encontrado ou expirado." });
+  if (generation.status === "SALVO" && generation.receitaId) {
+    const savedRecipe = await prisma.receita.findUnique({ where: { id: generation.receitaId }, include: { ingredientes: { include: { ingrediente: true } } } });
+    if (savedRecipe) return res.status(200).json({ receita: savedRecipe, idempotente: true });
+  }
   const payload = generation.payload;
   const recipe = await prisma.receita.create({
     data: {
@@ -142,6 +180,6 @@ export async function saveGeneration(req, res) {
     },
     include: { ingredientes: { include: { ingrediente: true } } }
   });
-  await prisma.receitaGeracao.update({ where: { id: generation.id }, data: { status: "SALVO" } });
+  await prisma.receitaGeracao.update({ where: { id: generation.id }, data: { status: "SALVO", receitaId: recipe.id } });
   return res.status(201).json({ receita: recipe });
 }

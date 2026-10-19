@@ -10,6 +10,8 @@ const dietMap = {
   CETOGENICO: "Cetogênico",
   OUTRO: "Outro"
 };
+const dietMapReverse = Object.fromEntries(Object.entries(dietMap).map(([key, value]) => [value, key]));
+const dietValues = new Set(Object.keys(dietMap));
 
 const userSelect = {
   id: true,
@@ -50,8 +52,10 @@ const UserController = {
         return res.status(400).json({ message: "A foto de perfil é muito grande." });
       }
 
-      const dietMapReverse = Object.fromEntries(Object.entries(dietMap).map(([key, value]) => [value, key]));
       const dietValue = tipoDieta ? (dietMapReverse[tipoDieta] || tipoDieta) : undefined;
+      if (dietValue && !dietValues.has(dietValue)) {
+        return res.status(400).json({ message: "Tipo de dieta inválido." });
+      }
       const user = await prisma.$transaction(async (transaction) => {
         const updated = await transaction.usuario.update({
           where: { id: Number(req.user.id) },
@@ -106,12 +110,7 @@ const UserController = {
 
       const senhaCriptografada = await bcrypt.hash(senha, 10);
 
-      const dietMap = {
-        "Come de tudo": "ONIVORO",
-        Vegetariano: "VEGETARIANO",
-        Vegano: "VEGANO"
-      };
-      const tipoDietaBanco = dietMap[tipoDieta] || "ONIVORO";
+      const tipoDietaBanco = dietMapReverse[tipoDieta] || (dietValues.has(tipoDieta) ? tipoDieta : "ONIVORO");
       const restricoesValidas = Array.isArray(restricoes)
         ? restricoes.filter((restricao) => typeof restricao === "string" && restricao.trim())
         : [];

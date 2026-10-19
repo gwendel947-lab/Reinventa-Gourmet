@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import api from "../../services/api";
 
 export type SavedRecipe = {
   id: number;
@@ -56,6 +57,43 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.removeItem("reinventa-user");
     }
   }, [user]);
+
+  useEffect(() => {
+    if (!user || !localStorage.getItem("reinventa-token")) return;
+    const loadAccountData = async () => {
+      try {
+        const [{ data: profileData }, { data: favoriteData }] = await Promise.all([
+          api.get("/users/me"),
+          api.get("/favoritos")
+        ]);
+        const profile = profileData.user;
+        const savedRecipes = (favoriteData.favoritos ?? []).map((favorite: any) => ({
+          id: favorite.receita.id,
+          title: favorite.receita.titulo,
+          time: String(favorite.receita.tempoEstimado),
+          difficulty: "",
+          servings: String(favorite.receita.porcoes),
+          preparation: favorite.receita.modoPreparo,
+          ingredients: favorite.receita.ingredientes,
+          author: favorite.receita.usuario?.nome,
+          authorId: favorite.receita.usuarioId
+        }));
+        setUser((current) => current ? {
+          ...current,
+          name: profile.nome,
+          email: profile.email,
+          avatar: profile.avatar,
+          diet: profile.tipoDieta,
+          allergies: profile.restricoes,
+          profileLoaded: true,
+          savedRecipes
+        } : current);
+      } catch {
+        setUser((current) => current ? { ...current, profileLoaded: false } : current);
+      }
+    };
+    loadAccountData();
+  }, [user?.id]);
 
   const login = (userData: User) => {
     setUser(userData);

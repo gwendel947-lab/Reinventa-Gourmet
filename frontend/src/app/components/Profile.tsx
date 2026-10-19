@@ -69,9 +69,14 @@ export const Profile = () => {
     else navigate("/profile");
   };
 
-  const removeFavorite = (id: number) => {
-    updateUser({ savedRecipes: favoriteRecipes.filter((recipe) => recipe.id !== id) });
-    toast.success("Receita removida das favoritas.");
+  const removeFavorite = async (id: number) => {
+    try {
+      await api.delete(`/favoritos/${id}`);
+      updateUser({ savedRecipes: favoriteRecipes.filter((recipe) => recipe.id !== id) });
+      toast.success("Receita removida das favoritas.");
+    } catch {
+      toast.error("Não foi possível remover a receita dos favoritos.");
+    }
   };
 
   const handleAvatarChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,23 +119,23 @@ export const Profile = () => {
     image: recipe.image,
   });
 
-  const saveRecipeChanges = async (recipe: RecipeDetails, ingredientNames: string[]) => {
+  const saveRecipeChanges = async (recipe: RecipeDetails, recipeIngredients: Array<{ nome: string; quantidade: number; unidade: string }>) => {
     setIsRecipeSaving(true);
     try {
       const { data: ingredientData } = await api.get("/ingredientes");
       const existingIngredients = ingredientData.ingredientes ?? [];
-      const ingredients = await Promise.all(ingredientNames.map(async (name) => {
-        const existing = existingIngredients.find((item: { id: number; nome: string }) => item.nome.toLowerCase() === name.toLowerCase());
-        if (existing) return existing.id;
-        const { data } = await api.post("/ingredientes", { nome: name, categoria: "outros" });
-        return data.ingrediente.id;
+      const ingredients = await Promise.all(recipeIngredients.map(async (item) => {
+        const existing = existingIngredients.find((candidate: { id: number; nome: string }) => candidate.nome.toLowerCase() === item.nome.toLowerCase());
+        if (existing) return { ...item, ingredienteId: existing.id };
+        const { data } = await api.post("/ingredientes", { nome: item.nome, categoria: "outros" });
+        return { ...item, ingredienteId: data.ingrediente.id };
       }));
       const { data } = await api.put(`/receitas/${recipe.id}`, {
         titulo: recipe.title,
         modoPreparo: recipe.preparation,
         tempoEstimado: Number(recipe.time),
         porcoes: Number(recipe.servings),
-        ingredientes: ingredients.map((ingredienteId) => ({ ingredienteId, quantidade: 1, unidade: "" })),
+        ingredientes: ingredients.map((item) => ({ ingredienteId: item.ingredienteId, quantidade: item.quantidade, unidade: item.unidade })),
       });
       const updatedRecipe = mapRecipe(data.receita);
       setMyRecipes((previous) => previous.map((item) => item.id === updatedRecipe.id ? updatedRecipe : item));
@@ -173,19 +178,28 @@ export const Profile = () => {
     }
   };
 
-  const handleSaveProfile = (e: React.FormEvent) => {
+  const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editData.name.trim()) {
       toast.error("O nome não pode estar vazio!");
       return;
     }
-    updateUser({
-      name: editData.name,
-      diet: editData.diet,
-      allergies: editData.allergies
-    });
-    toast.success("Perfil atualizado com sucesso!");
-    setIsEditModalOpen(false);
+    try {
+      const { data } = await api.put("/users/me", {
+        nome: editData.name,
+        tipoDieta: editData.diet,
+        restricoes: editData.allergies
+      });
+      updateUser({
+        name: data.user.nome,
+        diet: data.user.tipoDieta,
+        allergies: data.user.restricoes
+      });
+      toast.success("Perfil atualizado com sucesso!");
+      setIsEditModalOpen(false);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message ?? "Não foi possível atualizar o perfil.");
+    }
   };
 
   const toggleEditAllergy = (allergy: string) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { Clock, Flame, Heart, Lock, MessageCircle, Search, Share2, User, Users, Wand2 } from "lucide-react";
+import { Clock, Flame, Heart, Lock, MessageCircle, Plus, Search, Share2, Trash2, User, Users, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useAuth } from "../contexts/AuthContext";
@@ -33,13 +33,14 @@ type FeedPost = {
 
 const emptyForm = {
   title: "",
-  ingredients: "",
   preparation: "",
   time: "30",
   servings: "2",
   comment: "",
   visibility: "public" as "public" | "private",
 };
+
+type RecipeFormIngredient = { nome: string; quantidade: number; unidade: string };
 
 export const CommunityFeed = () => {
   const { user, updateUser } = useAuth();
@@ -50,6 +51,7 @@ export const CommunityFeed = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeDetails | null>(null);
   const [recipeImage, setRecipeImage] = useState<string | null>(null);
+  const [formIngredients, setFormIngredients] = useState<RecipeFormIngredient[]>([{ nome: "", quantidade: 1, unidade: "unidade" }]);
 
   const loadFeed = async () => {
     try {
@@ -77,8 +79,8 @@ export const CommunityFeed = () => {
       return;
     }
 
-    const ingredientNames = form.ingredients.split("\n").map((item) => item.trim()).filter(Boolean);
-    if (!form.title.trim() || !form.preparation.trim() || ingredientNames.length === 0) {
+    const validIngredients = formIngredients.filter((item) => item.nome.trim() && item.quantidade > 0 && item.unidade.trim());
+    if (!form.title.trim() || !form.preparation.trim() || validIngredients.length === 0) {
       toast.error("Preencha o título, os ingredientes e o modo de preparo.");
       return;
     }
@@ -87,13 +89,13 @@ export const CommunityFeed = () => {
     try {
       const { data: ingredientData } = await api.get("/ingredientes");
       const existingIngredients = ingredientData.ingredientes ?? [];
-      const ingredients = await Promise.all(ingredientNames.map(async (name) => {
+      const ingredients = await Promise.all(validIngredients.map(async (item) => {
         const existing = existingIngredients.find(
-          (ingredient: { id: number; nome: string }) => ingredient.nome.toLowerCase() === name.toLowerCase()
+          (ingredient: { id: number; nome: string }) => ingredient.nome.toLowerCase() === item.nome.trim().toLowerCase()
         );
-        if (existing) return existing.id;
-        const { data } = await api.post("/ingredientes", { nome: name, categoria: "outros" });
-        return data.ingrediente.id;
+        if (existing) return { ...item, ingredienteId: existing.id };
+        const { data } = await api.post("/ingredientes", { nome: item.nome.trim(), categoria: "outros" });
+        return { ...item, ingredienteId: data.ingrediente.id };
       }));
 
       const { data: recipeData } = await api.post("/receitas", {
@@ -103,7 +105,7 @@ export const CommunityFeed = () => {
         porcoes: Number(form.servings),
         publica: form.visibility === "public",
         imagem: recipeImage,
-        ingredientes: ingredients.map((ingredienteId) => ({ ingredienteId, quantidade: 1, unidade: "unidade" })),
+        ingredientes: ingredients.map((item) => ({ ingredienteId: item.ingredienteId, quantidade: item.quantidade, unidade: item.unidade })),
       });
 
       if (form.visibility === "public") {
@@ -114,6 +116,7 @@ export const CommunityFeed = () => {
         toast.success("Receita privada salva na sua conta!");
       }
       setForm(emptyForm);
+      setFormIngredients([{ nome: "", quantidade: 1, unidade: "unidade" }]);
       setRecipeImage(null);
     } catch (error: any) {
       toast.error(error.response?.data?.message ?? "Não foi possível salvar a receita.");
@@ -178,7 +181,7 @@ export const CommunityFeed = () => {
           <div className="flex items-center gap-3 mb-6"><div className="bg-[#F2CC8F] p-3 rounded-xl border-2 border-[#8C4B3A]"><Wand2 size={26} /></div><div><h2 className="font-title text-3xl">CRIAR RECEITA</h2><p className="opacity-70">Sua receita será salva no banco de dados.</p></div></div>
           <div className="grid md:grid-cols-2 gap-5">
             <label className="md:col-span-2 font-bold">Título<input value={form.title} onChange={(event) => updateForm("title", event.target.value)} placeholder="Ex: Massa cremosa de domingo" className="mt-2 w-full bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal focus:border-[#E07A5F] focus:outline-none" /></label>
-            <label className="font-bold">Ingredientes<textarea value={form.ingredients} onChange={(event) => updateForm("ingredients", event.target.value)} placeholder="Um ingrediente por linha, já com a quantidade (ex: 3 fatias de queijo)" className="mt-2 w-full h-32 bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal resize-none focus:border-[#E07A5F] focus:outline-none" /></label>
+            <div className="font-bold"><div className="mb-2 flex items-center justify-between">Ingredientes<button type="button" onClick={() => setFormIngredients((items) => [...items, { nome: "", quantidade: 1, unidade: "unidade" }])} className="flex items-center gap-1 text-sm text-[#E07A5F]"><Plus size={16} /> Adicionar</button></div><div className="space-y-2">{formIngredients.map((item, index) => <div key={index} className="flex gap-2"><input value={item.nome} onChange={(event) => setFormIngredients((items) => items.map((current, itemIndex) => itemIndex === index ? { ...current, nome: event.target.value } : current))} placeholder="Ingrediente" className="min-w-0 flex-1 rounded-xl border-2 border-[#8C4B3A]/30 bg-[#FEFAF0] px-3 py-2 font-normal" /><input type="number" min="0.01" step="any" value={item.quantidade} onChange={(event) => setFormIngredients((items) => items.map((current, itemIndex) => itemIndex === index ? { ...current, quantidade: Number(event.target.value) } : current))} className="w-20 rounded-xl border-2 border-[#8C4B3A]/30 bg-[#FEFAF0] px-2 py-2 font-normal" /><input value={item.unidade} onChange={(event) => setFormIngredients((items) => items.map((current, itemIndex) => itemIndex === index ? { ...current, unidade: event.target.value } : current))} className="w-24 rounded-xl border-2 border-[#8C4B3A]/30 bg-[#FEFAF0] px-2 py-2 font-normal" /><button type="button" onClick={() => setFormIngredients((items) => items.filter((_, itemIndex) => itemIndex !== index))} aria-label="Remover ingrediente"><Trash2 size={18} /></button></div>)}</div></div>
             <label className="font-bold">Modo de preparo<textarea value={form.preparation} onChange={(event) => updateForm("preparation", event.target.value)} placeholder="Descreva o passo a passo" className="mt-2 w-full h-32 bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal resize-none focus:border-[#E07A5F] focus:outline-none" /></label>
             <label className="font-bold">Tempo (minutos)<input type="number" min="1" value={form.time} onChange={(event) => updateForm("time", event.target.value)} className="mt-2 w-full bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal focus:border-[#E07A5F] focus:outline-none" /></label>
             <label className="font-bold">Porções<input type="number" min="1" value={form.servings} onChange={(event) => updateForm("servings", event.target.value)} className="mt-2 w-full bg-[#FEFAF0] border-2 border-[#8C4B3A]/30 rounded-xl px-4 py-3 font-normal focus:border-[#E07A5F] focus:outline-none" /></label>

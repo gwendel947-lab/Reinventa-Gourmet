@@ -9,6 +9,7 @@ export type RecipeIngredient = {
   unidade?: string;
   opcional?: boolean;
   nome?: string;
+  ingrediente?: { nome: string };
 };
 
 export type RecipeDetails = {

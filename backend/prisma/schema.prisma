@@ -153,7 +153,10 @@ model ReceitaGeracao {
   modelo String @db.VarChar(100)
   status String @db.VarChar(30)
   payload Json?
+  consumo Json?
   erroCodigo String? @db.VarChar(50)
+  receitaId Int?
+  cacheExpiraEm DateTime?
   rascunhoExpiraEm DateTime?
   criadaEm DateTime @default(now())
   finalizadaEm DateTime?
@@ -163,6 +166,7 @@ model ReceitaGeracao {
 
   @@index([usuarioId, criadaEm])
   @@index([usuarioId, chaveCache])
+  @@index([receitaId])
   @@map("receita_geracoes")
 }
 

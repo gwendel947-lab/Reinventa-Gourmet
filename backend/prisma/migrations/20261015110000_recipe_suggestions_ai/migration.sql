@@ -19,13 +19,17 @@ CREATE TABLE `receita_geracoes` (
   `modelo` VARCHAR(100) NOT NULL,
   `status` VARCHAR(30) NOT NULL,
   `payload` JSON NULL,
+  `consumo` JSON NULL,
   `erroCodigo` VARCHAR(50) NULL,
+  `receitaId` INTEGER NULL,
+  `cacheExpiraEm` DATETIME(3) NULL,
   `rascunhoExpiraEm` DATETIME(3) NULL,
   `criadaEm` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   `finalizadaEm` DATETIME(3) NULL,
   `duracaoMs` INTEGER NULL,
   INDEX `receita_geracoes_usuarioId_criadaEm_idx`(`usuarioId`, `criadaEm`),
   INDEX `receita_geracoes_usuarioId_chaveCache_idx`(`usuarioId`, `chaveCache`),
+  INDEX `receita_geracoes_receitaId_idx`(`receitaId`),
   PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

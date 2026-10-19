@@ -28,6 +28,7 @@ export const RecipeTool = () => {
   const [diet, setDiet] = useState("Come de tudo");
   const [allergies, setAllergies] = useState("");
   const [results, setResults] = useState<RecipeResult[]>([]);
+  const [aiError, setAiError] = useState<string | null>(null);
   const [authOpen, setAuthOpen] = useState(!user);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const [authData, setAuthData] = useState({ nome: "", email: "", senha: "" });
@@ -89,6 +90,7 @@ export const RecipeTool = () => {
   const searchRecipes = async () => {
     if (!selected.length) return toast.error("Selecione ao menos um ingrediente.");
     setIsLoading(true);
+    setAiError(null);
     try {
       const { data } = await api.post("/receitas/sugestoes", { ingredientIds: selected, maxTime: maxTime || undefined, servings: Number(servings), allowMissing });
       setResults(data.receitas ?? []);
@@ -110,11 +112,20 @@ export const RecipeTool = () => {
   const generateRecipe = async () => {
     if (!selected.length) return toast.error("Selecione ao menos um ingrediente.");
     setIsLoading(true);
+    setAiError(null);
     try {
       const { data } = await api.post("/receitas/gerar", { ingredientIds: selected, maxTime: maxTime || undefined, servings: Number(servings), allowMissing });
-      setResults([{ ...data.geracao.receita, geracaoId: data.geracao.id }]);
+      setResults([{
+        ...data.geracao.receita,
+        modoPreparo: data.geracao.receita.modoPreparo || data.geracao.receita.passos.join("\n"),
+        geracaoId: data.geracao.id
+      }]);
       toast.success(data.geracao.reutilizada ? "Rascunho reutilizado." : "Receita criada com IA.");
-    } catch (error: any) { toast.error(error.response?.data?.message || "A IA está indisponível. Tente buscar no banco."); }
+    } catch (error: any) {
+      const message = error.response?.data?.message || "A IA está indisponível. Tente buscar no banco.";
+      setAiError(message);
+      toast.error(message);
+    }
     finally { setIsLoading(false); }
   };
 
@@ -123,9 +134,16 @@ export const RecipeTool = () => {
     if (!generationId) return toast.error("Esta receita já está salva ou não é um rascunho.");
     setIsSaving(true);
     try {
-      await api.post(`/receitas/geracoes/${generationId}/salvar`);
+      const { data } = await api.post(`/receitas/geracoes/${generationId}/salvar`);
       toast.success("Receita salva no seu perfil.");
-      setResults((current) => current.map((item) => item === recipe ? { ...item, id: generationId, geracaoId: undefined } : item));
+      setResults((current) => current.map((item) => item === recipe ? {
+        titulo: data.receita.titulo,
+        modoPreparo: data.receita.modoPreparo,
+        tempoEstimado: data.receita.tempoEstimado,
+        porcoes: data.receita.porcoes,
+        geradaPorIA: true,
+        ingredientes: data.receita.ingredientes
+      } : item));
     } catch (error: any) { toast.error(error.response?.data?.message || "Não foi possível salvar o rascunho."); }
     finally { setIsSaving(false); }
   };
@@ -160,7 +178,7 @@ export const RecipeTool = () => {
           <div className="mt-6 space-y-3 border-t-2 border-dashed border-[#8C4B3A]/20 pt-5"><label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={allowMissing} onChange={(event) => { setAllowMissing(event.target.checked); setResults([]); }} /> Permitir ingredientes faltantes</label><div className="flex gap-2"><label className="flex-1 text-sm">Tempo máximo<input type="number" min="1" value={maxTime} onChange={(event) => setMaxTime(event.target.value)} placeholder="min" className="mt-1 w-full rounded border px-2 py-2" /></label><label className="flex-1 text-sm">Porções<input type="number" min="1" max="50" value={servings} onChange={(event) => setServings(event.target.value)} className="mt-1 w-full rounded border px-2 py-2" /></label></div><label className="block text-sm">Dieta<select value={diet} onChange={(event) => { setDiet(event.target.value); setResults([]); }} className="mt-1 w-full rounded border px-2 py-2"><option>Come de tudo</option><option>Vegetariano</option><option>Vegano</option><option>Pescetariano</option><option>Cetogênico</option><option>Outro</option></select></label><label className="block text-sm">Restrições, separadas por vírgula<input value={allergies} onChange={(event) => { setAllergies(event.target.value); setResults([]); }} placeholder="ex.: sem lactose" className="mt-1 w-full rounded border px-2 py-2" /></label><button type="button" onClick={savePreferences} className="text-left text-sm font-bold underline">Salvar preferências</button></div>
           <div className="mt-5 grid gap-2"><button disabled={!user || isLoading} onClick={searchRecipes} className="flex items-center justify-center gap-2 rounded-xl border-2 border-[#8C4B3A] py-3 font-bold disabled:opacity-50"><Search size={18} /> Buscar receitas</button><button disabled={!user || isLoading} onClick={generateRecipe} className="flex items-center justify-center gap-2 rounded-xl bg-[#E07A5F] py-3 font-bold text-white disabled:opacity-50"><Wand2 size={18} /> Criar com IA</button></div>
         </section>
-        <section className="space-y-5">{!results.length ? <div className="flex min-h-[420px] flex-col items-center justify-center rounded-3xl border-4 border-dashed border-[#8C4B3A]/20 p-10 text-center opacity-60"><Wand2 size={60} className="mb-5 text-[#E07A5F]" /><h2 className="font-title text-3xl">SUAS SUGESTÕES</h2><p className="mt-2 max-w-md">Busque no banco ou crie uma receita com IA. A geração não acontece automaticamente.</p></div> : results.map((recipe, index) => <article key={`${recipe.titulo}-${index}`} className="rounded-3xl border-4 border-[#8C4B3A] bg-white p-6 shadow-[6px_6px_0px_#F2CC8F]"><div className="flex flex-wrap items-start justify-between gap-3"><div><span className="text-sm font-bold uppercase text-[#E07A5F]">{recipe.geradaPorIA || (recipe as any).geracaoId ? "Criada com IA" : "Sugestão do banco"}</span><h2 className="font-title text-3xl">{recipe.titulo}</h2></div><div className="flex items-center gap-3 text-sm font-bold"><span><Clock size={16} className="inline" /> {recipe.tempoEstimado} min</span><span>{recipe.porcoes} porções</span>{recipe.pontuacao !== undefined && <span>{recipe.pontuacao}%</span>}</div></div><div className="mt-5 grid gap-6 md:grid-cols-2"><div><h3 className="mb-2 font-title text-xl">Ingredientes</h3><ul className="space-y-1">{(recipe.ingredientes || recipe.ingredientesPresentes || []).map((item: any, itemIndex) => <li key={itemIndex} className="text-sm">• {item.ingrediente?.nome || item.nome}: {item.quantidade} {item.unidade}</li>)}{recipe.ingredientesFaltantes?.filter((item) => !item.opcional).map((item, itemIndex) => <li key={`missing-${itemIndex}`} className="text-sm font-bold text-[#E07A5F]">• Faltante: {item.nome} ({item.quantidade} {item.unidade})</li>)}</ul></div><div><h3 className="mb-2 font-title text-xl">Modo de preparo</h3><ol className="space-y-2 text-sm">{recipe.modoPreparo.split("\n").map((step, stepIndex) => <li key={stepIndex}><b>{stepIndex + 1}.</b> {step}</li>)}</ol></div></div>{(recipe as any).geracaoId && <button disabled={isSaving} onClick={() => saveGeneration(recipe)} className="mt-5 flex items-center gap-2 rounded-xl bg-[#8C4B3A] px-4 py-2 font-bold text-white disabled:opacity-50"><Save size={17} /> Salvar receita</button>}</article>)}</section>
+        <section className="space-y-5">{aiError && <div className="rounded-2xl border-2 border-[#E07A5F] bg-[#E07A5F]/10 p-4"><p className="font-bold">{aiError}</p><button onClick={searchRecipes} className="mt-2 font-bold underline">Usar busca no banco</button></div>}{!results.length ? <div className="flex min-h-[420px] flex-col items-center justify-center rounded-3xl border-4 border-dashed border-[#8C4B3A]/20 p-10 text-center opacity-60"><Wand2 size={60} className="mb-5 text-[#E07A5F]" /><h2 className="font-title text-3xl">SUAS SUGESTÕES</h2><p className="mt-2 max-w-md">Busque no banco ou crie uma receita com IA. A geração não acontece automaticamente.</p></div> : results.map((recipe, index) => <article key={`${recipe.titulo}-${index}`} className="rounded-3xl border-4 border-[#8C4B3A] bg-white p-6 shadow-[6px_6px_0px_#F2CC8F]"><div className="flex flex-wrap items-start justify-between gap-3"><div><span className="text-sm font-bold uppercase text-[#E07A5F]">{recipe.geradaPorIA || (recipe as any).geracaoId ? "Criada com IA" : "Sugestão do banco"}</span><h2 className="font-title text-3xl">{recipe.titulo}</h2></div><div className="flex items-center gap-3 text-sm font-bold"><span><Clock size={16} className="inline" /> {recipe.tempoEstimado} min</span><span>{recipe.porcoes} porções</span>{recipe.pontuacao !== undefined && <span>{recipe.pontuacao}%</span>}</div></div><div className="mt-5 grid gap-6 md:grid-cols-2"><div><h3 className="mb-2 font-title text-xl">Ingredientes</h3><ul className="space-y-1">{(recipe.ingredientes || recipe.ingredientesPresentes || []).map((item: any, itemIndex) => <li key={itemIndex} className="text-sm">• {item.ingrediente?.nome || item.nome}: {item.quantidade} {item.unidade}</li>)}{recipe.ingredientesFaltantes?.filter((item) => !item.opcional).map((item, itemIndex) => <li key={`missing-${itemIndex}`} className="text-sm font-bold text-[#E07A5F]">• Faltante: {item.nome} ({item.quantidade} {item.unidade})</li>)}</ul></div><div><h3 className="mb-2 font-title text-xl">Modo de preparo</h3><ol className="space-y-2 text-sm">{recipe.modoPreparo.split("\n").map((step, stepIndex) => <li key={stepIndex}><b>{stepIndex + 1}.</b> {step}</li>)}</ol></div></div>{(recipe as any).geracaoId && <button disabled={isSaving} onClick={() => saveGeneration(recipe)} className="mt-5 flex items-center gap-2 rounded-xl bg-[#8C4B3A] px-4 py-2 font-bold text-white disabled:opacity-50"><Save size={17} /> Salvar receita</button>}</article>)}</section>
       </div>
       {authOpen && <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#8C4B3A]/40 p-4"><form onSubmit={submitAuth} className="w-full max-w-md rounded-3xl border-4 border-[#8C4B3A] bg-[#FEFAF0] p-7 shadow-[8px_8px_0px_#E07A5F]"><button type="button" onClick={() => setAuthOpen(false)} className="float-right"><X /></button><h2 className="mb-5 font-title text-3xl">{authMode === "login" ? "ENTRAR" : "CRIAR CONTA"}</h2>{authMode === "signup" && <input required placeholder="Nome" value={authData.nome} onChange={(event) => setAuthData({ ...authData, nome: event.target.value })} className="mb-3 w-full rounded-xl border-2 p-3" />}<input required type="email" placeholder="E-mail" value={authData.email} onChange={(event) => setAuthData({ ...authData, email: event.target.value })} className="mb-3 w-full rounded-xl border-2 p-3" /><input required type="password" placeholder="Senha" value={authData.senha} onChange={(event) => setAuthData({ ...authData, senha: event.target.value })} className="mb-5 w-full rounded-xl border-2 p-3" /><button className="w-full rounded-xl bg-[#E07A5F] py-3 font-bold text-white">{authMode === "login" ? "Entrar" : "Criar conta"}</button><button type="button" onClick={() => setAuthMode(authMode === "login" ? "signup" : "login")} className="mt-4 w-full text-sm underline">{authMode === "login" ? "Ainda não tenho conta" : "Já tenho conta"}</button></form></div>}
     </main>
