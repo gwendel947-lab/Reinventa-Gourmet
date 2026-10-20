@@ -161,13 +161,21 @@ model ReceitaGeracao {
   criadaEm         DateTime  @default(now())
   finalizadaEm     DateTime?
   duracaoMs        Int?
+  reservaExpiraEm  DateTime?
 
   usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
 
   @@index([usuarioId, criadaEm])
   @@index([usuarioId, chaveCache])
   @@index([receitaId])
+  @@index([criadaEm])
   @@map("receita_geracoes")
+}
+
+model IaControle {
+  id Int @id
+
+  @@map("ia_controle")
 }
 
 // ─────────────────────────────────────────

@@ -11,7 +11,8 @@ const app = express();
 
 app.use(express.json({ limit: "8mb" }));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+const origins = (process.env.CORS_ORIGINS || (process.env.NODE_ENV === "production" ? "" : "http://localhost:5173")).split(",").map((value) => value.trim()).filter(Boolean);
+app.use(cors({ origin: origins }));
 
 app.use("/users", userRoutes);
 app.use("/ingredientes", ingredienteRoutes);
@@ -25,6 +26,8 @@ app.get("/", (req, res) => {
     message: "API Reinventa Gourmet funcionando!"
   });
 });
+
+app.get("/health", (req, res) => res.json({ status: "ok" }));
 
 app.use((req, res) => {
   res.status(404).json({

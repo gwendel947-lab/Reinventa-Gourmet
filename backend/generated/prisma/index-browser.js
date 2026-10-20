@@ -197,7 +197,12 @@ exports.Prisma.ReceitaGeracaoScalarFieldEnum = {
   rascunhoExpiraEm: 'rascunhoExpiraEm',
   criadaEm: 'criadaEm',
   finalizadaEm: 'finalizadaEm',
-  duracaoMs: 'duracaoMs'
+  duracaoMs: 'duracaoMs',
+  reservaExpiraEm: 'reservaExpiraEm'
+};
+
+exports.Prisma.IaControleScalarFieldEnum = {
+  id: 'id'
 };
 
 exports.Prisma.ReceitaIngredienteScalarFieldEnum = {
@@ -324,6 +329,7 @@ exports.Prisma.ModelName = {
   Receita: 'Receita',
   Favorito: 'Favorito',
   ReceitaGeracao: 'ReceitaGeracao',
+  IaControle: 'IaControle',
   ReceitaIngrediente: 'ReceitaIngrediente',
   Comentario: 'Comentario',
   Postagem: 'Postagem'

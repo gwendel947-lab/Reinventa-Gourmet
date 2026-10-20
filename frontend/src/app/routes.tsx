@@ -42,4 +42,4 @@ export const router = createBrowserRouter([
       { path: "favorites", Component: Profile },
     ],
   },
-]);
+], { basename: import.meta.env.BASE_URL });

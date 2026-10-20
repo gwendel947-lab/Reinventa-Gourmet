@@ -1,36 +1,6 @@
 import { prisma } from "../config/prisma.js";
 
-const MASS = { kg: 1000, g: 1 };
-const VOLUME = { l: 1000, ml: 1 };
-
-function normalizeUnit(unit) {
-  return String(unit || "").trim().toLowerCase();
-}
-
-function comparableQuantity(quantity, from, to) {
-  const source = normalizeUnit(from);
-  const target = normalizeUnit(to);
-  if (source === target) return quantity;
-  if (MASS[source] && MASS[target]) return quantity * MASS[source] / MASS[target];
-  if (VOLUME[source] && VOLUME[target]) return quantity * VOLUME[source] / VOLUME[target];
-  return null;
-}
-
-function isCompatible(ingredient, diet, restrictions) {
-  const activeRestrictions = restrictions.map((item) => item.toLowerCase());
-  if ((diet !== "ONIVORO" || activeRestrictions.length) && ingredient.classificacaoStatus !== "VERIFICADO") return false;
-  if (diet !== "ONIVORO" && !ingredient.dietasPermitidas) return false;
-  if (diet !== "ONIVORO" && ingredient.dietasPermitidas) {
-    const allowed = ingredient.dietasPermitidas.split(",").map((item) => item.trim());
-    if (!allowed.includes(diet)) return false;
-  }
-  if (activeRestrictions.length && !ingredient.restricoes) return false;
-  if (activeRestrictions.length && ingredient.restricoes) {
-    const blocked = ingredient.restricoes.toLowerCase();
-    if (activeRestrictions.some((restriction) => blocked.includes(restriction))) return false;
-  }
-  return true;
-}
+import { comparableQuantity, isCompatible, preferences, RecipeError } from "../services/recipe-rules.js";
 
 function toResult(recipe, inventory, selectedIds, servings) {
   const scale = servings / recipe.porcoes;
@@ -100,8 +70,7 @@ export async function findSuggestions(req, res) {
 
     const selectedIds = new Set(ingredientIds.map(Number));
     const inventory = new Map(user.inventario.map((item) => [item.ingredienteId, item]));
-    const diet = user.perfil?.tipoDieta || "ONIVORO";
-    const restrictions = user.perfil?.restricoes?.map((item) => item.tipo) || [];
+    const { tipoDieta: diet, restricoes: restrictions } = preferences(req.body.preferencias, user.perfil ?? {});
     const where = {
       AND: [
         { OR: [{ publica: true }, { usuarioId: userId }] },
@@ -125,8 +94,9 @@ export async function findSuggestions(req, res) {
       .slice(0, 10)
       .map(({ missingCount, ...result }) => result);
 
-    return res.json({ receitas: results, preferencias: { tipoDieta: diet, restricoes } });
+    return res.json({ receitas: results, preferencias: { tipoDieta: diet, restricoes: restrictions } });
   } catch (error) {
+    if (error instanceof RecipeError) return res.status(error.status).json({ code: error.code, message: error.message });
     console.error(error);
     return res.status(500).json({ message: "Erro interno ao buscar sugestões." });
   }

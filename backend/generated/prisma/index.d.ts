@@ -54,6 +54,11 @@ export type Favorito = $Result.DefaultSelection<Prisma.$FavoritoPayload>
  */
 export type ReceitaGeracao = $Result.DefaultSelection<Prisma.$ReceitaGeracaoPayload>
 /**
+ * Model IaControle
+ *
+ */
+export type IaControle = $Result.DefaultSelection<Prisma.$IaControlePayload>
+/**
  * Model ReceitaIngrediente
  * 
  */
@@ -303,6 +308,16 @@ export class PrismaClient<
     * ```
     */
   get receitaGeracao(): Prisma.ReceitaGeracaoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.iaControle`: Exposes CRUD operations for the **IaControle** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IaControles
+    * const iaControles = await prisma.iaControle.findMany()
+    * ```
+    */
+  get iaControle(): Prisma.IaControleDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.receitaIngrediente`: Exposes CRUD operations for the **ReceitaIngrediente** model.
@@ -788,6 +803,7 @@ export namespace Prisma {
     Receita: 'Receita',
     Favorito: 'Favorito',
     ReceitaGeracao: 'ReceitaGeracao',
+    IaControle: 'IaControle',
     ReceitaIngrediente: 'ReceitaIngrediente',
     Comentario: 'Comentario',
     Postagem: 'Postagem'
@@ -806,7 +822,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "perfilAlimentar" | "restricaoAlimentar" | "ingrediente" | "inventario" | "receita" | "favorito" | "receitaGeracao" | "receitaIngrediente" | "comentario" | "postagem"
+      modelProps: "usuario" | "perfilAlimentar" | "restricaoAlimentar" | "ingrediente" | "inventario" | "receita" | "favorito" | "receitaGeracao" | "iaControle" | "receitaIngrediente" | "comentario" | "postagem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1338,6 +1354,72 @@ export namespace Prisma {
           }
         }
       }
+      IaControle: {
+        payload: Prisma.$IaControlePayload<ExtArgs>
+        fields: Prisma.IaControleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IaControleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IaControlePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IaControleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IaControlePayload>
+          }
+          findFirst: {
+            args: Prisma.IaControleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IaControlePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IaControleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IaControlePayload>
+          }
+          findMany: {
+            args: Prisma.IaControleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IaControlePayload>[]
+          }
+          create: {
+            args: Prisma.IaControleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IaControlePayload>
+          }
+          createMany: {
+            args: Prisma.IaControleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.IaControleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IaControlePayload>
+          }
+          update: {
+            args: Prisma.IaControleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IaControlePayload>
+          }
+          deleteMany: {
+            args: Prisma.IaControleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IaControleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.IaControleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IaControlePayload>
+          }
+          aggregate: {
+            args: Prisma.IaControleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIaControle>
+          }
+          groupBy: {
+            args: Prisma.IaControleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IaControleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IaControleCountArgs<ExtArgs>
+            result: $Utils.Optional<IaControleCountAggregateOutputType> | number
+          }
+        }
+      }
       ReceitaIngrediente: {
         payload: Prisma.$ReceitaIngredientePayload<ExtArgs>
         fields: Prisma.ReceitaIngredienteFieldRefs
@@ -1667,6 +1749,7 @@ export namespace Prisma {
     receita?: ReceitaOmit
     favorito?: FavoritoOmit
     receitaGeracao?: ReceitaGeracaoOmit
+    iaControle?: IaControleOmit
     receitaIngrediente?: ReceitaIngredienteOmit
     comentario?: ComentarioOmit
     postagem?: PostagemOmit
@@ -9312,6 +9395,7 @@ export namespace Prisma {
     criadaEm: Date | null
     finalizadaEm: Date | null
     duracaoMs: number | null
+    reservaExpiraEm: Date | null
   }
 
   export type ReceitaGeracaoMaxAggregateOutputType = {
@@ -9327,6 +9411,7 @@ export namespace Prisma {
     criadaEm: Date | null
     finalizadaEm: Date | null
     duracaoMs: number | null
+    reservaExpiraEm: Date | null
   }
 
   export type ReceitaGeracaoCountAggregateOutputType = {
@@ -9344,6 +9429,7 @@ export namespace Prisma {
     criadaEm: number
     finalizadaEm: number
     duracaoMs: number
+    reservaExpiraEm: number
     _all: number
   }
 
@@ -9375,6 +9461,7 @@ export namespace Prisma {
     criadaEm?: true
     finalizadaEm?: true
     duracaoMs?: true
+    reservaExpiraEm?: true
   }
 
   export type ReceitaGeracaoMaxAggregateInputType = {
@@ -9390,6 +9477,7 @@ export namespace Prisma {
     criadaEm?: true
     finalizadaEm?: true
     duracaoMs?: true
+    reservaExpiraEm?: true
   }
 
   export type ReceitaGeracaoCountAggregateInputType = {
@@ -9407,6 +9495,7 @@ export namespace Prisma {
     criadaEm?: true
     finalizadaEm?: true
     duracaoMs?: true
+    reservaExpiraEm?: true
     _all?: true
   }
 
@@ -9511,6 +9600,7 @@ export namespace Prisma {
     criadaEm: Date
     finalizadaEm: Date | null
     duracaoMs: number | null
+    reservaExpiraEm: Date | null
     _count: ReceitaGeracaoCountAggregateOutputType | null
     _avg: ReceitaGeracaoAvgAggregateOutputType | null
     _sum: ReceitaGeracaoSumAggregateOutputType | null
@@ -9547,6 +9637,7 @@ export namespace Prisma {
     criadaEm?: boolean
     finalizadaEm?: boolean
     duracaoMs?: boolean
+    reservaExpiraEm?: boolean
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["receitaGeracao"]>
 
@@ -9567,9 +9658,10 @@ export namespace Prisma {
     criadaEm?: boolean
     finalizadaEm?: boolean
     duracaoMs?: boolean
+    reservaExpiraEm?: boolean
   }
 
-  export type ReceitaGeracaoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "chaveCache" | "modelo" | "status" | "payload" | "consumo" | "erroCodigo" | "receitaId" | "cacheExpiraEm" | "rascunhoExpiraEm" | "criadaEm" | "finalizadaEm" | "duracaoMs", ExtArgs["result"]["receitaGeracao"]>
+  export type ReceitaGeracaoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "chaveCache" | "modelo" | "status" | "payload" | "consumo" | "erroCodigo" | "receitaId" | "cacheExpiraEm" | "rascunhoExpiraEm" | "criadaEm" | "finalizadaEm" | "duracaoMs" | "reservaExpiraEm", ExtArgs["result"]["receitaGeracao"]>
   export type ReceitaGeracaoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
@@ -9594,6 +9686,7 @@ export namespace Prisma {
       criadaEm: Date
       finalizadaEm: Date | null
       duracaoMs: number | null
+      reservaExpiraEm: Date | null
     }, ExtArgs["result"]["receitaGeracao"]>
     composites: {}
   }
@@ -9978,6 +10071,7 @@ export namespace Prisma {
     readonly criadaEm: FieldRef<"ReceitaGeracao", 'DateTime'>
     readonly finalizadaEm: FieldRef<"ReceitaGeracao", 'DateTime'>
     readonly duracaoMs: FieldRef<"ReceitaGeracao", 'Int'>
+    readonly reservaExpiraEm: FieldRef<"ReceitaGeracao", 'DateTime'>
   }
     
 
@@ -10345,6 +10439,883 @@ export namespace Prisma {
 
 
   /**
+   * Model IaControle
+   */
+
+  export type AggregateIaControle = {
+    _count: IaControleCountAggregateOutputType | null
+    _avg: IaControleAvgAggregateOutputType | null
+    _sum: IaControleSumAggregateOutputType | null
+    _min: IaControleMinAggregateOutputType | null
+    _max: IaControleMaxAggregateOutputType | null
+  }
+
+  export type IaControleAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type IaControleSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type IaControleMinAggregateOutputType = {
+    id: number | null
+  }
+
+  export type IaControleMaxAggregateOutputType = {
+    id: number | null
+  }
+
+  export type IaControleCountAggregateOutputType = {
+    id: number
+    _all: number
+  }
+
+
+  export type IaControleAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type IaControleSumAggregateInputType = {
+    id?: true
+  }
+
+  export type IaControleMinAggregateInputType = {
+    id?: true
+  }
+
+  export type IaControleMaxAggregateInputType = {
+    id?: true
+  }
+
+  export type IaControleCountAggregateInputType = {
+    id?: true
+    _all?: true
+  }
+
+  export type IaControleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IaControle to aggregate.
+     */
+    where?: IaControleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IaControles to fetch.
+     */
+    orderBy?: IaControleOrderByWithRelationInput | IaControleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IaControleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IaControles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IaControles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned IaControles
+    **/
+    _count?: true | IaControleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: IaControleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: IaControleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IaControleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IaControleMaxAggregateInputType
+  }
+
+  export type GetIaControleAggregateType<T extends IaControleAggregateArgs> = {
+        [P in keyof T & keyof AggregateIaControle]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIaControle[P]>
+      : GetScalarType<T[P], AggregateIaControle[P]>
+  }
+
+
+
+
+  export type IaControleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IaControleWhereInput
+    orderBy?: IaControleOrderByWithAggregationInput | IaControleOrderByWithAggregationInput[]
+    by: IaControleScalarFieldEnum[] | IaControleScalarFieldEnum
+    having?: IaControleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IaControleCountAggregateInputType | true
+    _avg?: IaControleAvgAggregateInputType
+    _sum?: IaControleSumAggregateInputType
+    _min?: IaControleMinAggregateInputType
+    _max?: IaControleMaxAggregateInputType
+  }
+
+  export type IaControleGroupByOutputType = {
+    id: number
+    _count: IaControleCountAggregateOutputType | null
+    _avg: IaControleAvgAggregateOutputType | null
+    _sum: IaControleSumAggregateOutputType | null
+    _min: IaControleMinAggregateOutputType | null
+    _max: IaControleMaxAggregateOutputType | null
+  }
+
+  type GetIaControleGroupByPayload<T extends IaControleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IaControleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IaControleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IaControleGroupByOutputType[P]>
+            : GetScalarType<T[P], IaControleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IaControleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+  }, ExtArgs["result"]["iaControle"]>
+
+
+
+  export type IaControleSelectScalar = {
+    id?: boolean
+  }
+
+  export type IaControleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id", ExtArgs["result"]["iaControle"]>
+
+  export type $IaControlePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IaControle"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+    }, ExtArgs["result"]["iaControle"]>
+    composites: {}
+  }
+
+  type IaControleGetPayload<S extends boolean | null | undefined | IaControleDefaultArgs> = $Result.GetResult<Prisma.$IaControlePayload, S>
+
+  type IaControleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IaControleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IaControleCountAggregateInputType | true
+    }
+
+  export interface IaControleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IaControle'], meta: { name: 'IaControle' } }
+    /**
+     * Find zero or one IaControle that matches the filter.
+     * @param {IaControleFindUniqueArgs} args - Arguments to find a IaControle
+     * @example
+     * // Get one IaControle
+     * const iaControle = await prisma.iaControle.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IaControleFindUniqueArgs>(args: SelectSubset<T, IaControleFindUniqueArgs<ExtArgs>>): Prisma__IaControleClient<$Result.GetResult<Prisma.$IaControlePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one IaControle that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IaControleFindUniqueOrThrowArgs} args - Arguments to find a IaControle
+     * @example
+     * // Get one IaControle
+     * const iaControle = await prisma.iaControle.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IaControleFindUniqueOrThrowArgs>(args: SelectSubset<T, IaControleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IaControleClient<$Result.GetResult<Prisma.$IaControlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IaControle that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IaControleFindFirstArgs} args - Arguments to find a IaControle
+     * @example
+     * // Get one IaControle
+     * const iaControle = await prisma.iaControle.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IaControleFindFirstArgs>(args?: SelectSubset<T, IaControleFindFirstArgs<ExtArgs>>): Prisma__IaControleClient<$Result.GetResult<Prisma.$IaControlePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IaControle that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IaControleFindFirstOrThrowArgs} args - Arguments to find a IaControle
+     * @example
+     * // Get one IaControle
+     * const iaControle = await prisma.iaControle.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IaControleFindFirstOrThrowArgs>(args?: SelectSubset<T, IaControleFindFirstOrThrowArgs<ExtArgs>>): Prisma__IaControleClient<$Result.GetResult<Prisma.$IaControlePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more IaControles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IaControleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all IaControles
+     * const iaControles = await prisma.iaControle.findMany()
+     * 
+     * // Get first 10 IaControles
+     * const iaControles = await prisma.iaControle.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const iaControleWithIdOnly = await prisma.iaControle.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IaControleFindManyArgs>(args?: SelectSubset<T, IaControleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IaControlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a IaControle.
+     * @param {IaControleCreateArgs} args - Arguments to create a IaControle.
+     * @example
+     * // Create one IaControle
+     * const IaControle = await prisma.iaControle.create({
+     *   data: {
+     *     // ... data to create a IaControle
+     *   }
+     * })
+     * 
+     */
+    create<T extends IaControleCreateArgs>(args: SelectSubset<T, IaControleCreateArgs<ExtArgs>>): Prisma__IaControleClient<$Result.GetResult<Prisma.$IaControlePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many IaControles.
+     * @param {IaControleCreateManyArgs} args - Arguments to create many IaControles.
+     * @example
+     * // Create many IaControles
+     * const iaControle = await prisma.iaControle.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IaControleCreateManyArgs>(args?: SelectSubset<T, IaControleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a IaControle.
+     * @param {IaControleDeleteArgs} args - Arguments to delete one IaControle.
+     * @example
+     * // Delete one IaControle
+     * const IaControle = await prisma.iaControle.delete({
+     *   where: {
+     *     // ... filter to delete one IaControle
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IaControleDeleteArgs>(args: SelectSubset<T, IaControleDeleteArgs<ExtArgs>>): Prisma__IaControleClient<$Result.GetResult<Prisma.$IaControlePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one IaControle.
+     * @param {IaControleUpdateArgs} args - Arguments to update one IaControle.
+     * @example
+     * // Update one IaControle
+     * const iaControle = await prisma.iaControle.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IaControleUpdateArgs>(args: SelectSubset<T, IaControleUpdateArgs<ExtArgs>>): Prisma__IaControleClient<$Result.GetResult<Prisma.$IaControlePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more IaControles.
+     * @param {IaControleDeleteManyArgs} args - Arguments to filter IaControles to delete.
+     * @example
+     * // Delete a few IaControles
+     * const { count } = await prisma.iaControle.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends IaControleDeleteManyArgs>(args?: SelectSubset<T, IaControleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IaControles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IaControleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many IaControles
+     * const iaControle = await prisma.iaControle.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends IaControleUpdateManyArgs>(args: SelectSubset<T, IaControleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one IaControle.
+     * @param {IaControleUpsertArgs} args - Arguments to update or create a IaControle.
+     * @example
+     * // Update or create a IaControle
+     * const iaControle = await prisma.iaControle.upsert({
+     *   create: {
+     *     // ... data to create a IaControle
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the IaControle we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IaControleUpsertArgs>(args: SelectSubset<T, IaControleUpsertArgs<ExtArgs>>): Prisma__IaControleClient<$Result.GetResult<Prisma.$IaControlePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of IaControles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IaControleCountArgs} args - Arguments to filter IaControles to count.
+     * @example
+     * // Count the number of IaControles
+     * const count = await prisma.iaControle.count({
+     *   where: {
+     *     // ... the filter for the IaControles we want to count
+     *   }
+     * })
+    **/
+    count<T extends IaControleCountArgs>(
+      args?: Subset<T, IaControleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IaControleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a IaControle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IaControleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IaControleAggregateArgs>(args: Subset<T, IaControleAggregateArgs>): Prisma.PrismaPromise<GetIaControleAggregateType<T>>
+
+    /**
+     * Group by IaControle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IaControleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<
+      T extends IaControleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IaControleGroupByArgs['orderBy'] }
+        : { orderBy?: IaControleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IaControleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIaControleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the IaControle model
+   */
+  readonly fields: IaControleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for IaControle.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IaControleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the IaControle model
+   */
+  interface IaControleFieldRefs {
+    readonly id: FieldRef<"IaControle", 'Int'>
+  }
+
+
+  // Custom InputTypes
+  /**
+   * IaControle findUnique
+   */
+  export type IaControleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IaControle
+     */
+    select?: IaControleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IaControle
+     */
+    omit?: IaControleOmit<ExtArgs> | null
+    /**
+     * Filter, which IaControle to fetch.
+     */
+    where: IaControleWhereUniqueInput
+  }
+
+  /**
+   * IaControle findUniqueOrThrow
+   */
+  export type IaControleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IaControle
+     */
+    select?: IaControleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IaControle
+     */
+    omit?: IaControleOmit<ExtArgs> | null
+    /**
+     * Filter, which IaControle to fetch.
+     */
+    where: IaControleWhereUniqueInput
+  }
+
+  /**
+   * IaControle findFirst
+   */
+  export type IaControleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IaControle
+     */
+    select?: IaControleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IaControle
+     */
+    omit?: IaControleOmit<ExtArgs> | null
+    /**
+     * Filter, which IaControle to fetch.
+     */
+    where?: IaControleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of IaControles to fetch.
+     */
+    orderBy?: IaControleOrderByWithRelationInput | IaControleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for IaControles.
+     */
+    cursor?: IaControleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` IaControles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` IaControles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of IaControles.
+     */
+    distinct?: IaControleScalarFieldEnum | IaControleScalarFieldEnum[]
+  }
+
+  /**
+   * IaControle findFirstOrThrow
+   */
+  export type IaControleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IaControle
+     */
+    select?: IaControleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IaControle
+     */
+    omit?: IaControleOmit<ExtArgs> | null
+    /**
+     * Filter, which IaControle to fetch.
+     */
+    where?: IaControleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of IaControles to fetch.
+     */
+    orderBy?: IaControleOrderByWithRelationInput | IaControleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for IaControles.
+     */
+    cursor?: IaControleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` IaControles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` IaControles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of IaControles.
+     */
+    distinct?: IaControleScalarFieldEnum | IaControleScalarFieldEnum[]
+  }
+
+  /**
+   * IaControle findMany
+   */
+  export type IaControleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IaControle
+     */
+    select?: IaControleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IaControle
+     */
+    omit?: IaControleOmit<ExtArgs> | null
+    /**
+     * Filter, which IaControles to fetch.
+     */
+    where?: IaControleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of IaControles to fetch.
+     */
+    orderBy?: IaControleOrderByWithRelationInput | IaControleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing IaControles.
+     */
+    cursor?: IaControleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` IaControles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` IaControles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of IaControles.
+     */
+    distinct?: IaControleScalarFieldEnum | IaControleScalarFieldEnum[]
+  }
+
+  /**
+   * IaControle create
+   */
+  export type IaControleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IaControle
+     */
+    select?: IaControleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IaControle
+     */
+    omit?: IaControleOmit<ExtArgs> | null
+    /**
+     * The data needed to create a IaControle.
+     */
+    data: XOR<IaControleCreateInput, IaControleUncheckedCreateInput>
+  }
+
+  /**
+   * IaControle createMany
+   */
+  export type IaControleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many IaControles.
+     */
+    data: IaControleCreateManyInput | IaControleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * IaControle update
+   */
+  export type IaControleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IaControle
+     */
+    select?: IaControleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IaControle
+     */
+    omit?: IaControleOmit<ExtArgs> | null
+    /**
+     * The data needed to update a IaControle.
+     */
+    data: XOR<IaControleUpdateInput, IaControleUncheckedUpdateInput>
+    /**
+     * Choose, which IaControle to update.
+     */
+    where: IaControleWhereUniqueInput
+  }
+
+  /**
+   * IaControle updateMany
+   */
+  export type IaControleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update IaControles.
+     */
+    data: XOR<IaControleUpdateManyMutationInput, IaControleUncheckedUpdateManyInput>
+    /**
+     * Filter which IaControles to update
+     */
+    where?: IaControleWhereInput
+    /**
+     * Limit how many IaControles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IaControle upsert
+   */
+  export type IaControleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IaControle
+     */
+    select?: IaControleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IaControle
+     */
+    omit?: IaControleOmit<ExtArgs> | null
+    /**
+     * The filter to search for the IaControle to update in case it exists.
+     */
+    where: IaControleWhereUniqueInput
+    /**
+     * In case the IaControle found by the `where` argument doesn't exist, create a new IaControle with this data.
+     */
+    create: XOR<IaControleCreateInput, IaControleUncheckedCreateInput>
+    /**
+     * In case the IaControle was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IaControleUpdateInput, IaControleUncheckedUpdateInput>
+  }
+
+  /**
+   * IaControle delete
+   */
+  export type IaControleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IaControle
+     */
+    select?: IaControleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IaControle
+     */
+    omit?: IaControleOmit<ExtArgs> | null
+    /**
+     * Filter which IaControle to delete.
+     */
+    where: IaControleWhereUniqueInput
+  }
+
+  /**
+   * IaControle deleteMany
+   */
+  export type IaControleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IaControles to delete
+     */
+    where?: IaControleWhereInput
+    /**
+     * Limit how many IaControles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * IaControle without action
+   */
+  export type IaControleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IaControle
+     */
+    select?: IaControleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IaControle
+     */
+    omit?: IaControleOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model ReceitaIngrediente
    */
 
@@ -10438,55 +11409,55 @@ export namespace Prisma {
     where?: ReceitaIngredienteWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ReceitaIngredientes to fetch.
      */
     orderBy?: ReceitaIngredienteOrderByWithRelationInput | ReceitaIngredienteOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ReceitaIngredienteWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ReceitaIngredientes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ReceitaIngredientes.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ReceitaIngredientes
     **/
     _count?: true | ReceitaIngredienteCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ReceitaIngredienteAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ReceitaIngredienteSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ReceitaIngredienteMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ReceitaIngredienteMaxAggregateInputType
@@ -10661,13 +11632,13 @@ export namespace Prisma {
      * @example
      * // Get all ReceitaIngredientes
      * const receitaIngredientes = await prisma.receitaIngrediente.findMany()
-     * 
+     *
      * // Get first 10 ReceitaIngredientes
      * const receitaIngredientes = await prisma.receitaIngrediente.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `receitaId`
      * const receitaIngredienteWithReceitaIdOnly = await prisma.receitaIngrediente.findMany({ select: { receitaId: true } })
-     * 
+     *
      */
     findMany<T extends ReceitaIngredienteFindManyArgs>(args?: SelectSubset<T, ReceitaIngredienteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReceitaIngredientePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -10681,7 +11652,7 @@ export namespace Prisma {
      *     // ... data to create a ReceitaIngrediente
      *   }
      * })
-     * 
+     *
      */
     create<T extends ReceitaIngredienteCreateArgs>(args: SelectSubset<T, ReceitaIngredienteCreateArgs<ExtArgs>>): Prisma__ReceitaIngredienteClient<$Result.GetResult<Prisma.$ReceitaIngredientePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -10695,7 +11666,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ReceitaIngredienteCreateManyArgs>(args?: SelectSubset<T, ReceitaIngredienteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -10709,7 +11680,7 @@ export namespace Prisma {
      *     // ... filter to delete one ReceitaIngrediente
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ReceitaIngredienteDeleteArgs>(args: SelectSubset<T, ReceitaIngredienteDeleteArgs<ExtArgs>>): Prisma__ReceitaIngredienteClient<$Result.GetResult<Prisma.$ReceitaIngredientePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -10726,7 +11697,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ReceitaIngredienteUpdateArgs>(args: SelectSubset<T, ReceitaIngredienteUpdateArgs<ExtArgs>>): Prisma__ReceitaIngredienteClient<$Result.GetResult<Prisma.$ReceitaIngredientePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -13494,10 +14465,18 @@ export namespace Prisma {
     rascunhoExpiraEm: 'rascunhoExpiraEm',
     criadaEm: 'criadaEm',
     finalizadaEm: 'finalizadaEm',
-    duracaoMs: 'duracaoMs'
+    duracaoMs: 'duracaoMs',
+    reservaExpiraEm: 'reservaExpiraEm'
   };
 
   export type ReceitaGeracaoScalarFieldEnum = (typeof ReceitaGeracaoScalarFieldEnum)[keyof typeof ReceitaGeracaoScalarFieldEnum]
+
+
+  export const IaControleScalarFieldEnum: {
+    id: 'id'
+  };
+
+  export type IaControleScalarFieldEnum = (typeof IaControleScalarFieldEnum)[keyof typeof IaControleScalarFieldEnum]
 
 
   export const ReceitaIngredienteScalarFieldEnum: {
@@ -14224,6 +15203,7 @@ export namespace Prisma {
     criadaEm?: DateTimeFilter<"ReceitaGeracao"> | Date | string
     finalizadaEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     duracaoMs?: IntNullableFilter<"ReceitaGeracao"> | number | null
+    reservaExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
   }
 
@@ -14242,6 +15222,7 @@ export namespace Prisma {
     criadaEm?: SortOrder
     finalizadaEm?: SortOrderInput | SortOrder
     duracaoMs?: SortOrderInput | SortOrder
+    reservaExpiraEm?: SortOrderInput | SortOrder
     usuario?: UsuarioOrderByWithRelationInput
     _relevance?: ReceitaGeracaoOrderByRelevanceInput
   }
@@ -14264,6 +15245,7 @@ export namespace Prisma {
     criadaEm?: DateTimeFilter<"ReceitaGeracao"> | Date | string
     finalizadaEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     duracaoMs?: IntNullableFilter<"ReceitaGeracao"> | number | null
+    reservaExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
   }, "id">
 
@@ -14282,6 +15264,7 @@ export namespace Prisma {
     criadaEm?: SortOrder
     finalizadaEm?: SortOrderInput | SortOrder
     duracaoMs?: SortOrderInput | SortOrder
+    reservaExpiraEm?: SortOrderInput | SortOrder
     _count?: ReceitaGeracaoCountOrderByAggregateInput
     _avg?: ReceitaGeracaoAvgOrderByAggregateInput
     _max?: ReceitaGeracaoMaxOrderByAggregateInput
@@ -14307,6 +15290,41 @@ export namespace Prisma {
     criadaEm?: DateTimeWithAggregatesFilter<"ReceitaGeracao"> | Date | string
     finalizadaEm?: DateTimeNullableWithAggregatesFilter<"ReceitaGeracao"> | Date | string | null
     duracaoMs?: IntNullableWithAggregatesFilter<"ReceitaGeracao"> | number | null
+    reservaExpiraEm?: DateTimeNullableWithAggregatesFilter<"ReceitaGeracao"> | Date | string | null
+  }
+
+  export type IaControleWhereInput = {
+    AND?: IaControleWhereInput | IaControleWhereInput[]
+    OR?: IaControleWhereInput[]
+    NOT?: IaControleWhereInput | IaControleWhereInput[]
+    id?: IntFilter<"IaControle"> | number
+  }
+
+  export type IaControleOrderByWithRelationInput = {
+    id?: SortOrder
+  }
+
+  export type IaControleWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: IaControleWhereInput | IaControleWhereInput[]
+    OR?: IaControleWhereInput[]
+    NOT?: IaControleWhereInput | IaControleWhereInput[]
+  }, "id">
+
+  export type IaControleOrderByWithAggregationInput = {
+    id?: SortOrder
+    _count?: IaControleCountOrderByAggregateInput
+    _avg?: IaControleAvgOrderByAggregateInput
+    _max?: IaControleMaxOrderByAggregateInput
+    _min?: IaControleMinOrderByAggregateInput
+    _sum?: IaControleSumOrderByAggregateInput
+  }
+
+  export type IaControleScalarWhereWithAggregatesInput = {
+    AND?: IaControleScalarWhereWithAggregatesInput | IaControleScalarWhereWithAggregatesInput[]
+    OR?: IaControleScalarWhereWithAggregatesInput[]
+    NOT?: IaControleScalarWhereWithAggregatesInput | IaControleScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"IaControle"> | number
   }
 
   export type ReceitaIngredienteWhereInput = {
@@ -14991,6 +16009,7 @@ export namespace Prisma {
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
     duracaoMs?: number | null
+    reservaExpiraEm?: Date | string | null
     usuario: UsuarioCreateNestedOneWithoutGeracoesInput
   }
 
@@ -15009,6 +16028,7 @@ export namespace Prisma {
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
     duracaoMs?: number | null
+    reservaExpiraEm?: Date | string | null
   }
 
   export type ReceitaGeracaoUpdateInput = {
@@ -15024,6 +16044,7 @@ export namespace Prisma {
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+    reservaExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usuario?: UsuarioUpdateOneRequiredWithoutGeracoesNestedInput
   }
 
@@ -15042,6 +16063,7 @@ export namespace Prisma {
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+    reservaExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ReceitaGeracaoCreateManyInput = {
@@ -15059,6 +16081,7 @@ export namespace Prisma {
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
     duracaoMs?: number | null
+    reservaExpiraEm?: Date | string | null
   }
 
   export type ReceitaGeracaoUpdateManyMutationInput = {
@@ -15074,6 +16097,7 @@ export namespace Prisma {
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+    reservaExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ReceitaGeracaoUncheckedUpdateManyInput = {
@@ -15091,6 +16115,35 @@ export namespace Prisma {
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+    reservaExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type IaControleCreateInput = {
+    id: number
+  }
+
+  export type IaControleUncheckedCreateInput = {
+    id: number
+  }
+
+  export type IaControleUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type IaControleUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type IaControleCreateManyInput = {
+    id: number
+  }
+
+  export type IaControleUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type IaControleUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
   }
 
   export type ReceitaIngredienteCreateInput = {
@@ -15939,6 +16992,7 @@ export namespace Prisma {
     criadaEm?: SortOrder
     finalizadaEm?: SortOrder
     duracaoMs?: SortOrder
+    reservaExpiraEm?: SortOrder
   }
 
   export type ReceitaGeracaoAvgOrderByAggregateInput = {
@@ -15961,6 +17015,7 @@ export namespace Prisma {
     criadaEm?: SortOrder
     finalizadaEm?: SortOrder
     duracaoMs?: SortOrder
+    reservaExpiraEm?: SortOrder
   }
 
   export type ReceitaGeracaoMinOrderByAggregateInput = {
@@ -15976,6 +17031,7 @@ export namespace Prisma {
     criadaEm?: SortOrder
     finalizadaEm?: SortOrder
     duracaoMs?: SortOrder
+    reservaExpiraEm?: SortOrder
   }
 
   export type ReceitaGeracaoSumOrderByAggregateInput = {
@@ -16039,6 +17095,26 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type IaControleCountOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IaControleAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IaControleMaxOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IaControleMinOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IaControleSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type ReceitaIngredienteOrderByRelevanceInput = {
@@ -17526,6 +18602,7 @@ export namespace Prisma {
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
     duracaoMs?: number | null
+    reservaExpiraEm?: Date | string | null
   }
 
   export type ReceitaGeracaoUncheckedCreateWithoutUsuarioInput = {
@@ -17542,6 +18619,7 @@ export namespace Prisma {
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
     duracaoMs?: number | null
+    reservaExpiraEm?: Date | string | null
   }
 
   export type ReceitaGeracaoCreateOrConnectWithoutUsuarioInput = {
@@ -17756,6 +18834,7 @@ export namespace Prisma {
     criadaEm?: DateTimeFilter<"ReceitaGeracao"> | Date | string
     finalizadaEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
     duracaoMs?: IntNullableFilter<"ReceitaGeracao"> | number | null
+    reservaExpiraEm?: DateTimeNullableFilter<"ReceitaGeracao"> | Date | string | null
   }
 
   export type UsuarioCreateWithoutPerfilInput = {
@@ -19258,6 +20337,7 @@ export namespace Prisma {
     criadaEm?: Date | string
     finalizadaEm?: Date | string | null
     duracaoMs?: number | null
+    reservaExpiraEm?: Date | string | null
   }
 
   export type InventarioUpdateWithoutUsuarioInput = {
@@ -19404,6 +20484,7 @@ export namespace Prisma {
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+    reservaExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ReceitaGeracaoUncheckedUpdateWithoutUsuarioInput = {
@@ -19420,6 +20501,7 @@ export namespace Prisma {
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+    reservaExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ReceitaGeracaoUncheckedUpdateManyWithoutUsuarioInput = {
@@ -19436,6 +20518,7 @@ export namespace Prisma {
     criadaEm?: DateTimeFieldUpdateOperationsInput | Date | string
     finalizadaEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     duracaoMs?: NullableIntFieldUpdateOperationsInput | number | null
+    reservaExpiraEm?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type RestricaoAlimentarCreateManyPerfilInput = {

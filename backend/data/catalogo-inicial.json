@@ -1,0 +1,13 @@
+[
+  {"nome":"Arroz","categoria":"grãos","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null},
+  {"nome":"Feijão","categoria":"grãos","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null},
+  {"nome":"Batata","categoria":"legumes","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null},
+  {"nome":"Cenoura","categoria":"legumes","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null},
+  {"nome":"Tomate","categoria":"legumes","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null},
+  {"nome":"Cebola","categoria":"legumes","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null},
+  {"nome":"Ovo","categoria":"ovos","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null},
+  {"nome":"Leite","categoria":"laticínios","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null},
+  {"nome":"Sal","categoria":"temperos","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null},
+  {"nome":"Óleo","categoria":"óleos","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null},
+  {"nome":"Água","categoria":"outros","classificacaoStatus":"NAO_VERIFICADO","dietasPermitidas":null,"restricoes":null}
+]
