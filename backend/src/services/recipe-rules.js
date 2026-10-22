@@ -72,7 +72,7 @@ export function requestContext(body = {}, inventory, savedProfile) {
 export function validateRecipe(parsed, selected, allowed, filters) {
   const invalid = () => { throw new RecipeError("RESPOSTA_INVALIDA", "A IA não retornou uma receita compatível com seu estoque e filtros. Tente a busca no banco.", 502); };
   if (!parsed || typeof parsed.titulo !== "string" || !parsed.titulo.trim() || parsed.titulo.length > 200 ||
-      !Array.isArray(parsed.passos) || !parsed.passos.length || parsed.passos.length > 30 ||
+      !Array.isArray(parsed.passos) || parsed.passos.length < 4 || parsed.passos.length > 30 ||
       parsed.passos.some((step) => typeof step !== "string" || !step.trim() || step.length > 2000) ||
       !Number.isInteger(parsed.tempoEstimado) || parsed.tempoEstimado < 1 ||
       (filters.maxTime && parsed.tempoEstimado > filters.maxTime) || parsed.porcoes !== filters.servings ||
@@ -94,7 +94,8 @@ export function validateRecipe(parsed, selected, allowed, filters) {
       unidade: item.unidade.trim(), opcional: item.opcional ?? false, situacao,
       quantidadeDisponivel: stock?.quantidade ?? 0, unidadeDisponivel: stock?.unidade ?? item.unidade };
   });
-  if (additions > 3 || !ingredientes.some((item) => selected.some((stock) => stock.ingredienteId === item.ingredienteId))) invalid();
+  if (additions > 3 || (filters.allowMissing && additions < 1) ||
+      !ingredientes.some((item) => selected.some((stock) => stock.ingredienteId === item.ingredienteId))) invalid();
   return { titulo: parsed.titulo.trim(), ingredientes, passos: parsed.passos.map((step) => step.trim()),
     tempoEstimado: parsed.tempoEstimado, porcoes: filters.servings };
 }

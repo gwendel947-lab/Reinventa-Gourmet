@@ -9,7 +9,7 @@ const ingredient = { id: 1, nome: "Batata", classificacaoStatus: "VERIFICADO", d
 const stock = [{ ingredienteId: 1, quantidade: 1, unidade: "kg", ingrediente: ingredient }];
 const body = { ingredientIds: [1], servings: 2 };
 const filters = { servings: 2, maxTime: 30, allowMissing: false };
-const recipe = () => ({ titulo: "Batata assada", ingredientes: [{ ingredienteId: 1, quantidade: 500, unidade: "g" }], passos: ["Asse as batatas."], tempoEstimado: 25, porcoes: 2 });
+const recipe = () => ({ titulo: "Batata assada", ingredientes: [{ ingredienteId: 1, quantidade: 500, unidade: "g" }], passos: ["Lave e descasque as batatas.", "Corte as batatas em pedaços uniformes.", "Tempere e distribua os pedaços em uma assadeira.", "Asse até dourar e verifique se estão macias ao centro."], tempoEstimado: 25, porcoes: 2 });
 const config = { enabled: true, apiKey: "test", model: "test", timeout: 100, daily: 5, cooldown: 30, cache: 900, draft: 86400, minute: 10, globalDaily: 100 };
 const res = () => ({ statusCode: 200, status(code) { this.statusCode = code; return this; }, set() { return this; }, json(body) { this.body = body; return this; } });
 
@@ -32,16 +32,18 @@ test("estoque, conversões e estrutura", () => {
   assert.equal(comparableQuantity(1, "l", "ml"), 1000);
   assert.equal(comparableQuantity(1, "g", "ml"), null);
   assert.equal(validateRecipe(recipe(), stock, [ingredient], filters).ingredientes[0].situacao, "disponivel");
-  for (const change of [{ passos: [] }, { passos: [""] }, { porcoes: 3 }, { tempoEstimado: 31 }, { ingredientes: [{ ingredienteId: 99, quantidade: 1, unidade: "g" }] }, { ingredientes: [...recipe().ingredientes, ...recipe().ingredientes] }, { ingredientes: [{ ingredienteId: 1, quantidade: 1001, unidade: "g" }] }, { ingredientes: [{ ingredienteId: 1, quantidade: 1, unidade: "ml" }] }]) {
+  for (const change of [{ passos: [] }, { passos: ["Asse as batatas."] }, { passos: [""] }, { porcoes: 3 }, { tempoEstimado: 31 }, { ingredientes: [{ ingredienteId: 99, quantidade: 1, unidade: "g" }] }, { ingredientes: [...recipe().ingredientes, ...recipe().ingredientes] }, { ingredientes: [{ ingredienteId: 1, quantidade: 1001, unidade: "g" }] }, { ingredientes: [{ ingredienteId: 1, quantidade: 1, unidade: "ml" }] }]) {
     assert.throws(() => validateRecipe({ ...recipe(), ...change }, stock, [ingredient], filters), { code: "RESPOSTA_INVALIDA" });
   }
 });
 test("modo flexível identifica complementos e limita adicionais", () => {
   const flexible = { ...filters, allowMissing: true };
   const parsed = recipe(); parsed.ingredientes[0].quantidade = 2000;
-  assert.equal(validateRecipe(parsed, stock, [ingredient], flexible).ingredientes[0].situacao, "faltante");
+  const complement = { ...ingredient, id: 2, nome: "Cebola" };
+  parsed.ingredientes.push({ ingredienteId: complement.id, quantidade: 1, unidade: "unidade" });
+  assert.equal(validateRecipe(parsed, stock, [ingredient, complement], flexible).ingredientes[0].situacao, "faltante");
   parsed.ingredientes[0].unidade = "ml";
-  assert.equal(validateRecipe(parsed, stock, [ingredient], flexible).ingredientes[0].situacao, "unidade_incompativel");
+  assert.equal(validateRecipe(parsed, stock, [ingredient, complement], flexible).ingredientes[0].situacao, "unidade_incompativel");
   const extra = [2, 3, 4, 5].map((id) => ({ ...ingredient, id }));
   parsed.ingredientes.push(...extra.map(({ id }) => ({ ingredienteId: id, quantidade: 1, unidade: "g" })));
   assert.throws(() => validateRecipe(parsed, stock, [ingredient, ...extra], flexible));
@@ -50,7 +52,13 @@ test("provedor estruturado e erros sem repetição", async () => {
   let attempts = 0;
   const call = createGeminiProvider((options) => {
     assert.equal(options.httpOptions.retryOptions.attempts, 1);
-    return { models: { generateContent: async (request) => { attempts++; assert.ok(request.config.abortSignal); return { text: JSON.stringify(recipe()) }; } } };
+    return { models: { generateContent: async (request) => {
+      attempts++;
+      assert.ok(request.config.abortSignal);
+      assert.match(request.config.systemInstruction, /modo de preparo sempre detalhado/);
+      assert.match(request.config.systemInstruction, /filtros\.allowMissing/);
+      return { text: JSON.stringify(recipe()) };
+    } } };
   });
   assert.equal((await call({ config, selected: stock, allowed: [ingredient], profile: preferences(), filters })).parsed.titulo, "Batata assada");
   assert.equal(attempts, 1);
