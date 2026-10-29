@@ -56,6 +56,7 @@ test("provedor estruturado e erros sem repetição", async () => {
       attempts++;
       assert.ok(request.config.abortSignal);
       assert.match(request.config.systemInstruction, /modo de preparo sempre detalhado/);
+      assert.match(request.config.systemInstruction, /inovadora, gostosa e receber um nome original e criativo/);
       assert.match(request.config.systemInstruction, /filtros\.allowMissing/);
       return { text: JSON.stringify(recipe()) };
     } } };
